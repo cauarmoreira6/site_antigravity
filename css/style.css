@@ -1,0 +1,512 @@
+/* ============================================================
+   MathPlay Solutions — CSS Global (style.css)
+   Estilos da página inicial e elementos compartilhados
+   ============================================================ */
+
+/* ---- Variáveis de cor e fonte ---- */
+:root {
+    --primary:    #6c63ff;   /* Roxo principal */
+    --primary-dk: #5a52d5;   /* Roxo escuro (hover) */
+    --accent:     #ff6b35;   /* Laranja de destaque */
+    --accent-dk:  #e55a25;   /* Laranja escuro (hover) */
+    --success:    #2ecc71;   /* Verde de sucesso */
+    --danger:     #e74c3c;   /* Vermelho de erro */
+    --warning:    #f39c12;   /* Amarelo/ouro */
+    --dark:       #2d3436;   /* Texto escuro */
+    --gray:       #636e72;   /* Texto cinza */
+    --light-gray: #b2bec3;   /* Cinza claro */
+    --bg:         #f0f2f5;   /* Fundo da página */
+    --card-bg:    #ffffff;   /* Fundo dos cards */
+    --shadow:     0 4px 20px rgba(0, 0, 0, 0.08);
+    --radius:     14px;
+    --radius-sm:  8px;
+    --transition: all 0.3s ease;
+}
+
+/* ---- Reset e base ---- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 50px;    /* Botão arredondado (pílula) */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dk);
+    transform: translateY(-2px);      /* Efeito de "subir" ao passar o mouse */
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.35);
+}
+
+.btn-accent {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-accent:hover {
+    background: var(--accent-dk);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.35);
+}
+
+.btn-outline {
+    background: transparent;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-outline-white {
+    background: transparent;
+    border-color: #fff;
+    color: #fff;
+}
+
+.btn-outline-white:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.btn-lg {
+    padding: 16px 40px;
+    font-size: 1.15rem;
+}
+
+.btn-sm {
+    padding: 8px 18px;
+    font-size: 0.875rem;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-success {
+    background: var(--success);
+    color: #fff;
+}
+
+/* ============================================================
+   NAVBAR (Página Inicial)
+   ============================================================ */
+.navbar-home {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);     /* Efeito de vidro fosco */
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.nav-brand .logo-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* ============================================================
+   HERO SECTION (Cabeçalho da Landing Page)
+   ============================================================ */
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6c63ff 0%, #a855f7 50%, #ff6b35 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 20px 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Círculos decorativos no fundo do hero */
+.hero::before,
+.hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.15;
+}
+
+.hero::before {
+    width: 500px;
+    height: 500px;
+    background: #fff;
+    top: -150px;
+    right: -150px;
+}
+
+.hero::after {
+    width: 300px;
+    height: 300px;
+    background: #fff;
+    bottom: -100px;
+    left: -80px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 6px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem); /* Tamanho responsivo */
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.hero h1 span {
+    color: #ffd700;   /* Dourado para destaque */
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 36px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Emojis flutuantes no hero */
+.floating-emoji {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: float 3s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-20px); }
+}
+
+/* ============================================================
+   SEÇÃO DE ESTATÍSTICAS
+   ============================================================ */
+.stats-section {
+    background: #fff;
+    padding: 60px 40px;
+}
+
+.stats-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.stat-item p {
+    font-size: 1rem;
+    color: var(--gray);
+}
+
+/* ============================================================
+   SEÇÃO DE JOGOS (Landing)
+   ============================================================ */
+.section {
+    padding: 80px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 12px;
+}
+
+.section-title p {
+    font-size: 1.1rem;
+    color: var(--gray);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* ============================================================
+   CARDS DE JOGOS (Landing)
+   ============================================================ */
+.jogos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.jogo-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 30px 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-top: 4px solid var(--primary);
+}
+
+.jogo-card:hover {
+    transform: translateY(-8px);      /* Levanta o card ao passar o mouse */
+    box-shadow: 0 12px 40px rgba(108, 99, 255, 0.18);
+}
+
+.jogo-card.jogo-2 { border-color: var(--accent); }
+.jogo-card.jogo-3 { border-color: var(--success); }
+.jogo-card.jogo-4 { border-color: var(--warning); }
+
+.jogo-card .jogo-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.jogo-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+}
+
+.jogo-card p {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+/* ============================================================
+   SEÇÃO DE GAMIFICAÇÃO (Landing)
+   ============================================================ */
+.gamificacao-section {
+    background: linear-gradient(135deg, #6c63ff, #a855f7);
+    padding: 80px 40px;
+    color: #fff;
+    text-align: center;
+}
+
+.gamificacao-section h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+
+.gamificacao-section p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.features-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+}
+
+.feature-item {
+    background: rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    padding: 24px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.feature-item .feat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.feature-item h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.feature-item p {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin: 0;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 0.9rem;
+}
+
+.footer strong {
+    color: var(--primary);
+}
+
+/* ============================================================
+   UTILITÁRIOS
+   ============================================================ */
+.text-center { text-align: center; }
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.d-flex { display: flex; }
+.gap-1 { gap: 8px; }
+.gap-2 { gap: 16px; }
+.align-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.flex-wrap { flex-wrap: wrap; }
+.w-100 { width: 100%; }
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+@media (max-width: 768px) {
+    .navbar-home {
+        padding: 14px 20px;
+    }
+
+    .hero {
+        padding: 90px 20px 50px;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section {
+        padding: 50px 20px;
+    }
+
+    .gamificacao-section {
+        padding: 50px 20px;
+    }
+
+    .floating-emoji {
+        display: none;  /* Remove emojis flutuantes em telas pequenas */
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-lg {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
