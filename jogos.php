@@ -21,36 +21,32 @@ $stmt->close();
 $jogos = [
     1 => [
         'nome'      => 'Batalha dos Inteiros',
-        'icone'     => '⚔️',
         'tema'      => 'Números Inteiros',
-        'descricao' => 'Enfrente inimigos resolvendo operações com números positivos e negativos. Cada acerto dá dano ao inimigo!',
+        'descricao' => 'Resolva operações com números positivos e negativos.',
         'dificuldades'=> 'Fácil, Médio e Difícil',
         'cor'       => 'j1',
         'link'      => '/site_antigravity/jogos/jogo1.php',
     ],
     2 => [
         'nome'      => 'Cofre das Equações',
-        'icone'     => '🔐',
         'tema'      => 'Equações de 1º Grau',
-        'descricao' => 'Descubra o valor de X para abrir cofres e encontrar recompensas escondidas. Dificuldade crescente!',
+        'descricao' => 'Descubra o valor de X para resolver as equações com dificuldade crescente.',
         'dificuldades'=> 'Fácil, Médio e Difícil',
         'cor'       => 'j2',
         'link'      => '/site_antigravity/jogos/jogo2.php',
     ],
     3 => [
         'nome'      => 'Loja MathPlay',
-        'icone'     => '🛒',
         'tema'      => 'Porcentagem e Finanças',
-        'descricao' => 'Gerencie uma lojinha resolvendo problemas de desconto, troco, lucro e juros simples.',
+        'descricao' => 'Pratique conceitos de desconto, troco, acréscimo e porcentagens aplicadas.',
         'dificuldades'=> 'Fácil, Médio e Difícil',
         'cor'       => 'j3',
         'link'      => '/site_antigravity/jogos/jogo3.php',
     ],
     4 => [
         'nome'      => 'Detetive dos Gráficos',
-        'icone'     => '🔍',
         'tema'      => 'Estatística e Gráficos',
-        'descricao' => 'Analise gráficos de barras e resolva mistérios usando média, moda e mediana.',
+        'descricao' => 'Interprete gráficos de barras e resolva questões de média, moda e mediana.',
         'dificuldades'=> 'Fácil, Médio e Difícil',
         'cor'       => 'j4',
         'link'      => '/site_antigravity/jogos/jogo4.php',
@@ -75,21 +71,15 @@ $jogos = [
 
         <div class="topbar">
             <div>
-                <h1>🎮 Jogos</h1>
-                <p>Escolha um jogo e comece sua aventura matemática!</p>
+                <h1>Catálogo de Jogos</h1>
+                <p>Escolha um jogo para praticar suas habilidades matemáticas</p>
             </div>
         </div>
 
-        <!-- Dica de XP -->
-        <div style="background:linear-gradient(135deg,rgba(108,99,255,0.1),rgba(168,85,247,0.08));
-                    border:1px solid rgba(108,99,255,0.2);border-radius:12px;
-                    padding:16px 24px;margin-bottom:28px;
-                    display:flex;align-items:center;gap:12px;">
-            <span style="font-size:1.5rem;">💡</span>
-            <div>
-                <strong style="color:#6c63ff;">Como ganhar XP?</strong>
-                <span style="color:#636e72;font-size:0.9rem;"> • +10 XP por resposta correta • +5 XP de bônus a cada 3 acertos seguidos • +20 XP ao concluir uma partida</span>
-            </div>
+        <!-- Dica de Pontuação -->
+        <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:10px;padding:14px 20px;margin-bottom:24px;">
+            <strong style="color:#6c63ff;">Critérios de Pontuação:</strong>
+            <span style="color:#636e72;font-size:0.9rem;"> +10 pontos por resposta correta • +5 pontos bônus em sequências de acertos • +20 pontos ao concluir a partida</span>
         </div>
 
         <!-- Catálogo de jogos -->
@@ -100,33 +90,28 @@ $jogos = [
             ?>
             <a href="<?= $jogo['link'] ?>" class="catalog-card <?= $jogo['cor'] ?>">
 
-                <!-- Cabeçalho colorido -->
-                <div class="catalog-card-header">
-                    <?= $jogo['icone'] ?>
-                </div>
-
                 <!-- Corpo -->
-                <div class="catalog-card-body">
+                <div class="catalog-card-body" style="padding-top:24px;">
                     <h3><?= $jogo['nome'] ?></h3>
                     <p><?= $jogo['descricao'] ?></p>
 
                     <!-- Informações de desempenho -->
                     <?php if ($jogado): ?>
-                    <div style="background:#f0f2f5;border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#636e72;">
-                        <strong><?= $stats['partidas'] ?></strong> partida<?= $stats['partidas'] > 1 ? 's' : '' ?> jogada<?= $stats['partidas'] > 1 ? 's' : '' ?> •
+                    <div style="background:#f0f2f5;border-radius:8px;padding:8px 12px;font-size:0.8rem;color:#636e72;">
+                        <strong><?= $stats['partidas'] ?></strong> partida<?= $stats['partidas'] > 1 ? 's' : '' ?> realizada<?= $stats['partidas'] > 1 ? 's' : '' ?> •
                         Melhor: <strong style="color:#6c63ff;"><?= $stats['melhor'] ?> pts</strong>
                     </div>
                     <?php else: ?>
-                    <div style="background:#f0f2f5;border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#b2bec3;">
-                        Ainda não jogado — seja o primeiro! 🆕
+                    <div style="background:#f0f2f5;border-radius:8px;padding:8px 12px;font-size:0.8rem;color:#95a5a6;">
+                        Ainda não iniciado
                     </div>
                     <?php endif; ?>
                 </div>
 
                 <!-- Rodapé -->
                 <div class="catalog-card-footer">
-                    <span class="jogo-tag">📐 <?= $jogo['tema'] ?></span>
-                    <span>🎮 Jogar →</span>
+                    <span class="jogo-tag"><?= $jogo['tema'] ?></span>
+                    <span>Jogar</span>
                 </div>
 
             </a>
@@ -135,28 +120,19 @@ $jogos = [
 
         <!-- Legenda de dificuldades -->
         <div class="card" style="margin-top:28px;">
-            <div class="card-title">📖 Como funcionam as dificuldades?</div>
+            <div class="card-title">Níveis de Dificuldade</div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-                <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f0f2f5;border-radius:10px;">
-                    <span style="font-size:1.5rem;">🟢</span>
-                    <div>
-                        <div style="font-weight:700;color:#2ecc71;">Fácil</div>
-                        <div style="font-size:0.8rem;color:#636e72;">Questões simples para começar</div>
-                    </div>
+                <div style="padding:14px;background:#f0f2f5;border-radius:10px;">
+                    <div style="font-weight:700;color:#2ecc71;">Fácil</div>
+                    <div style="font-size:0.8rem;color:#636e72;">Conceitos iniciais e cálculos diretos</div>
                 </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f0f2f5;border-radius:10px;">
-                    <span style="font-size:1.5rem;">🟡</span>
-                    <div>
-                        <div style="font-weight:700;color:#f39c12;">Médio</div>
-                        <div style="font-size:0.8rem;color:#636e72;">Questões intermediárias</div>
-                    </div>
+                <div style="padding:14px;background:#f0f2f5;border-radius:10px;">
+                    <div style="font-weight:700;color:#f39c12;">Médio</div>
+                    <div style="font-size:0.8rem;color:#636e72;">Questões intermediárias com múltiplos passos</div>
                 </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f0f2f5;border-radius:10px;">
-                    <span style="font-size:1.5rem;">🔴</span>
-                    <div>
-                        <div style="font-weight:700;color:#e74c3c;">Difícil</div>
-                        <div style="font-size:0.8rem;color:#636e72;">Para os verdadeiros mestres!</div>
-                    </div>
+                <div style="padding:14px;background:#f0f2f5;border-radius:10px;">
+                    <div style="font-weight:700;color:#e74c3c;">Difícil</div>
+                    <div style="font-size:0.8rem;color:#636e72;">Desafios avançados e problemas contextualizados</div>
                 </div>
             </div>
         </div>
@@ -165,4 +141,3 @@ $jogos = [
 </div>
 </body>
 </html>
-

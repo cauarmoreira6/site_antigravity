@@ -1,8 +1,12 @@
 /* ============================================================
    MathPlay Solutions — CSS de Login e Cadastro (login.css)
+   Design Limpo, Sem Emojis, Formulário Perfeitamente Enquadrado
    ============================================================ */
 
-/* Importa variáveis de style.css (usada em conjunto) */
+/* ---- Reset e Box Sizing Global neste contexto ---- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
 /* ---- Body da página de login/cadastro ---- */
 .auth-body {
@@ -11,53 +15,55 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 24px 16px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
-/* Círculos decorativos de fundo */
+/* Fundo com efeito sutil */
 .auth-body::before {
     content: '';
     position: absolute;
-    width: 400px;
-    height: 400px;
-    background: rgba(255,255,255,0.1);
+    width: 320px;
+    height: 320px;
+    background: rgba(255,255,255,0.08);
     border-radius: 50%;
-    top: -150px;
-    right: -100px;
+    top: -100px;
+    right: -80px;
+    pointer-events: none;
 }
 
 .auth-body::after {
     content: '';
     position: absolute;
-    width: 250px;
-    height: 250px;
-    background: rgba(255,255,255,0.08);
+    width: 220px;
+    height: 220px;
+    background: rgba(255,255,255,0.06);
     border-radius: 50%;
-    bottom: -80px;
-    left: -60px;
+    bottom: -60px;
+    left: -50px;
+    pointer-events: none;
 }
 
-/* ---- Caixa do formulário ---- */
+/* ---- Caixa do formulário (Card perfeitamente delimitado) ---- */
 .auth-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 48px 40px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 30px;
     width: 100%;
-    max-width: 440px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    max-width: 380px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
     position: relative;
     z-index: 1;
-    animation: slideUp 0.4s ease;   /* Animação de entrada */
+    overflow: hidden;
+    animation: slideUp 0.35s ease;
 }
 
-/* Animação de entrada do card */
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(18px);
     }
     to {
         opacity: 1;
@@ -65,164 +71,171 @@
     }
 }
 
-/* ---- Logo e título ---- */
+/* ---- Cabeçalho e Título ---- */
 .auth-logo {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 22px;
 }
 
 .auth-logo .logo-circle {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #6c63ff, #a855f7);
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    margin-bottom: 12px;
-    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+    display: none; /* Removido elemento de emoji */
 }
 
 .auth-logo h1 {
-    font-size: 1.6rem;
+    font-size: 1.45rem;
     font-weight: 800;
     color: #2d3436;
     margin-bottom: 4px;
+    letter-spacing: -0.3px;
 }
 
 .auth-logo p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #636e72;
 }
 
-/* ---- Campos do formulário ---- */
+/* ---- Formulário e Campos ---- */
+form {
+    width: 100%;
+}
+
 .form-group {
-    margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 14px;
 }
 
 .form-group label {
     display: block;
-    font-size: 0.875rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: #2d3436;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
+/* Garantia que o input não ultrapasse e tenha altura compacta */
 .form-control {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 1rem;
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 12px;
+    border: 1.5px solid #dcdde1;
+    border-radius: 8px;
+    font-size: 0.88rem;
     font-family: inherit;
     color: #2d3436;
-    transition: all 0.25s ease;
+    background: #fdfdfd;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
-    background: #fafafa;
+    box-sizing: border-box !important;
 }
 
-/* Efeito de foco no campo */
 .form-control:focus {
     border-color: #6c63ff;
-    background: #fff;
+    background: #ffffff;
     box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12);
 }
 
-/* Campo com ícone */
 .input-group {
+    width: 100%;
     position: relative;
 }
 
-.input-group .input-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.1rem;
-    pointer-events: none;
-}
-
+/* Como removemos os emojis, o input usa 100% da largura normalmente */
 .input-group .form-control {
-    padding-left: 42px;
+    padding-left: 12px;
 }
 
-/* ---- Seletor de tipo (radio buttons) ---- */
+.input-group .input-icon {
+    display: none;
+}
+
+/* ---- Seletor de Tipo (Aluno / Professor) ---- */
 .tipo-selector {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .tipo-option {
     cursor: pointer;
+    width: 100%;
 }
 
 .tipo-option input[type="radio"] {
-    display: none;  /* Esconde o radio nativo */
+    display: none;
 }
 
 .tipo-label {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 14px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
+    justify-content: center;
+    height: 36px;
+    border: 1.5px solid #dcdde1;
+    border-radius: 8px;
     transition: all 0.2s ease;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: #636e72;
+    background: #fafafa;
     cursor: pointer;
+    user-select: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .tipo-label .tipo-icon {
-    font-size: 1.5rem;
-    margin-bottom: 6px;
+    display: none;
 }
 
-/* Estilo quando o radio está selecionado */
 .tipo-option input[type="radio"]:checked + .tipo-label {
     border-color: #6c63ff;
     background: rgba(108, 99, 255, 0.08);
     color: #6c63ff;
+    font-weight: 700;
 }
 
-/* ---- Botão de submit ---- */
+/* ---- Botão de Ação ---- */
 .btn-auth {
     width: 100%;
-    padding: 14px;
+    height: 42px;
+    line-height: 42px;
+    padding: 0;
     background: linear-gradient(135deg, #6c63ff, #a855f7);
-    color: #fff;
+    color: #ffffff;
     border: none;
-    border-radius: 10px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 0.92rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
     margin-top: 8px;
     font-family: inherit;
+    display: block;
+    text-align: center;
 }
 
 .btn-auth:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.35);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(108, 99, 255, 0.32);
 }
 
 .btn-auth:active {
     transform: translateY(0);
 }
 
-/* ---- Mensagens de erro e sucesso ---- */
+/* ---- Alertas ---- */
 .alert {
-    padding: 12px 16px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
+    padding: 9px 12px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    font-size: 0.82rem;
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    display: block;
+    text-align: center;
 }
 
 .alert-error {
@@ -243,11 +256,11 @@
     color: #2980b9;
 }
 
-/* ---- Link de alternância (login/cadastro) ---- */
+/* ---- Links de Alternância ---- */
 .auth-switch {
     text-align: center;
-    margin-top: 24px;
-    font-size: 0.9rem;
+    margin-top: 18px;
+    font-size: 0.82rem;
     color: #636e72;
 }
 
@@ -261,15 +274,14 @@
     text-decoration: underline;
 }
 
-/* ---- Link voltar ---- */
 .auth-back {
     text-align: center;
-    margin-top: 16px;
+    margin-top: 10px;
 }
 
 .auth-back a {
-    color: #b2bec3;
-    font-size: 0.85rem;
+    color: #95a5a6;
+    font-size: 0.78rem;
     text-decoration: none;
     transition: color 0.2s;
 }
@@ -278,44 +290,18 @@
     color: #6c63ff;
 }
 
-/* ---- Requisitos de senha ---- */
 .senha-dica {
-    font-size: 0.78rem;
-    color: #b2bec3;
-    margin-top: 4px;
+    font-size: 0.72rem;
+    color: #95a5a6;
+    margin-top: 3px;
+    display: block;
 }
-
-/* ---- Divisor ---- */
-.auth-divider {
-    text-align: center;
-    color: #b2bec3;
-    font-size: 0.85rem;
-    margin: 20px 0;
-    position: relative;
-}
-
-.auth-divider::before,
-.auth-divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 40%;
-    height: 1px;
-    background: #e0e0e0;
-}
-
-.auth-divider::before { left: 0; }
-.auth-divider::after  { right: 0; }
 
 /* ============================================================
    RESPONSIVIDADE
    ============================================================ */
 @media (max-width: 480px) {
     .auth-card {
-        padding: 32px 24px;
-    }
-
-    .tipo-selector {
-        grid-template-columns: 1fr;
+        padding: 24px 20px;
     }
 }

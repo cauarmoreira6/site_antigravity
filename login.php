@@ -15,40 +15,32 @@ require_once 'includes/conexao.php';
 $erro    = '';
 $sucesso = '';
 
-// ---- Processa o formulário de login (quando o formulário é enviado) ----
+// Processa o formulário de login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Captura e limpa os dados enviados pelo formulário
-    // trim() remove espaços extras no início e no fim
     $email = trim($_POST['email'] ?? '');
     $senha = trim($_POST['senha'] ?? '');
 
-    // Verifica se os campos foram preenchidos
     if (empty($email) || empty($senha)) {
         $erro = 'Por favor, preencha todos os campos.';
     } else {
-        // Busca o usuário pelo e-mail no banco de dados
-        // Usamos prepared statement para evitar SQL Injection
         $stmt = $conn->prepare('SELECT id, nome, email, senha, tipo FROM usuarios WHERE email = ?');
-        $stmt->bind_param('s', $email);   // 's' significa que o parâmetro é string
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $resultado = $stmt->get_result();
         $usuario   = $resultado->fetch_assoc();
         $stmt->close();
 
         if ($usuario) {
-            // password_verify() compara a senha digitada com o hash armazenado
             if (password_verify($senha, $usuario['senha'])) {
 
-                // Login bem-sucedido! Cria as variáveis de sessão
                 $_SESSION['usuario_id'] = $usuario['id'];
                 $_SESSION['nome']       = $usuario['nome'];
                 $_SESSION['email']      = $usuario['email'];
                 $_SESSION['tipo']       = $usuario['tipo'];
 
-                // Busca o progresso do usuário para guardar na sessão
                 $stmt2 = $conn->prepare('SELECT xp, nivel FROM progresso WHERE usuario_id = ?');
-                $stmt2->bind_param('i', $usuario['id']); // 'i' = integer
+                $stmt2->bind_param('i', $usuario['id']);
                 $stmt2->execute();
                 $prog = $stmt2->get_result()->fetch_assoc();
                 $stmt2->close();
@@ -56,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['xp']    = $prog['xp']    ?? 0;
                 $_SESSION['nivel'] = $prog['nivel']  ?? 1;
 
-                // Redireciona conforme o tipo de usuário
                 if ($usuario['tipo'] === 'admin') {
                     header('Location: /site_antigravity/admin/dashboard.php');
                 } else {
@@ -72,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+$versao_css = time();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -79,37 +71,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/login.css">
+    <link rel="stylesheet" href="/site_antigravity/css/login.css?v=<?= $versao_css ?>">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box !important;
+        }
+        .auth-card {
+            max-width: 420px !important;
+            width: 100% !important;
+            padding: 32px 28px !important;
+            overflow: hidden !important;
+            border-radius: 16px !important;
+            background: #ffffff !important;
+        }
+        .form-group {
+            width: 100% !important;
+            margin-bottom: 14px !important;
+        }
+        .input-group {
+            width: 100% !important;
+            display: block !important;
+        }
+        .form-control {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 40px !important;
+            line-height: normal !important;
+            padding: 0 14px !important;
+            font-size: 0.9rem !important;
+            border: 1.5px solid #dcdde1 !important;
+            border-radius: 8px !important;
+            background: #f8f9fa !important;
+            color: #2d3436 !important;
+            box-sizing: border-box !important;
+            margin: 0 !important;
+        }
+        .form-control:focus {
+            border-color: #6c63ff !important;
+            background: #ffffff !important;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12) !important;
+            outline: none !important;
+        }
+        .btn-auth {
+            width: 100% !important;
+            height: 42px !important;
+            border-radius: 8px !important;
+            font-size: 0.95rem !important;
+            font-weight: 700 !important;
+            box-sizing: border-box !important;
+            margin-top: 6px !important;
+            cursor: pointer !important;
+        }
+    </style>
 </head>
 <body class="auth-body">
 
     <div class="auth-card">
 
-        <!-- Logo -->
+        <!-- Logo/Título -->
         <div class="auth-logo">
-            <div class="logo-circle">🧮</div>
             <h1>MathPlay Solutions</h1>
-            <p>Entre na sua conta para continuar jogando</p>
+            <p>Entre na sua conta para acessar os conteúdos</p>
         </div>
 
-        <!-- Mensagem de erro -->
+        <!-- Mensagens de retorno -->
         <?php if ($erro): ?>
-            <div class="alert alert-error">❌ <?= htmlspecialchars($erro) ?></div>
+            <div class="alert alert-error"><?= htmlspecialchars($erro) ?></div>
         <?php endif; ?>
 
-        <!-- Mensagem de sucesso (vinda do cadastro) -->
         <?php if (isset($_GET['cadastro']) && $_GET['cadastro'] === 'ok'): ?>
-            <div class="alert alert-success">✅ Conta criada com sucesso! Faça login.</div>
+            <div class="alert alert-success">Conta criada com sucesso! Faça login.</div>
         <?php endif; ?>
 
         <!-- Formulário de login -->
-        <!-- action="" envia para a mesma página (login.php), method="post" para não mostrar na URL -->
         <form action="" method="POST">
 
             <div class="form-group">
-                <label for="email">📧 E-mail</label>
+                <label for="email">E-mail</label>
                 <div class="input-group">
-                    <span class="input-icon">📧</span>
                     <input
                         type="email"
                         id="email"
@@ -123,9 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label for="senha">🔒 Senha</label>
+                <label for="senha">Senha</label>
                 <div class="input-group">
-                    <span class="input-icon">🔒</span>
                     <input
                         type="password"
                         id="senha"
@@ -137,22 +176,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <button type="submit" class="btn-auth">🎮 Entrar na MathPlay</button>
+            <button type="submit" class="btn-auth">Entrar na MathPlay</button>
         </form>
 
         <!-- Link para cadastro -->
         <div class="auth-switch">
             Não tem conta ainda?
-            <a href="/site_antigravity/cadastro.php">Criar conta grátis</a>
+            <a href="/site_antigravity/cadastro.php">Criar conta</a>
         </div>
 
         <!-- Link para página inicial -->
         <div class="auth-back">
-            <a href="/site_antigravity/index.php">← Voltar para a página inicial</a>
+            <a href="/site_antigravity/index.php">Voltar para a página inicial</a>
         </div>
 
     </div>
 
 </body>
 </html>
-

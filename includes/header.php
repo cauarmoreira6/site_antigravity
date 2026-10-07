@@ -6,23 +6,21 @@
 // Ele gera a sidebar de navegação com links e dados do usuário.
 // ============================================================
 
-// Inicia sessão se necessário
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Pega o nome da página atual para destacar o link ativo
-// basename() retorna apenas o nome do arquivo (ex: dashboard.php)
+// Nome da página atual (ex: dashboard.php, usuarios.php)
 $pagina_atual = basename($_SERVER['PHP_SELF']);
 
-// Pega a primeira letra do nome do usuário para o avatar
+// Verifica se está dentro da pasta /admin/
+$esta_em_admin = (strpos($_SERVER['PHP_SELF'], '/admin/') !== false);
+
 $inicial = strtoupper(substr($_SESSION['nome'] ?? 'U', 0, 1));
 
-// Lógica de nível baseada no XP
 $xp    = $_SESSION['xp']    ?? 0;
 $nivel = $_SESSION['nivel'] ?? 1;
 
-// Títulos de cada nível
 $titulos = [
     1 => 'Iniciante',
     2 => 'Aprendiz',
@@ -33,26 +31,23 @@ $titulos = [
 ];
 $titulo_nivel = $titulos[$nivel] ?? 'Mestre MathPlay';
 
-// XP necessário para o próximo nível
 $xp_por_nivel = [0, 0, 100, 250, 500, 800, 1200];
 $xp_proximo   = $xp_por_nivel[$nivel + 1] ?? 9999;
 $xp_atual_nivel = $xp_por_nivel[$nivel] ?? 0;
 $xp_diff      = $xp_proximo - $xp_atual_nivel;
 $xp_progresso = ($xp_diff > 0) ? min(100, round(($xp - $xp_atual_nivel) / $xp_diff * 100)) : 100;
 
-// Define se é admin para mostrar links extras
 $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
 ?>
 
 <!-- ============ BOTÃO DE MENU MOBILE ============ -->
-<button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+<button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">Menu</button>
 
 <!-- ============ SIDEBAR ============ -->
 <aside class="sidebar" id="sidebar">
 
     <!-- Logo -->
     <div class="sidebar-brand">
-        <div class="brand-icon">🧮</div>
         <div class="brand-name">
             MathPlay
             <span>Solutions</span>
@@ -64,7 +59,7 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
         <div class="user-avatar"><?= $inicial ?></div>
         <div class="user-info">
             <div class="user-name"><?= htmlspecialchars($_SESSION['nome'] ?? 'Usuário') ?></div>
-            <div class="user-level">⭐ Nível <?= $nivel ?> — <?= $titulo_nivel ?></div>
+            <div class="user-level">Nível <?= $nivel ?> — <?= $titulo_nivel ?></div>
         </div>
     </div>
 
@@ -74,51 +69,53 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
         <div class="nav-section-label">Principal</div>
 
         <a href="/site_antigravity/dashboard.php"
-           class="nav-item <?= $pagina_atual === 'dashboard.php' ? 'active' : '' ?>">
-            <span class="nav-icon">🏠</span> Dashboard
+           class="nav-item <?= (!$esta_em_admin && $pagina_atual === 'dashboard.php') ? 'active' : '' ?>">
+            Dashboard
         </a>
 
         <a href="/site_antigravity/jogos.php"
            class="nav-item <?= $pagina_atual === 'jogos.php' ? 'active' : '' ?>">
-            <span class="nav-icon">🎮</span> Jogos
+            Jogos
         </a>
 
         <a href="/site_antigravity/ranking.php"
            class="nav-item <?= $pagina_atual === 'ranking.php' ? 'active' : '' ?>">
-            <span class="nav-icon">🏆</span> Ranking
+            Ranking
         </a>
 
         <div class="nav-section-label">Meu Perfil</div>
 
         <a href="/site_antigravity/perfil.php"
            class="nav-item <?= $pagina_atual === 'perfil.php' ? 'active' : '' ?>">
-            <span class="nav-icon">👤</span> Perfil
+            Perfil
         </a>
 
         <a href="/site_antigravity/conquistas.php"
            class="nav-item <?= $pagina_atual === 'conquistas.php' ? 'active' : '' ?>">
-            <span class="nav-icon">🏅</span> Conquistas
+            Conquistas
         </a>
 
         <a href="/site_antigravity/progresso.php"
            class="nav-item <?= $pagina_atual === 'progresso.php' ? 'active' : '' ?>">
-            <span class="nav-icon">📈</span> Progresso
+            Progresso
         </a>
 
         <?php if ($is_admin): ?>
         <div class="nav-section-label">Administração</div>
 
         <a href="/site_antigravity/admin/dashboard.php"
-           class="nav-item <?= in_array($pagina_atual, ['dashboard.php','usuarios.php','resultados.php']) && strpos($_SERVER['PHP_SELF'], '/admin/') !== false ? 'active' : '' ?>">
-            <span class="nav-icon">⚙️</span> Painel Admin
+           class="nav-item <?= ($esta_em_admin && $pagina_atual === 'dashboard.php') ? 'active' : '' ?>">
+            Painel Admin
         </a>
 
-        <a href="/site_antigravity/admin/usuarios.php" class="nav-item">
-            <span class="nav-icon">👥</span> Alunos
+        <a href="/site_antigravity/admin/usuarios.php"
+           class="nav-item <?= ($esta_em_admin && $pagina_atual === 'usuarios.php') ? 'active' : '' ?>">
+            Alunos
         </a>
 
-        <a href="/site_antigravity/admin/resultados.php" class="nav-item">
-            <span class="nav-icon">📊</span> Resultados
+        <a href="/site_antigravity/admin/resultados.php"
+           class="nav-item <?= ($esta_em_admin && $pagina_atual === 'resultados.php') ? 'active' : '' ?>">
+            Resultados
         </a>
         <?php endif; ?>
 
@@ -127,7 +124,7 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
     <!-- Rodapé da sidebar -->
     <div class="sidebar-footer">
         <a href="/site_antigravity/logout.php" class="nav-item">
-            <span class="nav-icon">🚪</span> Sair
+            Sair
         </a>
     </div>
 
@@ -135,20 +132,16 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
 
 <!-- Script para abrir/fechar sidebar no mobile -->
 <script>
-    // Seleciona os elementos
     const menuToggle = document.getElementById('menuToggle');
     const sidebar    = document.getElementById('sidebar');
 
-    // Alterna a classe 'open' na sidebar ao clicar no botão
     menuToggle.addEventListener('click', function () {
         sidebar.classList.toggle('open');
     });
 
-    // Fecha a sidebar ao clicar fora dela no mobile
     document.addEventListener('click', function (e) {
         if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
             sidebar.classList.remove('open');
         }
     });
 </script>
-

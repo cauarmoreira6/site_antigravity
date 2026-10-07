@@ -8,14 +8,14 @@
 // ============================================================
 
 // Configurações de conexão
-$host    = 'localhost';   // Endereço do servidor MySQL (XAMPP usa localhost)
-$usuario = 'root';        // Usuário padrão do XAMPP
-$senha   = '';            // Senha padrão do XAMPP é vazia
-$banco   = 'mathplay';    // Nome do banco de dados
+const DB_HOST = '127.0.0.1';   // Endereço do servidor MySQL (XAMPP usa localhost)
+const DB_PORT = 3308;        // Usuário padrão do XAMPP
+const DB_USER = 'root';            // Senha padrão do XAMPP é vazia
+const DB_NAME = 'mathplay';    // Nome do banco de dados
 
 // Cria a conexão
 // new mysqli() tenta conectar ao MySQL com os dados acima
-$conn = new mysqli($host, $usuario, $senha, $banco);
+$conn = new mysqli("localhost", "root", "", "mathplay", "3308");
 
 // Verifica se houve erro na conexão
 if ($conn->connect_error) {
