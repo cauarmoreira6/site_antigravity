@@ -16,13 +16,13 @@ $stmt->close();
 
 // Lista de TODAS as medalhas possíveis do sistema
 $todas_medalhas = [
-    ['icone'=>'🏆','medalha'=>'Primeiro Passo',      'descricao'=>'Completar o primeiro jogo da plataforma'],
-    ['icone'=>'🔥','medalha'=>'Sequência Perfeita',   'descricao'=>'Conseguir 5 respostas corretas consecutivas'],
-    ['icone'=>'🧠','medalha'=>'Mestre da Matemática', 'descricao'=>'Acumular 100 acertos no total'],
-    ['icone'=>'🎯','medalha'=>'Sem Errar',             'descricao'=>'Finalizar uma partida com 0 erros'],
-    ['icone'=>'⭐','medalha'=>'Jogador Frequente',     'descricao'=>'Completar 10 partidas'],
-    ['icone'=>'💰','medalha'=>'Comerciante Nato',      'descricao'=>'Completar a Loja MathPlay no nível difícil'],
-    ['icone'=>'🔍','medalha'=>'Olho de Águia',         'descricao'=>'Completar o Detetive dos Gráficos sem erros'],
+    ['icone'=>'01', 'medalha'=>'Primeiro Passo',      'descricao'=>'Completar o primeiro jogo da plataforma'],
+    ['icone'=>'05', 'medalha'=>'Sequência Perfeita',   'descricao'=>'Conseguir 5 respostas corretas consecutivas'],
+    ['icone'=>'100','medalha'=>'Mestre da Matemática', 'descricao'=>'Acumular 100 acertos no total'],
+    ['icone'=>'0',  'medalha'=>'Sem Errar',             'descricao'=>'Finalizar uma partida com 0 erros'],
+    ['icone'=>'10', 'medalha'=>'Jogador Frequente',     'descricao'=>'Completar 10 partidas'],
+    ['icone'=>'$',  'medalha'=>'Comerciante Nato',      'descricao'=>'Completar a Loja MathPlay no nível difícil'],
+    ['icone'=>'OA', 'medalha'=>'Olho de Águia',         'descricao'=>'Completar o Detetive dos Gráficos sem erros'],
 ];
 
 // Cria um array com os nomes das medalhas já conquistadas (para verificação rápida)
@@ -45,7 +45,7 @@ $conquistadas_nomes = array_column($minhas, 'medalha');
 
         <div class="topbar">
             <div>
-                <h1>🏅 Conquistas</h1>
+                <h1>Conquistas</h1>
                 <p>Suas medalhas e conquistas — continue jogando para desbloquear mais!</p>
             </div>
             <div class="topbar-right">
@@ -89,7 +89,7 @@ $conquistadas_nomes = array_column($minhas, 'medalha');
                         <?= !$conquistada ? 'opacity:0.45;filter:grayscale(1);' : 'border:2px solid rgba(243,156,18,0.3);' ?>"
                  <?= $conquistada ? 'onmouseover="this.style.transform=\'translateY(-4px)\'" onmouseout="this.style.transform=\'translateY(0)\'"' : '' ?>>
 
-                <div style="font-size:3.5rem;margin-bottom:12px;"><?= $m['icone'] ?></div>
+                <div class="achievement-mark"><?= htmlspecialchars($m['icone']) ?></div>
                 <h3 style="font-size:1rem;font-weight:800;color:#2d3436;margin-bottom:8px;">
                     <?= htmlspecialchars($m['medalha']) ?>
                 </h3>
@@ -100,12 +100,12 @@ $conquistadas_nomes = array_column($minhas, 'medalha');
                 <?php if ($conquistada): ?>
                     <span style="display:inline-block;background:rgba(243,156,18,0.12);color:#e67e22;
                                  padding:4px 12px;border-radius:50px;font-size:0.75rem;font-weight:700;">
-                        ✅ Conquistada <?= $data_conquista ? 'em '.$data_conquista : '' ?>
+                         Conquistada <?= $data_conquista ? 'em '.$data_conquista : '' ?>
                     </span>
                 <?php else: ?>
                     <span style="display:inline-block;background:rgba(99,110,114,0.1);color:#b2bec3;
                                  padding:4px 12px;border-radius:50px;font-size:0.75rem;font-weight:700;">
-                        🔒 Bloqueada
+                         Bloqueada
                     </span>
                 <?php endif; ?>
 
@@ -118,11 +118,10 @@ $conquistadas_nomes = array_column($minhas, 'medalha');
         <?php if (count($minhas) < count($todas_medalhas)): ?>
         <div style="text-align:center;margin-top:32px;">
             <p style="color:#636e72;margin-bottom:16px;">Continue jogando para desbloquear mais medalhas!</p>
-            <a href="/site_antigravity/jogos.php" class="btn btn-primary">🎮 Ir para os Jogos</a>
+            <a href="/site_antigravity/jogos.php" class="btn btn-primary"> Ir para os Jogos</a>
         </div>
         <?php else: ?>
         <div style="text-align:center;margin-top:32px;padding:30px;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
-            <div style="font-size:3rem;margin-bottom:12px;">🎉</div>
             <h2 style="color:#2d3436;">Parabéns! Você conquistou todas as medalhas!</h2>
             <p style="color:#636e72;">Você é um verdadeiro Mestre MathPlay!</p>
         </div>
@@ -132,4 +131,3 @@ $conquistadas_nomes = array_column($minhas, 'medalha');
 </div>
 </body>
 </html>
-

@@ -113,6 +113,9 @@ $versao_css = time();
             box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12) !important;
             outline: none !important;
         }
+        .form-control.password-input {
+            padding-right: 48px !important;
+        }
         .btn-auth {
             width: 100% !important;
             height: 42px !important;
@@ -169,10 +172,15 @@ $versao_css = time();
                         type="password"
                         id="senha"
                         name="senha"
-                        class="form-control"
+                        class="form-control password-input"
                         placeholder="Sua senha"
                         required
                     >
+                    <button type="button" class="password-toggle" aria-label="Mostrar senha" aria-pressed="false" aria-controls="senha">
+                        <svg class="password-toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 5c-5 0-9.27 3.11-11 7 1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -192,5 +200,6 @@ $versao_css = time();
 
     </div>
 
+    <script src="/site_antigravity/js/password-toggle.js"></script>
 </body>
 </html>

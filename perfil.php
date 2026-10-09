@@ -56,6 +56,9 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil — MathPlay Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
 </head>
 <body>
@@ -67,7 +70,7 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
 
         <div class="topbar">
             <div>
-                <h1>👤 Meu Perfil</h1>
+                <h1><span class="google-icon" aria-hidden="true">person</span> Meu Perfil</h1>
                 <p>Suas informações e estatísticas pessoais</p>
             </div>
         </div>
@@ -93,7 +96,11 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
                     </p>
 
                     <span class="badge badge-primary" style="font-size:0.8rem;">
-                        <?= $usuario['tipo'] === 'admin' ? '👨‍🏫 Professor' : '🎮 Aluno' ?>
+                        <?php if ($usuario['tipo'] === 'admin'): ?>
+                            <span class="google-icon" aria-hidden="true">school</span> Professor
+                        <?php else: ?>
+                            <span class="google-icon" aria-hidden="true">sports_esports</span> Aluno
+                        <?php endif; ?>
                     </span>
 
                     <div style="margin:20px 0;padding:16px;background:#f0f2f5;border-radius:10px;">
@@ -104,7 +111,7 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
                     <!-- Nível e XP -->
                     <div style="background:linear-gradient(135deg,#6c63ff,#a855f7);border-radius:12px;padding:16px;color:#fff;text-align:left;">
                         <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
-                            <span style="font-weight:700;">⭐ Nível <?= $nivel ?></span>
+                            <span style="font-weight:700;"><span class="google-icon" aria-hidden="true">star</span> Nível <?= $nivel ?></span>
                             <span style="font-size:0.85rem;opacity:0.85;"><?= $xp ?>/<?= $xp_prox ?> XP</span>
                         </div>
                         <div style="background:rgba(255,255,255,0.2);border-radius:50px;height:10px;overflow:hidden;">
@@ -116,8 +123,9 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
 
                 <!-- Medalhas -->
                 <div class="card">
-                    <div class="card-title">🏅 Medalhas</div>
+                    <div class="card-title"><span class="google-icon" aria-hidden="true">military_tech</span> Medalhas</div>
                     <div style="text-align:center;padding:10px 0;">
+                        <span class="google-icon profile-medal-icon" aria-hidden="true">military_tech</span>
                         <div style="font-size:3rem;font-weight:900;color:#f39c12;"><?= $total_medalhas ?></div>
                         <div style="font-size:0.85rem;color:#636e72;">de 7 possíveis</div>
                     </div>
@@ -128,20 +136,20 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
             <!-- ---- ESTATÍSTICAS (direita) ---- -->
             <div>
                 <div class="card" style="margin-bottom:24px;">
-                    <div class="card-title">📊 Estatísticas Completas</div>
+                    <div class="card-title"><span class="google-icon" aria-hidden="true">analytics</span> Estatísticas Completas</div>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:16px;">
                         <?php
                         $stats = [
-                            ['🏆', 'Pontuação',   number_format($pontuacao),   '#6c63ff'],
-                            ['⭐', 'XP Total',     number_format($xp),          '#a855f7'],
-                            ['✅', 'Acertos',      $acertos,                    '#2ecc71'],
-                            ['❌', 'Erros',        $erros,                      '#e74c3c'],
-                            ['🎮', 'Partidas',     $jogos_feitos,               '#ff6b35'],
-                            ['🎯', 'Taxa Acerto',  $taxa_acerto.'%',            '#f39c12'],
+                            ['emoji_events', 'Pontuação',   number_format($pontuacao),   '#6c63ff'],
+                            ['star', 'XP Total',     number_format($xp),          '#a855f7'],
+                            ['check_circle', 'Acertos',      $acertos,                    '#2ecc71'],
+                            ['cancel', 'Erros',        $erros,                      '#e74c3c'],
+                            ['sports_esports', 'Partidas',     $jogos_feitos,               '#ff6b35'],
+                            ['track_changes', 'Taxa Acerto',  $taxa_acerto.'%',            '#f39c12'],
                         ];
                         foreach ($stats as [$icon, $label, $value, $color]): ?>
                         <div style="background:#f0f2f5;border-radius:12px;padding:16px;text-align:center;">
-                            <div style="font-size:1.5rem;margin-bottom:6px;"><?= $icon ?></div>
+                            <div class="google-icon profile-stat-icon" aria-hidden="true"><?= $icon ?></div>
                             <div style="font-size:1.4rem;font-weight:800;color:<?= $color ?>;"><?= $value ?></div>
                             <div style="font-size:0.75rem;color:#636e72;font-weight:600;"><?= $label ?></div>
                         </div>
@@ -151,7 +159,7 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
 
                 <!-- Resultados por jogo -->
                 <div class="card">
-                    <div class="card-title">🎮 Desempenho por Jogo</div>
+                    <div class="card-title"><span class="google-icon" aria-hidden="true">sports_esports</span> Desempenho por Jogo</div>
                     <?php
                     // Busca estatísticas agregadas por jogo
                     $stmt = $conn->prepare('SELECT jogo_nome, COUNT(*) as partidas, SUM(pontuacao) as total_pts, SUM(acertos) as total_acertos, MAX(pontuacao) as melhor
@@ -163,7 +171,7 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
                     ?>
                     <?php if (empty($por_jogo)): ?>
                         <p style="color:#b2bec3;text-align:center;padding:20px;">
-                            Você ainda não jogou. <a href="/site_antigravity/jogos.php" style="color:#6c63ff;">Comece agora! 🎮</a>
+                            Você ainda não jogou. <a href="/site_antigravity/jogos.php" style="color:#6c63ff;">Comece agora! <span class="google-icon" aria-hidden="true">sports_esports</span></a>
                         </p>
                     <?php else: ?>
                         <div style="overflow-x:auto;">
@@ -210,4 +218,3 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
 
 </body>
 </html>
-

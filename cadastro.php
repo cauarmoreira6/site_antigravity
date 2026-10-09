@@ -13,6 +13,7 @@ if (isset($_SESSION['usuario_id'])) {
 require_once 'includes/conexao.php';
 
 $erro = '';
+$series = ['6º ano', '7º ano', '8º ano', '9º ano'];
 
 // ---- Processa o formulário de cadastro ----
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = trim($_POST['senha'] ?? '');
     $conf  = trim($_POST['confirmar_senha'] ?? '');
     $tipo  = $_POST['tipo'] ?? 'aluno';
+    $serie = $_POST['serie'] ?? '';
+    $turma = $_POST['turma'] ?? '';
 
     // Validações básicas
     if (empty($nome) || empty($email) || empty($senha)) {
@@ -33,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro = 'Digite um e-mail válido.';
 
+    } elseif (!in_array(strtolower(substr(strrchr($email, '@') ?: '', 1)), ['gmail.com', 'icloud.com', 'hotmail.com', 'yahoo.com'], true)) {
+        $erro = 'Use um e-mail com final @gmail.com, @icloud.com, @hotmail.com ou @yahoo.com.';
+
     } elseif (strlen($senha) < 6) {
         $erro = 'A senha deve ter pelo menos 6 caracteres.';
 
@@ -41,6 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } elseif (!in_array($tipo, ['aluno', 'admin'])) {
         $erro = 'Tipo de usuário inválido.';
+
+    } elseif ($tipo === 'aluno' && !in_array($serie, $series, true)) {
+        $erro = 'Selecione uma série válida.';
+
+    } elseif ($tipo === 'aluno' && !in_array($turma, ['A', 'B'], true)) {
+        $erro = 'Selecione uma turma válida.';
 
     } else {
         // Verifica se o e-mail já está cadastrado
@@ -56,9 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->close();
 
             $hash = password_hash($senha, PASSWORD_DEFAULT);
+            if ($tipo !== 'aluno') {
+                $serie = null;
+                $turma = null;
+            }
 
-            $stmt = $conn->prepare('INSERT INTO usuarios (nome, email, senha, tipo) VALUES (?, ?, ?, ?)');
-            $stmt->bind_param('ssss', $nome, $email, $hash, $tipo);
+            $stmt = $conn->prepare('INSERT INTO usuarios (nome, email, senha, tipo, serie, turma) VALUES (?, ?, ?, ?, ?, ?)');
+            $stmt->bind_param('ssssss', $nome, $email, $hash, $tipo, $serie, $turma);
 
             if ($stmt->execute()) {
                 $novo_id = $conn->insert_id;
@@ -129,6 +145,40 @@ $versao_css = time();
             box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12) !important;
             outline: none !important;
         }
+        .form-control.password-input {
+            padding-right: 48px !important;
+        }
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            transform: translateY(-50%);
+            border: 0;
+            border-radius: 6px;
+            background: transparent;
+            color: #636e72;
+            cursor: pointer;
+        }
+        .password-toggle:hover,
+        .password-toggle:focus-visible {
+            background: rgba(108, 99, 255, 0.1);
+            color: #5a52d5;
+        }
+        .password-toggle:focus-visible {
+            outline: 2px solid #6c63ff;
+            outline-offset: 1px;
+        }
+        .password-toggle-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
         
         /* Seletor de Tipo com destaque nítido */
         .tipo-selector {
@@ -175,6 +225,22 @@ $versao_css = time();
             font-weight: 700 !important;
             box-shadow: 0 4px 12px rgba(108, 99, 255, 0.35) !important;
             transform: translateY(-1px) !important;
+        }
+        .student-details[hidden] {
+            display: none !important;
+        }
+        .student-details {
+            padding: 14px;
+            margin: 0 0 14px;
+            border: 1px solid #e5e1ff;
+            border-radius: 10px;
+            background: #f8f7ff;
+        }
+        .student-details-title {
+            margin: 0 0 12px;
+            color: #5148c8;
+            font-size: 0.88rem;
+            font-weight: 700;
         }
         
         .btn-auth {
@@ -232,9 +298,11 @@ $versao_css = time();
                         class="form-control"
                         placeholder="seu@email.com"
                         value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                        title="Use um e-mail com final @gmail.com, @icloud.com, @hotmail.com ou @yahoo.com."
                         required
                     >
                 </div>
+                <span class="senha-dica">Aceitamos apenas Gmail, iCloud, Hotmail ou Yahoo.</span>
             </div>
 
             <div class="form-group">
@@ -244,10 +312,15 @@ $versao_css = time();
                         type="password"
                         id="senha"
                         name="senha"
-                        class="form-control"
+                        class="form-control password-input"
                         placeholder="Mínimo 6 caracteres"
                         required
                     >
+                    <button type="button" class="password-toggle" aria-label="Mostrar senha" aria-pressed="false" aria-controls="senha">
+                        <svg class="password-toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 5c-5 0-9.27 3.11-11 7 1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        </svg>
+                    </button>
                 </div>
                 <span class="senha-dica">Use pelo menos 6 caracteres</span>
             </div>
@@ -259,27 +332,56 @@ $versao_css = time();
                         type="password"
                         id="confirmar_senha"
                         name="confirmar_senha"
-                        class="form-control"
+                        class="form-control password-input"
                         placeholder="Repita sua senha"
                         required
                     >
+                    <button type="button" class="password-toggle" aria-label="Mostrar senha" aria-pressed="false" aria-controls="confirmar_senha">
+                        <svg class="password-toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 5c-5 0-9.27 3.11-11 7 1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
             <!-- Seletor de tipo de usuário com destaque imediato -->
+            <?php $tipo_selecionado = $_POST['tipo'] ?? 'aluno'; ?>
             <div class="form-group">
                 <label>Tipo de Conta</label>
                 <div class="tipo-selector">
                     <label class="tipo-option">
                         <input type="radio" name="tipo" value="aluno"
-                            <?= (($_POST['tipo'] ?? 'aluno') === 'aluno') ? 'checked' : '' ?>>
+                            <?= ($tipo_selecionado === 'aluno') ? 'checked' : '' ?>>
                         <div class="tipo-label">Aluno</div>
                     </label>
                     <label class="tipo-option">
                         <input type="radio" name="tipo" value="admin"
-                            <?= (($_POST['tipo'] ?? '') === 'admin') ? 'checked' : '' ?>>
+                            <?= ($tipo_selecionado === 'admin') ? 'checked' : '' ?>>
                         <div class="tipo-label">Professor</div>
                     </label>
+                </div>
+            </div>
+
+            <div class="student-details" id="student-details" <?= $tipo_selecionado === 'aluno' ? '' : 'hidden' ?>>
+                <p class="student-details-title">Dados da turma</p>
+                <div class="form-group">
+                    <label for="serie">Série</label>
+                    <select id="serie" name="serie" class="form-control" <?= $tipo_selecionado === 'aluno' ? 'required' : 'disabled' ?>>
+                        <option value="">Selecione sua série</option>
+                        <?php foreach ($series as $opcao_serie): ?>
+                            <option value="<?= $opcao_serie ?>" <?= (($_POST['serie'] ?? '') === $opcao_serie) ? 'selected' : '' ?>>
+                                <?= $opcao_serie ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom:0 !important;">
+                    <label for="turma">Turma</label>
+                    <select id="turma" name="turma" class="form-control" <?= $tipo_selecionado === 'aluno' ? 'required' : 'disabled' ?>>
+                        <option value="">Selecione sua turma</option>
+                        <option value="A" <?= (($_POST['turma'] ?? '') === 'A') ? 'selected' : '' ?>>Turma A</option>
+                        <option value="B" <?= (($_POST['turma'] ?? '') === 'B') ? 'selected' : '' ?>>Turma B</option>
+                    </select>
                 </div>
             </div>
 
@@ -298,8 +400,58 @@ $versao_css = time();
 
     </div>
 
+    <script src="/site_antigravity/js/password-toggle.js"></script>
+
     <!-- Validação no cliente -->
     <script>
+        const tipoConta = document.querySelectorAll('input[name="tipo"]');
+        const dadosAluno = document.getElementById('student-details');
+        const camposAluno = dadosAluno.querySelectorAll('select');
+        const campoEmail = document.getElementById('email');
+        const dominiosPermitidos = ['gmail.com', 'icloud.com', 'hotmail.com', 'yahoo.com'];
+        const mensagensObrigatorias = {
+            serie: 'Selecione a sua série',
+            turma: 'Selecione a sua turma'
+        };
+
+        campoEmail.addEventListener('invalid', function() {
+            if (campoEmail.validity.typeMismatch || campoEmail.value.trim() === '') {
+                return;
+            }
+
+            const dominio = campoEmail.value.trim().toLowerCase().split('@').pop();
+            if (!dominiosPermitidos.includes(dominio)) {
+                campoEmail.setCustomValidity('Use um e-mail com final @gmail.com, @icloud.com, @hotmail.com ou @yahoo.com.');
+            }
+        });
+        campoEmail.addEventListener('input', function() {
+            campoEmail.setCustomValidity('');
+        });
+
+        camposAluno.forEach(function(campo) {
+            campo.addEventListener('invalid', function() {
+                campo.setCustomValidity(mensagensObrigatorias[campo.name]);
+            });
+            campo.addEventListener('change', function() {
+                campo.setCustomValidity('');
+            });
+        });
+
+        function atualizarCamposAluno() {
+            const tipoSelecionado = document.querySelector('input[name="tipo"]:checked');
+            const ehAluno = tipoSelecionado && tipoSelecionado.value === 'aluno';
+            dadosAluno.hidden = !ehAluno;
+            camposAluno.forEach(function(campo) {
+                campo.disabled = !ehAluno;
+                campo.required = ehAluno;
+            });
+        }
+
+        tipoConta.forEach(function(opcao) {
+            opcao.addEventListener('change', atualizarCamposAluno);
+        });
+        atualizarCamposAluno();
+
         document.querySelector('form').addEventListener('submit', function(e) {
             const senha  = document.getElementById('senha').value;
             const conf   = document.getElementById('confirmar_senha').value;

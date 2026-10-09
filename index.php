@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathPlay Solutions — Plataforma Educacional de Matemática</title>
+    <title>MathPlay Solutions — Plataforma Educacional</title>
     <link rel="stylesheet" href="/site_antigravity/css/style.css">
 </head>
 <body>
@@ -27,10 +27,10 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-badge">Plataforma Educacional Gamificada</div>
-            <h1>Aprender Matemática<br><span>de forma interativa e engajadora</span></h1>
+            <h1>Aprender Matemática e Português<br><span>de forma interativa e engajadora</span></h1>
             <p>
                 Resolva desafios, acumule pontos, acompanhe seu nível e conquistas
-                enquanto domina os tópicos do Ensino Fundamental II.
+                enquanto aprende Matemática e Língua Portuguesa.
             </p>
             <div class="hero-buttons">
                 <a href="/site_antigravity/cadastro.php" class="btn btn-accent btn-lg">Começar Agora</a>
@@ -45,7 +45,7 @@
     <section class="stats-section">
         <div class="stats-grid">
             <div class="stat-item">
-                <h3>4</h3>
+                <h3>8</h3>
                 <p>Jogos Interativos</p>
             </div>
             <div class="stat-item">
@@ -69,7 +69,7 @@
     <div class="section">
         <div class="section-title">
             <h2>Nossos Jogos</h2>
-            <p>Quatro atividades focadas em habilidades essenciais, com pontuação e aprendizado prático.</p>
+            <p>Oito atividades de Matemática e Língua Portuguesa, com pontuação e aprendizado prático.</p>
         </div>
 
         <div class="jogos-grid">
@@ -95,6 +95,22 @@
             <div class="jogo-card jogo-4">
                 <h3>Detetive dos Gráficos</h3>
                 <p>Analise gráficos de barras e resolva questões de média, moda e mediana.</p>
+            </div>
+            <div class="jogo-card">
+                <h3>O Revisor de Notícias</h3>
+                <p>Corrija manchetes e reportagens praticando concordância verbal e nominal.</p>
+            </div>
+            <div class="jogo-card jogo-2">
+                <h3>A Batalha das Metáforas</h3>
+                <p>Desvende figuras de linguagem em frases, poemas e desafios de interpretação.</p>
+            </div>
+            <div class="jogo-card jogo-3">
+                <h3>A Fábrica de Histórias</h3>
+                <p>Una ideias e organize narrativas usando conectivos que preservam a lógica.</p>
+            </div>
+            <div class="jogo-card jogo-4">
+                <h3>A Montagem de Robôs</h3>
+                <p>Monte orações identificando sujeito, núcleo e predicado.</p>
             </div>
         </div>
     </div>
@@ -148,7 +164,7 @@
             <div style="background:#fff;border-radius:14px;padding:30px 20px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
                 <div style="font-size:1.8rem;font-weight:800;color:#6c63ff;margin-bottom:12px;">2</div>
                 <h3 style="margin-bottom:8px;">Selecione o tema</h3>
-                <p style="color:#636e72;font-size:0.9rem;">Escolha entre os 4 jogos e o nível de dificuldade desejado.</p>
+                <p style="color:#636e72;font-size:0.9rem;">Escolha entre os 8 jogos e o nível de dificuldade desejado.</p>
             </div>
             <div style="background:#fff;border-radius:14px;padding:30px 20px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
                 <div style="font-size:1.8rem;font-weight:800;color:#6c63ff;margin-bottom:12px;">3</div>
@@ -166,7 +182,7 @@
          FOOTER
     ====================================================== -->
     <footer class="footer">
-        <p>© 2024 <strong>MathPlay Solutions</strong> — Plataforma Educacional de Matemática</p>
+        <p>© 2024 <strong>MathPlay Solutions</strong> — Plataforma Educacional</p>
         <p style="margin-top:6px;font-size:0.8rem;">Desenvolvida para estudantes do Ensino Fundamental II</p>
     </footer>
 

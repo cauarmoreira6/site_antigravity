@@ -75,7 +75,7 @@ function embaralhar(arr) {
 
 function iniciarJogo() {
     // Seleciona 8 questões aleatórias da dificuldade escolhida
-    estado.questoes    = embaralhar(questoes[estado.dificuldade]).slice(0, 8);
+    estado.questoes    = embaralhar(questoes[dificuldadeDoAno(estado.dificuldade, 2)]).slice(0, 8);
     estado.indice      = 0;
     estado.acertos     = 0;
     estado.erros       = 0;
@@ -101,7 +101,7 @@ function renderizarCofres() {
         const div = document.createElement('div');
         div.id        = `safe${i}`;
         div.className = `safe-item ${i === 0 ? 'current' : 'locked'}`;
-        div.textContent = i === 0 ? '🔐' : '🔒';
+        div.textContent = i + 1;
         row.appendChild(div);
     }
 }
@@ -113,15 +113,15 @@ function atualizarCofres() {
         if (i < estado.indice) {
             // Cofres já resolvidos
             safe.className   = 'safe-item open';
-            safe.textContent = '💰';
+            safe.textContent   = i + 1;
         } else if (i === estado.indice) {
             // Cofre atual
             safe.className   = 'safe-item current';
-            safe.textContent = '🔐';
+            safe.textContent   = i + 1;
         } else {
             // Cofres futuros (bloqueados)
             safe.className   = 'safe-item locked';
-            safe.textContent = '🔒';
+            safe.textContent   = i + 1;
         }
     }
 }
@@ -169,7 +169,7 @@ function verificarResposta() {
 
     // Verifica se o aluno digitou algo válido
     if (input.value.trim() === '' || isNaN(valor)) {
-        alert('⚠️ Por favor, digite um número para X!');
+        alert(' Por favor, digite um número para X!');
         input.focus();
         return;
     }
@@ -190,19 +190,19 @@ function verificarResposta() {
 
         input.style.borderColor = '#2ecc71';
         feedbackBox.className   = 'feedback-box correct-fb show';
-        document.getElementById('feedbackTitle').textContent = '🔑 Cofre aberto! +10 XP';
+        document.getElementById('feedbackTitle').textContent = ' Cofre aberto! +10 XP';
         document.getElementById('feedbackText').textContent  = `Correto! x = ${q.resp}. ${q.expr.replace('x', `(${q.resp})`)}`;
 
         // Animação do cofre abrindo
         const safeEl = document.getElementById(`safe${estado.indice}`);
-        safeEl.textContent = '💰';
+        safeEl.textContent = estado.indice + 1;
         safeEl.className   = 'safe-item open';
 
     } else {
         estado.erros++;
         input.style.borderColor = '#e74c3c';
         feedbackBox.className   = 'feedback-box wrong-fb show';
-        document.getElementById('feedbackTitle').textContent = `❌ Valor incorreto! A resposta era x = ${q.resp}`;
+        document.getElementById('feedbackTitle').textContent = ` Valor incorreto! A resposta era x = ${q.resp}`;
         document.getElementById('feedbackText').textContent  = q.explicacao;
     }
 
@@ -234,10 +234,8 @@ function encerrarJogo() {
 
     document.getElementById('gamePanel').classList.remove('active');
 
-    const icon  = estado.acertos === 8 ? '💎' : (estado.acertos >= 6 ? '🏆' : '🔑');
     const title = estado.acertos === 8 ? 'Perfeito! Todos os cofres abertos!' : (estado.acertos >= 6 ? 'Ótimo trabalho!' : 'Continue praticando!');
 
-    document.getElementById('resultIcon').textContent  = icon;
     document.getElementById('resultTitle').textContent = title;
     document.getElementById('resultSub').textContent   = `Você abriu ${estado.acertos} de 8 cofres na dificuldade ${estado.dificuldade}!`;
     document.getElementById('rPontuacao').textContent  = estado.pontuacao;
@@ -263,7 +261,7 @@ function salvarResultado() {
         .then(r => r.json())
         .then(data => {
             if (data.sucesso) {
-                if (data.subiu_nivel) setTimeout(() => alert(`🎉 Você subiu para o Nível ${data.novo_nivel}!`), 500);
+                if (data.subiu_nivel) setTimeout(() => alert(` Você subiu para o Nível ${data.novo_nivel}!`), 500);
                 if (data.novas_conquistas && data.novas_conquistas.length > 0) mostrarConquistas(data.novas_conquistas);
             }
         })
@@ -282,4 +280,3 @@ function reiniciarJogo() {
     document.getElementById('startScreen').style.display = 'block';
     document.getElementById('gamePanel').classList.remove('active');
 }
-

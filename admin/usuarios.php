@@ -8,7 +8,7 @@ require_once '../includes/conexao.php';
 
 // Busca todos os alunos cadastrados com progresso
 $alunos = $conn->query("
-    SELECT u.id, u.nome, u.email, u.criado_em,
+    SELECT u.id, u.nome, u.email, u.serie, u.turma, u.criado_em,
            p.xp, p.nivel, p.pontuacao, p.acertos, p.erros, p.jogos_feitos
     FROM usuarios u
     LEFT JOIN progresso p ON p.usuario_id = u.id
@@ -32,14 +32,14 @@ $alunos = $conn->query("
     <main class="main-content">
         <div class="topbar">
             <div>
-                <h1>👥 Alunos Cadastrados</h1>
+                <h1> Alunos Cadastrados</h1>
                 <p>Lista completa de estudantes matriculados na plataforma</p>
             </div>
             <a href="/site_antigravity/admin/dashboard.php" class="btn btn-outline btn-sm">← Voltar ao Painel</a>
         </div>
 
         <div class="card">
-            <div class="card-title">📋 Relação de Estudantes (Total: <?= count($alunos) ?>)</div>
+            <div class="card-title"> Relação de Estudantes (Total: <?= count($alunos) ?>)</div>
             <?php if (empty($alunos)): ?>
                 <p style="color:#b2bec3;padding:30px;text-align:center;">Nenhum aluno cadastrado ainda.</p>
             <?php else: ?>
@@ -49,6 +49,8 @@ $alunos = $conn->query("
                             <tr>
                                 <th>Nome</th>
                                 <th>E-mail</th>
+                                <th>Série</th>
+                                <th>Turma</th>
                                 <th>Nível</th>
                                 <th>XP</th>
                                 <th>Pontuação</th>
@@ -62,6 +64,8 @@ $alunos = $conn->query("
                             <tr>
                                 <td><strong><?= htmlspecialchars($a['nome']) ?></strong></td>
                                 <td><?= htmlspecialchars($a['email']) ?></td>
+                                <td><?= htmlspecialchars($a['serie'] ?? '') ?: '—' ?></td>
+                                <td><?= htmlspecialchars($a['turma'] ?? '') ?: '—' ?></td>
                                 <td><span class="badge badge-primary">Nv. <?= $a['nivel'] ?? 1 ?></span></td>
                                 <td><?= number_format($a['xp'] ?? 0) ?></td>
                                 <td><strong><?= number_format($a['pontuacao'] ?? 0) ?></strong></td>
@@ -83,4 +87,3 @@ $alunos = $conn->query("
 </div>
 </body>
 </html>
-

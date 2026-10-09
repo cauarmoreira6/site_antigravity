@@ -50,6 +50,15 @@ $stmt->bind_param('i', $uid);
 $stmt->execute();
 $conquistas = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+$icones_conquista = [
+    'Primeiro Passo' => 'flag',
+    'Sequência Perfeita' => 'local_fire_department',
+    'Mestre da Matemática' => 'psychology',
+    'Sem Errar' => 'task_alt',
+    'Jogador Frequente' => 'star',
+    'Comerciante Nato' => 'payments',
+    'Olho de Águia' => 'visibility',
+];
 
 // ---- Últimas partidas ----
 $stmt = $conn->prepare('SELECT * FROM resultados WHERE usuario_id = ? ORDER BY jogado_em DESC LIMIT 5');
@@ -84,6 +93,9 @@ $stmt->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard — MathPlay Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
 </head>
 <body>
@@ -98,11 +110,11 @@ $stmt->close();
         <!-- Título da página -->
         <div class="topbar">
             <div>
-                <h1>👋 Olá, <?= htmlspecialchars(explode(' ', $_SESSION['nome'])[0]) ?>!</h1>
+                <h1>Olá, <?= htmlspecialchars(explode(' ', $_SESSION['nome'])[0]) ?>!</h1>
                 <p>Bem-vindo de volta à sua aventura matemática!</p>
             </div>
             <div class="topbar-right">
-                <a href="/site_antigravity/jogos.php" class="btn btn-primary">🎮 Jogar Agora</a>
+                <a href="/site_antigravity/jogos.php" class="btn btn-primary"><span class="google-icon" aria-hidden="true">sports_esports</span> Jogar Agora</a>
             </div>
         </div>
 
@@ -111,7 +123,7 @@ $stmt->close();
             <div class="xp-header">
                 <div class="level-info">
                     <div class="level-badge">Nível <?= $nivel ?></div>
-                    <div class="level-title">⭐ <?= $titulo ?></div>
+                    <div class="level-title"><span class="google-icon" aria-hidden="true">star</span> <?= $titulo ?></div>
                 </div>
                 <div class="xp-numbers">
                     <?= $xp ?> / <?= $xp_prox ?> XP
@@ -127,7 +139,7 @@ $stmt->close();
         <div class="stats-grid">
 
             <div class="stat-card">
-                <div class="stat-icon">⭐</div>
+                <div class="stat-icon"><span class="google-icon" aria-hidden="true">star</span></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= number_format($xp) ?></div>
                     <div class="stat-label">XP Total</div>
@@ -135,7 +147,7 @@ $stmt->close();
             </div>
 
             <div class="stat-card accent">
-                <div class="stat-icon">🏆</div>
+                <div class="stat-icon"><span class="google-icon" aria-hidden="true">emoji_events</span></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= number_format($pontuacao) ?></div>
                     <div class="stat-label">Pontuação</div>
@@ -143,7 +155,7 @@ $stmt->close();
             </div>
 
             <div class="stat-card success">
-                <div class="stat-icon">✅</div>
+                <div class="stat-icon"><span class="google-icon" aria-hidden="true">check_circle</span></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= $acertos ?></div>
                     <div class="stat-label">Acertos</div>
@@ -151,7 +163,7 @@ $stmt->close();
             </div>
 
             <div class="stat-card danger">
-                <div class="stat-icon">❌</div>
+                <div class="stat-icon"><span class="google-icon" aria-hidden="true">cancel</span></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= $erros ?></div>
                     <div class="stat-label">Erros</div>
@@ -159,7 +171,7 @@ $stmt->close();
             </div>
 
             <div class="stat-card warning">
-                <div class="stat-icon">🎮</div>
+                <div class="stat-icon"><span class="google-icon" aria-hidden="true">sports_esports</span></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= $jogos_feitos ?></div>
                     <div class="stat-label">Jogos Feitos</div>
@@ -167,7 +179,7 @@ $stmt->close();
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon">🎯</div>
+                <div class="stat-icon"><span class="google-icon" aria-hidden="true">track_changes</span></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= $taxa_acerto ?>%</div>
                     <div class="stat-label">Taxa de Acerto</div>
@@ -184,17 +196,17 @@ $stmt->close();
 
                 <!-- Conquistas recentes -->
                 <div class="card" style="margin-bottom:24px;">
-                    <div class="card-title">🏅 Conquistas Recentes</div>
+                    <div class="card-title"><span class="google-icon" aria-hidden="true">military_tech</span> Conquistas Recentes</div>
                     <?php if (empty($conquistas)): ?>
                         <p style="color:#b2bec3;text-align:center;padding:20px 0;">
                             Você ainda não conquistou nenhuma medalha.<br>
-                            <a href="/site_antigravity/jogos.php" style="color:#6c63ff;">Comece jogando! 🎮</a>
+                            <a href="/site_antigravity/jogos.php" style="color:#6c63ff;">Comece jogando! <span class="google-icon" aria-hidden="true">sports_esports</span></a>
                         </p>
                     <?php else: ?>
                         <div class="medals-grid">
                             <?php foreach ($conquistas as $c): ?>
                                 <div class="medal-item" title="<?= htmlspecialchars($c['descricao']) ?>">
-                                    <span class="medal-icon"><?= $c['icone'] ?></span>
+                                    <span class="medal-icon google-icon" aria-hidden="true"><?= $icones_conquista[$c['medalha']] ?? 'military_tech' ?></span>
                                     <span class="medal-name"><?= htmlspecialchars($c['medalha']) ?></span>
                                 </div>
                             <?php endforeach; ?>
@@ -207,7 +219,7 @@ $stmt->close();
 
                 <!-- Histórico de partidas -->
                 <div class="card">
-                    <div class="card-title">📋 Últimas Partidas</div>
+                    <div class="card-title"><span class="google-icon" aria-hidden="true">history</span> Últimas Partidas</div>
                     <?php if (empty($historico)): ?>
                         <p style="color:#b2bec3;text-align:center;padding:20px 0;">
                             Nenhuma partida jogada ainda.
@@ -257,10 +269,10 @@ $stmt->close();
 
                 <!-- Mini Ranking -->
                 <div class="card" style="margin-bottom:24px;">
-                    <div class="card-title">🏆 Ranking Geral</div>
+                    <div class="card-title"><span class="google-icon" aria-hidden="true">leaderboard</span> Ranking Geral</div>
                     <div class="ranking-list">
                         <?php
-                        $posIcons = ['🥇','🥈','🥉'];
+                        $posIcons = ['military_tech', 'military_tech', 'military_tech'];
                         foreach ($ranking as $r):
                             $pos = $r['posicao'];
                             $cls = ['gold','silver','bronze'][$pos-1] ?? '';
@@ -270,7 +282,11 @@ $stmt->close();
                         ?>
                         <div class="ranking-item">
                             <div class="ranking-pos <?= $cls ?>">
-                                <?= $posIcons[$pos-1] ?? $pos ?>
+                                <?php if (isset($posIcons[$pos - 1])): ?>
+                                    <span class="google-icon" aria-hidden="true"><?= $posIcons[$pos - 1] ?></span>
+                                <?php else: ?>
+                                    <?= $pos ?>
+                                <?php endif; ?>
                             </div>
                             <div class="ranking-name"><?= htmlspecialchars($r['nome']) ?></div>
                             <div class="ranking-pts"><?= number_format($r['pontuacao']) ?> pts</div>
@@ -287,11 +303,11 @@ $stmt->close();
 
                 <!-- Ações Rápidas -->
                 <div class="card">
-                    <div class="card-title">🎮 Jogar Agora</div>
+                    <div class="card-title"><span class="google-icon" aria-hidden="true">sports_esports</span> Jogar Agora</div>
                     <div style="display:flex;flex-direction:column;gap:10px;">
                         <a href="/site_antigravity/jogos/jogo1.php" style="text-decoration:none;">
                             <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f0f2f5;border-radius:10px;transition:all 0.2s;" onmouseover="this.style.background='rgba(108,99,255,0.08)'" onmouseout="this.style.background='#f0f2f5'">
-                                <span style="font-size:1.8rem;">⚔️</span>
+                                <span class="quick-game-icon google-icon" aria-hidden="true">functions</span>
                                 <div>
                                     <div style="font-weight:700;font-size:0.9rem;color:#2d3436;">Batalha dos Inteiros</div>
                                     <div style="font-size:0.75rem;color:#636e72;">Números positivos e negativos</div>
@@ -301,7 +317,7 @@ $stmt->close();
                         </a>
                         <a href="/site_antigravity/jogos/jogo2.php" style="text-decoration:none;">
                             <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f0f2f5;border-radius:10px;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,107,53,0.08)'" onmouseout="this.style.background='#f0f2f5'">
-                                <span style="font-size:1.8rem;">🔐</span>
+                                <span class="quick-game-icon google-icon" aria-hidden="true">calculate</span>
                                 <div>
                                     <div style="font-weight:700;font-size:0.9rem;color:#2d3436;">Cofre das Equações</div>
                                     <div style="font-size:0.75rem;color:#636e72;">Equações de 1º grau</div>
@@ -311,7 +327,7 @@ $stmt->close();
                         </a>
                         <a href="/site_antigravity/jogos/jogo3.php" style="text-decoration:none;">
                             <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f0f2f5;border-radius:10px;transition:all 0.2s;" onmouseover="this.style.background='rgba(46,204,113,0.08)'" onmouseout="this.style.background='#f0f2f5'">
-                                <span style="font-size:1.8rem;">🛒</span>
+                                <span class="quick-game-icon google-icon" aria-hidden="true">storefront</span>
                                 <div>
                                     <div style="font-weight:700;font-size:0.9rem;color:#2d3436;">Loja MathPlay</div>
                                     <div style="font-size:0.75rem;color:#636e72;">Porcentagem e finanças</div>
@@ -321,7 +337,7 @@ $stmt->close();
                         </a>
                         <a href="/site_antigravity/jogos/jogo4.php" style="text-decoration:none;">
                             <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f0f2f5;border-radius:10px;transition:all 0.2s;" onmouseover="this.style.background='rgba(243,156,18,0.08)'" onmouseout="this.style.background='#f0f2f5'">
-                                <span style="font-size:1.8rem;">🔍</span>
+                                <span class="quick-game-icon google-icon" aria-hidden="true">bar_chart</span>
                                 <div>
                                     <div style="font-weight:700;font-size:0.9rem;color:#2d3436;">Detetive dos Gráficos</div>
                                     <div style="font-size:0.75rem;color:#636e72;">Estatística e gráficos</div>
@@ -339,4 +355,3 @@ $stmt->close();
 </div>
 </body>
 </html>
-

@@ -32,7 +32,7 @@ $dificuldade = $_POST['dificuldade']       ?? 'facil';
 $xp_ganho    = (int)($_POST['xp_ganho']   ?? 0);
 
 // Validação básica dos dados recebidos
-if ($jogo_id < 1 || $jogo_id > 4 || empty($jogo_nome)) {
+if ($jogo_id < 1 || $jogo_id > 8 || empty($jogo_nome)) {
     echo json_encode(['sucesso' => false, 'erro' => 'Dados inválidos']);
     exit();
 }
@@ -114,34 +114,34 @@ function dar_medalha($conn, $uid, $icone, $nome, $descricao, &$novas) {
     }
 }
 
-// 🏆 Primeiro Passo — primeiro jogo completado
+//  Primeiro Passo — primeiro jogo completado
 if ($novos_jogos >= 1) {
-    dar_medalha($conn, $uid, '🏆', 'Primeiro Passo', 'Completou o primeiro jogo da plataforma', $novas_conquistas);
+    dar_medalha($conn, $uid, '01', 'Primeiro Passo', 'Completou o primeiro jogo da plataforma', $novas_conquistas);
 }
 
-// ⭐ Jogador Frequente — 10 partidas
+//  Jogador Frequente — 10 partidas
 if ($novos_jogos >= 10) {
-    dar_medalha($conn, $uid, '⭐', 'Jogador Frequente', 'Completou 10 partidas na plataforma', $novas_conquistas);
+    dar_medalha($conn, $uid, '10', 'Jogador Frequente', 'Completou 10 partidas na plataforma', $novas_conquistas);
 }
 
-// 🧠 Mestre da Matemática — 100 acertos totais
+//  Mestre da Matemática — 100 acertos totais
 if ($novos_ac >= 100) {
-    dar_medalha($conn, $uid, '🧠', 'Mestre da Matemática', 'Acumulou 100 acertos no total', $novas_conquistas);
+    dar_medalha($conn, $uid, '100', 'Mestre da Matemática', 'Acumulou 100 acertos no total', $novas_conquistas);
 }
 
-// 🎯 Sem Errar — partida com 0 erros
+//  Sem Errar — partida com 0 erros
 if ($erros === 0 && $acertos > 0) {
-    dar_medalha($conn, $uid, '🎯', 'Sem Errar', 'Finalizou uma partida sem cometer nenhum erro', $novas_conquistas);
+    dar_medalha($conn, $uid, '0', 'Sem Errar', 'Finalizou uma partida sem cometer nenhum erro', $novas_conquistas);
 }
 
-// 💰 Comerciante Nato — Jogo 3 no difícil
+//  Comerciante Nato — Jogo 3 no difícil
 if ($jogo_id === 3 && $dificuldade === 'dificil') {
-    dar_medalha($conn, $uid, '💰', 'Comerciante Nato', 'Completou a Loja MathPlay no nível difícil', $novas_conquistas);
+    dar_medalha($conn, $uid, '$', 'Comerciante Nato', 'Completou a Loja MathPlay no nível difícil', $novas_conquistas);
 }
 
-// 🔍 Olho de Águia — Jogo 4 sem erros
+//  Olho de Águia — Jogo 4 sem erros
 if ($jogo_id === 4 && $erros === 0 && $acertos > 0) {
-    dar_medalha($conn, $uid, '🔍', 'Olho de Águia', 'Completou o Detetive dos Gráficos sem erros', $novas_conquistas);
+    dar_medalha($conn, $uid, 'OA', 'Olho de Águia', 'Completou o Detetive dos Gráficos sem erros', $novas_conquistas);
 }
 
 // ---- 7. Verifica se subiu de nível ----
@@ -156,4 +156,3 @@ echo json_encode([
     'novas_conquistas' => $novas_conquistas,
 ]);
 ?>
-

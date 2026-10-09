@@ -49,9 +49,9 @@ const questoes = {
 
 // Inimigos para cada dificuldade
 const inimigos = {
-    facil:   { nome: 'Zumbi dos Números', avatar: '🧟', hp: 100 },
-    medio:   { nome: 'Dragão das Equações', avatar: '🐉', hp: 150 },
-    dificil: { nome: 'Vilão Matemático', avatar: '👾', hp: 200 },
+    facil:   { nome: 'Zumbi dos Números', avatar: 'ZN', hp: 100 },
+    medio:   { nome: 'Dragão das Equações', avatar: 'DE', hp: 150 },
+    dificil: { nome: 'Vilão Matemático', avatar: 'VM', hp: 200 },
 };
 
 // ---- ESTADO DO JOGO ----
@@ -98,7 +98,7 @@ function iniciarJogo() {
     const dif = estado.dificuldade;
 
     // Reinicia o estado
-    estado.questoes      = embaralhar(questoes[dif]).slice(0, 10); // Pega 10 aleatórias
+    estado.questoes      = embaralhar(questoes[dificuldadeDoAno(dif, 1)]).slice(0, 10); // Pega 10 aleatórias
     estado.indice        = 0;
     estado.acertos       = 0;
     estado.erros         = 0;
@@ -197,7 +197,7 @@ function verificarResposta(indiceOpcao) {
 
         // Feedback positivo
         feedbackBox.className = 'feedback-box correct-fb show';
-        document.getElementById('feedbackTitle').textContent = '✅ Correto! ' + (estado.sequencia % 3 === 0 && estado.sequencia > 0 ? '🔥 Bônus de sequência +5 XP!' : '+10 XP');
+        document.getElementById('feedbackTitle').textContent = ' Correto! ' + (estado.sequencia % 3 === 0 && estado.sequencia > 0 ? ' Bônus de sequência +5 XP!' : '+10 XP');
         document.getElementById('feedbackText').textContent  = `Muito bem! ${q.expr.replace('?', q.resp)}`;
 
     } else {
@@ -215,7 +215,7 @@ function verificarResposta(indiceOpcao) {
 
         // Feedback com explicação didática
         feedbackBox.className = 'feedback-box wrong-fb show';
-        document.getElementById('feedbackTitle').textContent = '❌ Resposta errada!';
+        document.getElementById('feedbackTitle').textContent = ' Resposta errada!';
         document.getElementById('feedbackText').textContent  = q.explicacao;
     }
 
@@ -255,11 +255,9 @@ function encerrarJogo() {
     document.getElementById('gamePanel').classList.remove('active');
 
     // Atualiza a tela de resultado
-    const icon  = estado.erros === 0 ? '🏆' : (estado.acertos >= 7 ? '⭐' : (estado.acertos >= 5 ? '😊' : '💪'));
     const title = estado.erros === 0 ? 'Perfeito! Sem erros!' : (estado.acertos >= 7 ? 'Ótimo resultado!' : 'Continue praticando!');
     const sub   = `Você acertou ${estado.acertos} de 10 questões na dificuldade ${estado.dificuldade}!`;
 
-    document.getElementById('resultIcon').textContent     = icon;
     document.getElementById('resultTitle').textContent    = title;
     document.getElementById('resultSub').textContent      = sub;
     document.getElementById('rPontuacao').textContent     = estado.pontuacao;
@@ -295,7 +293,7 @@ function salvarResultado() {
         if (data.sucesso) {
             // Verifica se subiu de nível
             if (data.subiu_nivel) {
-                setTimeout(() => alert(`🎉 Parabéns! Você subiu para o Nível ${data.novo_nivel}!`), 500);
+                setTimeout(() => alert(` Parabéns! Você subiu para o Nível ${data.novo_nivel}!`), 500);
             }
             // Mostra novas conquistas
             if (data.novas_conquistas && data.novas_conquistas.length > 0) {
@@ -325,4 +323,3 @@ function reiniciarJogo() {
     document.getElementById('startScreen').style.display = 'block';
     document.getElementById('gamePanel').classList.remove('active');
 }
-

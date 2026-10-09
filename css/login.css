@@ -142,6 +142,45 @@ form {
     position: relative;
 }
 
+.form-control.password-input {
+    padding-right: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #636e72;
+    cursor: pointer;
+}
+
+.password-toggle:hover,
+.password-toggle:focus-visible {
+    background: rgba(108, 99, 255, 0.1);
+    color: #5a52d5;
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid #6c63ff;
+    outline-offset: 1px;
+}
+
+.password-toggle-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
 /* Como removemos os emojis, o input usa 100% da largura normalmente */
 .input-group .form-control {
     padding-left: 12px;

@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     email      VARCHAR(150) NOT NULL UNIQUE,
     senha      VARCHAR(255) NOT NULL,        -- Senha armazenada como hash (password_hash)
     tipo       ENUM('aluno', 'admin') NOT NULL DEFAULT 'aluno',
+    serie      VARCHAR(10) NULL,
+    turma      CHAR(1) NULL,
     criado_em  DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -47,7 +49,7 @@ CREATE TABLE IF NOT EXISTS progresso (
 CREATE TABLE IF NOT EXISTS resultados (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id  INT NOT NULL,
-    jogo_id     INT NOT NULL,               -- ID do jogo: 1, 2, 3 ou 4
+    jogo_id     INT NOT NULL,               -- IDs dos jogos disponíveis (1 a 8)
     jogo_nome   VARCHAR(100) NOT NULL,      -- Nome amigável do jogo
     pontuacao   INT DEFAULT 0,             -- Pontuação obtida nesta partida
     acertos     INT DEFAULT 0,             -- Acertos nesta partida

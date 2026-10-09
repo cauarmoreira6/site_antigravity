@@ -21,7 +21,7 @@ $conn = new mysqli("localhost", "root", "", "mathplay", "3308");
 if ($conn->connect_error) {
     // connect_error retorna a mensagem de erro se a conexão falhar
     die('<div style="text-align:center;padding:50px;font-family:sans-serif;">
-            <h2 style="color:#e74c3c;">⚠️ Erro de Conexão</h2>
+            <h2 style="color:#e74c3c;"> Erro de Conexão</h2>
             <p>Não foi possível conectar ao banco de dados.</p>
             <p><small>' . $conn->connect_error . '</small></p>
             <p>Verifique se o XAMPP está rodando (Apache + MySQL).</p>

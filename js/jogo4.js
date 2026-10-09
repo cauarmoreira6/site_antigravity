@@ -234,7 +234,7 @@ function embaralhar(arr) {
 }
 
 function iniciarJogo() {
-    estado.questoes = embaralhar(casos[estado.dificuldade]).slice(0, 8);
+    estado.questoes = embaralhar(casos[dificuldadeDoAno(estado.dificuldade, 4)]).slice(0, 8);
     estado.indice = 0;
     estado.acertos = 0;
     estado.erros = 0;
@@ -276,7 +276,7 @@ function carregarQuestao() {
     const num = estado.indice + 1;
     document.getElementById('pistaAtual').textContent = num;
     document.getElementById('questionNumber').textContent = `Pista ${num} de 8`;
-    document.getElementById('chartTitle').textContent = `📊 ${q.titulo}`;
+    document.getElementById('chartTitle').textContent = ` ${q.titulo}`;
     document.getElementById('questionText').textContent = q.pergunta;
 
     desenharGrafico(q.dados);
@@ -320,7 +320,7 @@ function verificarResposta(idx) {
 
         btnClicado.classList.add('correct');
         feedbackBox.className = 'feedback-box correct-fb show';
-        document.getElementById('feedbackTitle').textContent = '🔎 Pista desvendada com sucesso! +10 XP';
+        document.getElementById('feedbackTitle').textContent = ' Pista desvendada com sucesso! +10 XP';
         document.getElementById('feedbackText').textContent = `Correto! ${q.explicacao}`;
 
         document.getElementById('clueText').textContent = q.pista;
@@ -331,7 +331,7 @@ function verificarResposta(idx) {
         btnCorreto.classList.add('correct');
 
         feedbackBox.className = 'feedback-box wrong-fb show';
-        document.getElementById('feedbackTitle').textContent = `❌ Análise incorreta! A resposta era ${q.resp}`;
+        document.getElementById('feedbackTitle').textContent = ` Análise incorreta! A resposta era ${q.resp}`;
         document.getElementById('feedbackText').textContent = q.explicacao;
     }
 
@@ -356,11 +356,9 @@ function encerrarJogo() {
 
     document.getElementById('gamePanel').classList.remove('active');
 
-    const icon = estado.acertos >= 7 ? '🕵️‍♂️' : (estado.acertos >= 5 ? '🔍' : '📜');
     const title = estado.acertos >= 7 ? 'Mistério Solucionado!' : 'Investigação Concluída!';
     const sub = `Você acertou ${estado.acertos} de 8 pistas analisando os gráficos na dificuldade ${estado.dificuldade}!`;
 
-    document.getElementById('resultIcon').textContent = icon;
     document.getElementById('resultTitle').textContent = title;
     document.getElementById('resultSub').textContent = sub;
     document.getElementById('rPontuacao').textContent = estado.pontuacao;
@@ -386,7 +384,7 @@ function salvarResultado() {
         .then(r => r.json())
         .then(data => {
             if (data.sucesso) {
-                if (data.subiu_nivel) setTimeout(() => alert(`🎉 Você subiu para o Nível ${data.novo_nivel}!`), 500);
+                if (data.subiu_nivel) setTimeout(() => alert(` Você subiu para o Nível ${data.novo_nivel}!`), 500);
                 if (data.novas_conquistas && data.novas_conquistas.length > 0) mostrarConquistas(data.novas_conquistas);
             }
         })
@@ -405,4 +403,3 @@ function reiniciarJogo() {
     document.getElementById('startScreen').style.display = 'block';
     document.getElementById('gamePanel').classList.remove('active');
 }
-

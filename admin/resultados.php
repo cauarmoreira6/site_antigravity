@@ -10,7 +10,7 @@ require_once '../includes/conexao.php';
 $filtro_jogo = (int)($_GET['jogo'] ?? 0);
 
 $where = "";
-if ($filtro_jogo >= 1 && $filtro_jogo <= 4) {
+if ($filtro_jogo >= 1 && $filtro_jogo <= 8) {
     $where = "WHERE r.jogo_id = $filtro_jogo";
 }
 
@@ -39,7 +39,7 @@ $resultados = $conn->query("
     <main class="main-content">
         <div class="topbar">
             <div>
-                <h1>📊 Relatório de Resultados</h1>
+                <h1> Relatório de Resultados</h1>
                 <p>Histórico detalhado de todas as partidas jogadas</p>
             </div>
             <a href="/site_antigravity/admin/dashboard.php" class="btn btn-outline btn-sm">← Voltar ao Painel</a>
@@ -50,15 +50,19 @@ $resultados = $conn->query("
             <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
                 <span style="font-weight:700;font-size:0.9rem;color:#2d3436;">Filtrar por Jogo:</span>
                 <a href="/site_antigravity/admin/resultados.php" class="btn btn-sm <?= $filtro_jogo === 0 ? 'btn-primary' : 'btn-outline' ?>">Todos</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=1" class="btn btn-sm <?= $filtro_jogo === 1 ? 'btn-primary' : 'btn-outline' ?>">⚔️ Inteiros</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=2" class="btn btn-sm <?= $filtro_jogo === 2 ? 'btn-primary' : 'btn-outline' ?>">🔐 Equações</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=3" class="btn btn-sm <?= $filtro_jogo === 3 ? 'btn-primary' : 'btn-outline' ?>">🛒 Loja</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=4" class="btn btn-sm <?= $filtro_jogo === 4 ? 'btn-primary' : 'btn-outline' ?>">🔍 Gráficos</a>
+                <a href="/site_antigravity/admin/resultados.php?jogo=1" class="btn btn-sm <?= $filtro_jogo === 1 ? 'btn-primary' : 'btn-outline' ?>"> Inteiros</a>
+                <a href="/site_antigravity/admin/resultados.php?jogo=2" class="btn btn-sm <?= $filtro_jogo === 2 ? 'btn-primary' : 'btn-outline' ?>"> Equações</a>
+                <a href="/site_antigravity/admin/resultados.php?jogo=3" class="btn btn-sm <?= $filtro_jogo === 3 ? 'btn-primary' : 'btn-outline' ?>"> Loja</a>
+                <a href="/site_antigravity/admin/resultados.php?jogo=4" class="btn btn-sm <?= $filtro_jogo === 4 ? 'btn-primary' : 'btn-outline' ?>"> Gráficos</a>
+                <a href="/site_antigravity/admin/resultados.php?jogo=5" class="btn btn-sm <?= $filtro_jogo === 5 ? 'btn-primary' : 'btn-outline' ?>"> Revisor</a>
+                <a href="/site_antigravity/admin/resultados.php?jogo=6" class="btn btn-sm <?= $filtro_jogo === 6 ? 'btn-primary' : 'btn-outline' ?>"> Metáforas</a>
+                <a href="/site_antigravity/admin/resultados.php?jogo=7" class="btn btn-sm <?= $filtro_jogo === 7 ? 'btn-primary' : 'btn-outline' ?>"> Histórias</a>
+                <a href="/site_antigravity/admin/resultados.php?jogo=8" class="btn btn-sm <?= $filtro_jogo === 8 ? 'btn-primary' : 'btn-outline' ?>"> Robôs</a>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title">📋 Partidas Registradas (Exibindo até 100 mais recentes)</div>
+            <div class="card-title"> Partidas Registradas (Exibindo até 100 mais recentes)</div>
             <?php if (empty($resultados)): ?>
                 <p style="color:#b2bec3;padding:30px;text-align:center;">Nenhuma partida encontrada com o filtro selecionado.</p>
             <?php else: ?>
@@ -104,4 +108,3 @@ $resultados = $conn->query("
 </div>
 </body>
 </html>
-

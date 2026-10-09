@@ -26,6 +26,15 @@
     gap: 24px;
 }
 
+.serie-jogos-notice {
+    margin: 0 0 24px;
+    padding: 12px 16px;
+    border: 1px solid rgba(108, 99, 255, 0.2);
+    border-radius: 10px;
+    background: rgba(108, 99, 255, 0.08);
+    color: var(--gray);
+}
+
 .catalog-card {
     background: var(--card-bg);
     border-radius: var(--radius);
@@ -98,12 +107,154 @@
 .catalog-card.j3 .catalog-card-footer .jogo-tag { background: rgba(46,204,113,0.1); color: var(--success); }
 .catalog-card.j4 .catalog-card-footer .jogo-tag { background: rgba(243,156,18,0.1); color: var(--warning); }
 
+.catalog-section-title {
+    margin: 30px 0 16px;
+    color: var(--dark);
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.catalog-card.j5 .catalog-card-footer .jogo-tag { background: rgba(52, 152, 219, 0.12); color: #2471a3; }
+.catalog-card.j6 .catalog-card-footer .jogo-tag { background: rgba(142, 68, 173, 0.12); color: #7d3c98; }
+.catalog-card.j7 .catalog-card-footer .jogo-tag { background: rgba(22, 160, 133, 0.12); color: #117864; }
+.catalog-card.j8 .catalog-card-footer .jogo-tag { background: rgba(52, 73, 94, 0.12); color: #34495e; }
+
 /* ============================================================
    TELA DO JOGO (Layout)
    ============================================================ */
 .game-wrapper {
-    max-width: 800px;
+    max-width: 1050px;
     margin: 0 auto;
+}
+
+.game-big-icon:empty,
+.hud-icon:empty,
+.product-icon:empty,
+.result-icon:empty {
+    display: none;
+}
+
+.portuguese-game {
+    --portuguese-color: #2471a3;
+}
+
+.portuguese-game .diff-btn.selected {
+    background: var(--portuguese-color);
+    border-color: var(--portuguese-color);
+}
+
+.portuguese-brief {
+    display: grid;
+    gap: 8px;
+    max-width: 500px;
+    margin: 0 auto 24px;
+    padding: 18px 20px;
+    border: 1px solid rgba(36, 113, 163, 0.16);
+    border-radius: 12px;
+    background: rgba(36, 113, 163, 0.06);
+    color: var(--gray);
+    text-align: left;
+    line-height: 1.55;
+}
+
+.portuguese-brief strong {
+    color: var(--portuguese-color);
+}
+
+.portuguese-game .difficulty-prompt {
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.portuguese-progress {
+    width: 0;
+    background: linear-gradient(90deg, #3498db, #8e44ad);
+}
+
+.portuguese-challenge {
+    padding: 32px;
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.portuguese-stage {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 7px 12px;
+    border-radius: 50px;
+    background: rgba(36, 113, 163, 0.09);
+    color: var(--portuguese-color);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+}
+
+.portuguese-prompt {
+    margin: 0 auto 18px;
+    color: var(--dark);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+.portuguese-question {
+    margin-bottom: 18px;
+    color: var(--gray);
+    font-size: 0.82rem;
+    text-transform: capitalize;
+}
+
+.portuguese-game .option-btn {
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.portuguese-game .option-btn.correct {
+    border-color: var(--success);
+}
+
+.portuguese-game .option-btn.wrong {
+    border-color: var(--danger);
+}
+
+.portuguese-game .btn-next {
+    background: var(--portuguese-color);
+}
+
+.portuguese-game .btn-next:hover {
+    background: #1f618d;
+}
+
+.portuguese-achievements {
+    display: none;
+    margin: 0 0 20px;
+    padding: 16px;
+    border: 1px solid rgba(243, 156, 18, 0.3);
+    border-radius: 12px;
+    background: rgba(243, 156, 18, 0.1);
+    color: #e67e22;
+}
+
+.portuguese-achievements.show {
+    display: block;
+}
+
+.portuguese-achievements div {
+    margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+    .portuguese-challenge {
+        padding: 24px 18px;
+    }
+
+    .portuguese-prompt {
+        font-size: 1.05rem;
+    }
 }
 
 /* ---- Tela de início do jogo ---- */
@@ -177,6 +328,11 @@
 
 .diff-btn.diff-medio.selected { background: var(--warning); border-color: var(--warning); }
 .diff-btn.diff-dificil.selected { background: var(--danger); border-color: var(--danger); }
+.portuguese-game .diff-btn.diff-medio.selected,
+.portuguese-game .diff-btn.diff-dificil.selected {
+    background: var(--portuguese-color);
+    border-color: var(--portuguese-color);
+}
 
 /* ---- Painel do jogo (durante a partida) ---- */
 .game-panel {
@@ -593,7 +749,8 @@
     border-radius: 12px;
     border: 2px solid #e0e0e0;
     background: var(--bg);
-    font-size: 2.5rem;
+    font-size: 1rem;
+    font-weight: 800;
     transition: var(--transition);
     cursor: default;
 }

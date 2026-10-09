@@ -50,40 +50,40 @@ $top_alunos = $conn->query("
     <main class="main-content">
         <div class="topbar">
             <div>
-                <h1>👨‍🏫 Painel do Professor / Admin</h1>
+                <h1>Painel do Professor / Admin</h1>
                 <p>Acompanhamento de desempenho da turma e estatísticas pedagógicas</p>
             </div>
             <div class="topbar-right">
-                <a href="/site_antigravity/admin/usuarios.php" class="btn btn-outline btn-sm">👥 Gerenciar Alunos</a>
-                <a href="/site_antigravity/admin/resultados.php" class="btn btn-primary btn-sm">📊 Relatório de Partidas</a>
+                <a href="/site_antigravity/admin/usuarios.php" class="btn btn-outline btn-sm">Gerenciar Alunos</a>
+                <a href="/site_antigravity/admin/resultados.php" class="btn btn-primary btn-sm">Relatório de Partidas</a>
             </div>
         </div>
 
         <!-- Indicadores Gerais -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon">👥</div>
+                <div class="stat-icon"></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= $total_alunos ?></div>
                     <div class="stat-label">Alunos Cadastrados</div>
                 </div>
             </div>
             <div class="stat-card accent">
-                <div class="stat-icon">🎮</div>
+                <div class="stat-icon"></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= $total_partidas ?></div>
                     <div class="stat-label">Partidas Realizadas</div>
                 </div>
             </div>
             <div class="stat-card success">
-                <div class="stat-icon">✅</div>
+                <div class="stat-icon"></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= $total_acertos ?></div>
                     <div class="stat-label">Questões Acertadas</div>
                 </div>
             </div>
             <div class="stat-card warning">
-                <div class="stat-icon">🎯</div>
+                <div class="stat-icon"></div>
                 <div class="stat-info">
                     <div class="stat-value"><?= $taxa_geral ?>%</div>
                     <div class="stat-label">Taxa Geral de Acerto</div>
@@ -94,7 +94,7 @@ $top_alunos = $conn->query("
         <div class="dashboard-grid">
             <!-- Partidas recentes -->
             <div class="card">
-                <div class="card-title">🕒 Últimas Partidas dos Alunos</div>
+                <div class="card-title"> Últimas Partidas dos Alunos</div>
                 <?php if (empty($ultimos_jogos)): ?>
                     <p style="color:#b2bec3;padding:20px;text-align:center;">Nenhuma partida registrada até o momento.</p>
                 <?php else: ?>
@@ -136,7 +136,7 @@ $top_alunos = $conn->query("
 
             <!-- Melhores Alunos -->
             <div class="card">
-                <div class="card-title">🏆 Alunos com Maior Pontuação</div>
+                <div class="card-title"> Alunos com Maior Pontuação</div>
                 <div class="ranking-list">
                     <?php if (empty($top_alunos)): ?>
                         <p style="color:#b2bec3;padding:10px;text-align:center;">Sem registros de alunos.</p>
@@ -162,4 +162,3 @@ $top_alunos = $conn->query("
 </div>
 </body>
 </html>
-

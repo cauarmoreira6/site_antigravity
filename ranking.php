@@ -63,7 +63,7 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
 
         <div class="topbar">
             <div>
-                <h1>🏆 Ranking Geral</h1>
+                <h1>Ranking Geral</h1>
                 <p>Veja quem são os melhores jogadores da MathPlay!</p>
             </div>
             <div class="topbar-right">
@@ -79,9 +79,9 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
 
             <!-- 2º lugar -->
             <div style="text-align:center;order:1;">
-                <div style="font-size:2rem;">🥈</div>
+                <div class="ranking-place">2º lugar</div>
                 <div style="background:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 4px 20px rgba(0,0,0,0.08);min-width:120px;border-top:4px solid #c0c0c0;">
-                    <div style="font-size:2rem;">👤</div>
+                    <div class="ranking-place">2º</div>
                     <div style="font-weight:700;font-size:0.9rem;margin-top:8px;"><?= htmlspecialchars(explode(' ', $ranking[1]['nome'])[0]) ?></div>
                     <div style="font-size:0.8rem;color:#636e72;"><?= number_format($ranking[1]['pontuacao']) ?> pts</div>
                 </div>
@@ -90,9 +90,9 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
 
             <!-- 1º lugar -->
             <div style="text-align:center;order:2;">
-                <div style="font-size:2rem;">👑</div>
+                <div class="ranking-place">1º lugar</div>
                 <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,0.08);min-width:140px;border-top:4px solid #ffd700;">
-                    <div style="font-size:2.5rem;">👤</div>
+                    <div class="ranking-place ranking-place-first">1º</div>
                     <div style="font-weight:800;font-size:1rem;margin-top:8px;"><?= htmlspecialchars(explode(' ', $ranking[0]['nome'])[0]) ?></div>
                     <div style="font-size:0.85rem;color:#636e72;"><?= number_format($ranking[0]['pontuacao']) ?> pts</div>
                 </div>
@@ -101,9 +101,9 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
 
             <!-- 3º lugar -->
             <div style="text-align:center;order:3;">
-                <div style="font-size:2rem;">🥉</div>
+                <div class="ranking-place">3º lugar</div>
                 <div style="background:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 4px 20px rgba(0,0,0,0.08);min-width:120px;border-top:4px solid #cd7f32;">
-                    <div style="font-size:2rem;">👤</div>
+                    <div class="ranking-place">3º</div>
                     <div style="font-weight:700;font-size:0.9rem;margin-top:8px;"><?= htmlspecialchars(explode(' ', $ranking[2]['nome'])[0]) ?></div>
                     <div style="font-size:0.8rem;color:#636e72;"><?= number_format($ranking[2]['pontuacao']) ?> pts</div>
                 </div>
@@ -115,7 +115,7 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
 
         <!-- Tabela completa do ranking -->
         <div class="card">
-            <div class="card-title">📋 Classificação Completa</div>
+            <div class="card-title"> Classificação Completa</div>
             <div style="overflow-x:auto;">
                 <table class="data-table">
                     <thead>
@@ -133,7 +133,7 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
                         <?php foreach ($ranking as $r):
                             $pos   = $r['posicao'];
                             $isMe  = ($r['id'] == $uid);
-                            $icons = ['🥇','🥈','🥉'];
+                            $icons = [1, 2, 3];
                             $icon  = $icons[$pos-1] ?? $pos;
                         ?>
                         <tr <?= $isMe ? 'style="background:rgba(108,99,255,0.06);font-weight:600;"' : '' ?>>
@@ -163,4 +163,3 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
 </div>
 </body>
 </html>
-

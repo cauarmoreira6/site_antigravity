@@ -287,6 +287,79 @@ body {
     background: rgba(108, 99, 255, 0.1);
 }
 
+.google-icon {
+    display: inline-block;
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.2em;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    text-rendering: optimizeLegibility;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+}
+
+.stat-icon .google-icon {
+    font-size: 1.5rem;
+}
+
+.quick-game-icon {
+    flex: 0 0 1.8rem;
+    font-size: 1.8rem;
+}
+
+.profile-stat-icon {
+    margin-bottom: 6px;
+    font-size: 1.5rem;
+}
+
+.profile-medal-icon {
+    margin-bottom: 8px;
+    color: #f39c12;
+    font-size: 2rem;
+}
+
+.stat-icon:empty {
+    display: none;
+}
+
+.ranking-place {
+    display: inline-block;
+    min-width: 52px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #f0f2f5;
+    color: #2d3436;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.ranking-place-first {
+    padding: 12px 16px;
+    font-size: 1.25rem;
+}
+
+.achievement-mark {
+    display: grid;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 12px;
+    place-items: center;
+    border: 2px solid rgba(243, 156, 18, 0.35);
+    border-radius: 50%;
+    background: rgba(243, 156, 18, 0.08);
+    color: #b9770e;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
 .stat-card.accent  .stat-icon { background: rgba(255, 107, 53, 0.1); }
 .stat-card.success .stat-icon { background: rgba(46, 204, 113, 0.1); }
 .stat-card.warning .stat-icon { background: rgba(243, 156, 18, 0.1); }

@@ -65,14 +65,14 @@ $niveis = [
 
         <div class="topbar">
             <div>
-                <h1>📈 Meu Progresso</h1>
+                <h1>Meu Progresso</h1>
                 <p>Acompanhe seu desenvolvimento e evolução na plataforma</p>
             </div>
         </div>
 
         <!-- Mapa de Níveis -->
         <div class="card" style="margin-bottom:24px;">
-            <div class="card-title">⭐ Jornada de Níveis</div>
+            <div class="card-title">Jornada de Níveis</div>
             <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;">
                 <?php foreach ($niveis as $n => $info):
                     $conquistado = ($xp >= $info['xp_min']);
@@ -82,7 +82,6 @@ $niveis = [
                             background:<?= $atual ? $info['cor'] : ($conquistado ? $info['cor'].'22' : '#f0f2f5') ?>;
                             border:2px solid <?= ($atual || $conquistado) ? $info['cor'] : '#e0e0e0' ?>;
                             flex-shrink:0;">
-                    <div style="font-size:1.5rem;margin-bottom:6px;"><?= $atual ? '⭐' : ($conquistado ? '✅' : '🔒') ?></div>
                     <div style="font-size:0.75rem;font-weight:700;color:<?= $atual ? '#fff' : ($conquistado ? $info['cor'] : '#b2bec3') ?>;">
                         Nível <?= $n ?><br><?= $info['nome'] ?>
                     </div>
@@ -98,18 +97,17 @@ $niveis = [
 
             <!-- Progresso por dificuldade -->
             <div class="card">
-                <div class="card-title">🎯 Por Dificuldade</div>
+                <div class="card-title">Por Dificuldade</div>
                 <?php
                 $difs = [
-                    'facil'   => ['nome'=>'Fácil',    'cor'=>'#2ecc71', 'icon'=>'🟢'],
-                    'medio'   => ['nome'=>'Médio',    'cor'=>'#f39c12', 'icon'=>'🟡'],
-                    'dificil' => ['nome'=>'Difícil',  'cor'=>'#e74c3c', 'icon'=>'🔴'],
+                    'facil'   => ['nome'=>'Fácil',    'cor'=>'#2ecc71'],
+                    'medio'   => ['nome'=>'Médio',    'cor'=>'#f39c12'],
+                    'dificil' => ['nome'=>'Difícil',  'cor'=>'#e74c3c'],
                 ];
                 foreach ($difs as $key => $d):
                     $dados = $por_dif[$key] ?? ['partidas'=>0,'acertos'=>0,'pts'=>0];
                 ?>
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
-                    <span style="font-size:1.3rem;"><?= $d['icon'] ?></span>
                     <div style="flex:1;">
                         <div style="display:flex;justify-content:space-between;font-size:0.85rem;font-weight:600;margin-bottom:4px;">
                             <span><?= $d['nome'] ?></span>
@@ -126,22 +124,22 @@ $niveis = [
 
             <!-- Resumo rápido -->
             <div class="card">
-                <div class="card-title">📋 Resumo</div>
+                <div class="card-title">Resumo</div>
                 <?php
                 $total_resp  = $acertos + $erros;
                 $taxa_acerto = ($total_resp > 0) ? round($acertos / $total_resp * 100) : 0;
                 $items = [
-                    ['Total de Partidas',    $jogos_feitos,       '🎮'],
-                    ['Total de Respostas',   $total_resp,         '📝'],
-                    ['Respostas Corretas',   $acertos,            '✅'],
-                    ['Respostas Erradas',    $erros,              '❌'],
-                    ['Taxa de Acerto',       $taxa_acerto.'%',    '🎯'],
-                    ['Pontuação Total',      number_format($pontuacao), '🏆'],
+                    ['Total de Partidas',    $jogos_feitos],
+                    ['Total de Respostas',   $total_resp],
+                    ['Respostas Corretas',   $acertos],
+                    ['Respostas Erradas',    $erros],
+                    ['Taxa de Acerto',       $taxa_acerto.'%'],
+                    ['Pontuação Total',      number_format($pontuacao)],
                 ];
-                foreach ($items as [$label, $val, $icon]): ?>
+                foreach ($items as [$label, $val]): ?>
                 <div style="display:flex;justify-content:space-between;align-items:center;
                             padding:10px 0;border-bottom:1px solid #f0f0f0;">
-                    <span style="color:#636e72;font-size:0.9rem;"><?= $icon ?> <?= $label ?></span>
+                    <span style="color:#636e72;font-size:0.9rem;"><?= $label ?></span>
                     <span style="font-weight:700;color:#2d3436;"><?= $val ?></span>
                 </div>
                 <?php endforeach; ?>
@@ -151,7 +149,7 @@ $niveis = [
 
         <!-- Histórico completo -->
         <div class="card">
-            <div class="card-title">📋 Histórico Completo de Partidas</div>
+            <div class="card-title"> Histórico Completo de Partidas</div>
             <?php if (empty($historico)): ?>
                 <p style="text-align:center;color:#b2bec3;padding:30px 0;">
                     Nenhuma partida registrada. <a href="/site_antigravity/jogos.php" style="color:#6c63ff;">Comece jogando!</a>
@@ -200,4 +198,3 @@ $niveis = [
 </style>
 </body>
 </html>
-
