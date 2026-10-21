@@ -53,6 +53,8 @@ let estado = {
     erros:       0,
     pontuacao:   0,
     xp:          0,
+    sequencia:   0,
+    maiorSequencia: 0,
     respondido:  false,
 };
 
@@ -81,6 +83,8 @@ function iniciarJogo() {
     estado.erros       = 0;
     estado.pontuacao   = 0;
     estado.xp          = 0;
+    estado.sequencia   = 0;
+    estado.maiorSequencia = 0;
     estado.respondido  = false;
 
     // Renderiza os cofres visuais
@@ -165,10 +169,10 @@ function verificarResposta() {
     if (estado.respondido) return;
 
     const input  = document.getElementById('answerInput');
-    const valor  = parseFloat(input.value); // parseFloat lida com decimais
+    const valor  = Number(input.value.trim().replace(',', '.'));
 
     // Verifica se o aluno digitou algo válido
-    if (input.value.trim() === '' || isNaN(valor)) {
+    if (input.value.trim() === '' || !Number.isFinite(valor)) {
         alert(' Por favor, digite um número para X!');
         input.focus();
         return;
@@ -185,6 +189,8 @@ function verificarResposta() {
 
     if (acertou) {
         estado.acertos++;
+        estado.sequencia++;
+        estado.maiorSequencia = Math.max(estado.maiorSequencia, estado.sequencia);
         estado.pontuacao += 10;
         estado.xp        += 10;
 
@@ -200,6 +206,7 @@ function verificarResposta() {
 
     } else {
         estado.erros++;
+        estado.sequencia = 0;
         input.style.borderColor = '#e74c3c';
         feedbackBox.className   = 'feedback-box wrong-fb show';
         document.getElementById('feedbackTitle').textContent = ` Valor incorreto! A resposta era x = ${q.resp}`;
@@ -256,6 +263,7 @@ function salvarResultado() {
     dados.append('erros',       estado.erros);
     dados.append('dificuldade', estado.dificuldade);
     dados.append('xp_ganho',    estado.xp);
+    dados.append('maior_sequencia', estado.maiorSequencia);
 
     fetch('/site_antigravity/jogos/salvar_resultado.php', { method: 'POST', body: dados })
         .then(r => r.json())

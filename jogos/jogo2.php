@@ -11,15 +11,15 @@ require_once '../includes/serie_jogos.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cofre das Equações — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
-    <link rel="stylesheet" href="/site_antigravity/css/jogos.css">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>
 <div class="app-layout">
 
     <?php require_once '../includes/header.php'; ?>
 
-    <main class="main-content">
+    <main id="main-content" class="main-content" tabindex="-1">
         <div class="topbar">
             <div>
                 <h1>Cofre das Equações</h1>
@@ -39,8 +39,8 @@ require_once '../includes/serie_jogos.php';
                     resolver a equação e descobrir o valor de <strong>X</strong>.
                     Cada cofre aberto revela uma recompensa!
                 </p>
-                <div style="background:rgba(255,107,53,0.08);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;">
-                    <p style="font-weight:700;margin-bottom:8px;"> Como jogar:</p>
+                <div class="math-game-brief math-game-brief-2">
+                    <p class="math-game-brief-title">Como jogar:</p>
                     <p style="font-size:0.9rem;color:#636e72;line-height:1.7;">
                          Resolva a equação e encontre o valor de X<br>
                          Digite apenas o número (ex: 5)<br>
@@ -55,7 +55,7 @@ require_once '../includes/serie_jogos.php';
                     <button class="diff-btn diff-medio"           onclick="selecionarDif('medio', this)">Médio</button>
                     <button class="diff-btn diff-dificil"         onclick="selecionarDif('dificil', this)">Difícil</button>
                 </div>
-                <button class="btn btn-accent btn-lg" onclick="iniciarJogo()" style="margin-top:24px;">
+                <button id="startGameButton" class="btn btn-lg start-game-btn start-game-math2" onclick="iniciarJogo()">
                      Abrir os Cofres!
                 </button>
             </div>
@@ -103,21 +103,21 @@ require_once '../includes/serie_jogos.php';
 
                 <!-- Questão -->
                 <div class="question-card">
-                    <div class="question-number" id="questionNumber">Cofre 1 de 8</div>
+                    <div class="question-number" id="questionNumber" aria-live="polite">Cofre 1 de 8</div>
                     <p class="question-text">Para abrir este cofre, descubra o valor de <strong>X</strong>:</p>
                     <div class="math-expression" id="mathExpr">2x + 4 = 10</div>
 
                     <!-- Input de resposta -->
                     <div class="answer-input-wrap">
                         <span style="font-size:1.2rem;font-weight:700;">X =</span>
-                        <input type="number" id="answerInput" class="answer-input" placeholder="?" step="any">
+                        <input type="text" id="answerInput" class="answer-input" placeholder="?" inputmode="text" autocomplete="off" aria-label="Digite o valor de X">
                         <button class="btn btn-accent" onclick="verificarResposta()" id="btnVerificar">
                             Abrir
                         </button>
                     </div>
 
                     <!-- Feedback -->
-                    <div class="feedback-box" id="feedbackBox">
+                    <div class="feedback-box" id="feedbackBox" role="status" aria-live="polite" aria-atomic="true">
                         <div class="feedback-title" id="feedbackTitle"></div>
                         <div class="feedback-text"  id="feedbackText"></div>
                     </div>
@@ -130,7 +130,7 @@ require_once '../includes/serie_jogos.php';
             </div>
 
             <!-- RESULTADO -->
-            <div id="resultScreen" class="result-screen">
+            <div id="resultScreen" class="result-screen" role="status" aria-live="polite">
                 <h2 id="resultTitle">Missão Concluída!</h2>
                 <p class="result-sub" id="resultSub"></p>
                 <div class="result-stats">
@@ -171,6 +171,6 @@ require_once '../includes/serie_jogos.php';
 </script>
 <script>const ANO_ESCOLAR = <?= (int)$ano_escolar ?>;</script>
 <script src="/site_antigravity/js/serie_jogos.js"></script>
-<script src="/site_antigravity/js/jogo2.js"></script>
+<script src="/site_antigravity/js/jogo2.js?v=20261021-streak2"></script>
 </body>
 </html>

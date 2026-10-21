@@ -65,6 +65,7 @@ let estado = {
     pontuacao:      0,
     xp:             0,
     sequencia:      0,          // Contagem de acertos consecutivos
+    maiorSequencia: 0,
     hpAtual:        100,
     hpMax:          100,
     respondido:     false,      // Se a questão já foi respondida
@@ -105,6 +106,7 @@ function iniciarJogo() {
     estado.pontuacao     = 0;
     estado.xp            = 0;
     estado.sequencia     = 0;
+    estado.maiorSequencia = 0;
     estado.hpAtual       = inimigos[dif].hp;
     estado.hpMax         = inimigos[dif].hp;
     estado.respondido    = false;
@@ -150,6 +152,7 @@ function carregarQuestao() {
         btn.className   = 'option-btn'; // Remove classes anteriores
         btn.disabled    = false;
     }
+    document.getElementById('opt0').focus();
 
     // Esconde feedback e botão "próxima"
     const fb = document.getElementById('feedbackBox');
@@ -177,6 +180,7 @@ function verificarResposta(indiceOpcao) {
         // ---- ACERTO ----
         estado.acertos++;
         estado.sequencia++;
+        estado.maiorSequencia = Math.max(estado.maiorSequencia, estado.sequencia);
 
         // Pontuação: 10 pts base + 5 de bônus a cada 3 seguidos
         let pts = 10;
@@ -282,6 +286,7 @@ function salvarResultado() {
     dados.append('erros',       estado.erros);
     dados.append('dificuldade', estado.dificuldade);
     dados.append('xp_ganho',    estado.xp);
+    dados.append('maior_sequencia', estado.maiorSequencia);
 
     // fetch() faz uma requisição para o PHP sem recarregar a página
     fetch('/site_antigravity/jogos/salvar_resultado.php', {

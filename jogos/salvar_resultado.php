@@ -30,6 +30,7 @@ $acertos     = (int)($_POST['acertos']     ?? 0);
 $erros       = (int)($_POST['erros']       ?? 0);
 $dificuldade = $_POST['dificuldade']       ?? 'facil';
 $xp_ganho    = (int)($_POST['xp_ganho']   ?? 0);
+$maior_sequencia = (int)($_POST['maior_sequencia'] ?? 0);
 
 // Validação básica dos dados recebidos
 if ($jogo_id < 1 || $jogo_id > 8 || empty($jogo_nome)) {
@@ -41,6 +42,10 @@ if ($jogo_id < 1 || $jogo_id > 8 || empty($jogo_nome)) {
 if (!in_array($dificuldade, ['facil', 'medio', 'dificil'])) {
     $dificuldade = 'facil';
 }
+
+// Limita a sequência ao número máximo de questões possível naquele jogo.
+$limites_questoes = [1 => 10, 2 => 8, 3 => 10, 4 => 8, 5 => 6, 6 => 6, 7 => 6, 8 => 6];
+$maior_sequencia = max(0, min($maior_sequencia, $limites_questoes[$jogo_id]));
 
 // ---- 1. Salva o resultado da partida ----
 $stmt = $conn->prepare('INSERT INTO resultados (usuario_id, jogo_id, jogo_nome, pontuacao, acertos, erros, dificuldade) VALUES (?, ?, ?, ?, ?, ?, ?)');
@@ -132,6 +137,11 @@ if ($novos_ac >= 100) {
 //  Sem Errar — partida com 0 erros
 if ($erros === 0 && $acertos > 0) {
     dar_medalha($conn, $uid, '0', 'Sem Errar', 'Finalizou uma partida sem cometer nenhum erro', $novas_conquistas);
+}
+
+// Sequência Perfeita — cinco respostas corretas consecutivas na mesma partida.
+if ($maior_sequencia >= 5) {
+    dar_medalha($conn, $uid, '05', 'Sequência Perfeita', 'Conseguiu 5 respostas corretas consecutivas', $novas_conquistas);
 }
 
 //  Comerciante Nato — Jogo 3 no difícil

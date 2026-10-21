@@ -41,13 +41,13 @@ if ($jogo === null) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($jogo['nome']) ?> — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
-    <link rel="stylesheet" href="/site_antigravity/css/jogos.css">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>
 <div class="app-layout">
     <?php require_once '../includes/header.php'; ?>
-    <main class="main-content">
+    <main id="main-content" class="main-content" tabindex="-1">
         <div class="topbar">
             <div>
                 <h1><?= htmlspecialchars($jogo['nome']) ?></h1>
@@ -57,7 +57,7 @@ if ($jogo === null) {
             <a href="/site_antigravity/jogos.php" class="btn btn-outline btn-sm">← Voltar aos jogos</a>
         </div>
 
-        <div class="game-wrapper portuguese-game">
+        <div class="game-wrapper portuguese-game portuguese-game-<?= (int)$jogo_portugues_id ?>">
             <section id="startScreen" class="game-start-screen">
                 <h2><?= htmlspecialchars($jogo['nome']) ?></h2>
                 <p><?= htmlspecialchars($jogo['chamada']) ?></p>
@@ -72,7 +72,7 @@ if ($jogo === null) {
                     <button class="diff-btn diff-medio" onclick="selecionarDif('medio', this)">Médio</button>
                     <button class="diff-btn diff-dificil" onclick="selecionarDif('dificil', this)">Difícil</button>
                 </div>
-                <button class="btn btn-primary btn-lg" onclick="iniciarJogo()"><?= htmlspecialchars($jogo['acao']) ?> →</button>
+                <button id="startGameButton" class="btn btn-lg start-game-btn start-game-portuguese-<?= (int)$jogo_portugues_id ?>" onclick="iniciarJogo()"><?= htmlspecialchars($jogo['acao']) ?> →</button>
             </section>
 
             <section id="gamePanel" class="game-panel">
@@ -84,16 +84,16 @@ if ($jogo === null) {
                     <div class="hud-progress"><div class="hud-label">Progresso da missão</div><div class="hud-progress-bar"><div class="hud-progress-fill portuguese-progress" id="progressFill"></div></div></div>
                 </div>
                 <article class="portuguese-challenge">
-                    <div class="portuguese-stage" id="stageLabel"></div>
-                    <div class="portuguese-prompt" id="questionPrompt"></div>
-                    <div class="portuguese-question" id="questionText"></div>
+                    <div class="portuguese-stage" id="stageLabel" aria-live="polite"></div>
+                    <div class="portuguese-prompt" id="questionPrompt" aria-live="polite"></div>
+                    <div class="portuguese-question" id="questionText" aria-live="polite"></div>
                     <div class="options-grid" id="optionsGrid">
                         <button class="option-btn" id="opt0" onclick="verificarResposta(0)"></button>
                         <button class="option-btn" id="opt1" onclick="verificarResposta(1)"></button>
                         <button class="option-btn" id="opt2" onclick="verificarResposta(2)"></button>
                         <button class="option-btn" id="opt3" onclick="verificarResposta(3)"></button>
                     </div>
-                    <div class="feedback-box" id="feedbackBox">
+                    <div class="feedback-box" id="feedbackBox" role="status" aria-live="polite" aria-atomic="true">
                         <div class="feedback-title" id="feedbackTitle"></div>
                         <div class="feedback-text" id="feedbackText"></div>
                     </div>
@@ -101,7 +101,7 @@ if ($jogo === null) {
                 </article>
             </section>
 
-            <section id="resultScreen" class="result-screen">
+            <section id="resultScreen" class="result-screen" role="status" aria-live="polite">
                 <h2 id="resultTitle">Missão concluída!</h2>
                 <p class="result-sub" id="resultSub"></p>
                 <div class="result-stats">
@@ -126,6 +126,6 @@ if ($jogo === null) {
     const ANO_ESCOLAR = <?= (int)$ano_escolar ?>;
 </script>
 <script src="/site_antigravity/js/serie_jogos.js"></script>
-<script src="/site_antigravity/js/jogos_portugues.js"></script>
+<script src="/site_antigravity/js/jogos_portugues.js?v=20261021-streak"></script>
 </body>
 </html>

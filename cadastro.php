@@ -189,11 +189,33 @@ $versao_css = time();
         }
         .tipo-option {
             flex: 1 !important;
+            position: relative !important;
             cursor: pointer !important;
             display: block !important;
         }
         .tipo-option input[type="radio"] {
-            display: none !important;
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+        .tipo-fieldset {
+            min-width: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+        }
+        .tipo-fieldset legend {
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        .tipo-option input[type="radio"]:focus-visible + .tipo-label {
+            outline: 3px solid #ffbf47 !important;
+            outline-offset: 3px !important;
         }
         .tipo-label {
             display: flex !important;
@@ -246,7 +268,7 @@ $versao_css = time();
         .btn-auth {
             width: 100% !important;
             height: 42px !important;
-            border-radius: 8px !important;
+            border-radius: 50px !important;
             font-size: 0.95rem !important;
             font-weight: 700 !important;
             box-sizing: border-box !important;
@@ -257,6 +279,8 @@ $versao_css = time();
 </head>
 <body class="auth-body">
 
+    <?php require_once __DIR__ . '/includes/accessibility.php'; ?>
+    <main id="main-content" class="auth-main" tabindex="-1">
     <div class="auth-card">
 
         <!-- Título -->
@@ -267,7 +291,7 @@ $versao_css = time();
 
         <!-- Mensagem de erro -->
         <?php if ($erro): ?>
-            <div class="alert alert-error"><?= htmlspecialchars($erro) ?></div>
+            <div class="alert alert-error" role="alert"><?= htmlspecialchars($erro) ?></div>
         <?php endif; ?>
 
         <!-- Formulário de cadastro -->
@@ -346,8 +370,8 @@ $versao_css = time();
 
             <!-- Seletor de tipo de usuário com destaque imediato -->
             <?php $tipo_selecionado = $_POST['tipo'] ?? 'aluno'; ?>
-            <div class="form-group">
-                <label>Tipo de Conta</label>
+            <fieldset class="form-group tipo-fieldset">
+                <legend>Tipo de Conta</legend>
                 <div class="tipo-selector">
                     <label class="tipo-option">
                         <input type="radio" name="tipo" value="aluno"
@@ -360,7 +384,7 @@ $versao_css = time();
                         <div class="tipo-label">Professor</div>
                     </label>
                 </div>
-            </div>
+            </fieldset>
 
             <div class="student-details" id="student-details" <?= $tipo_selecionado === 'aluno' ? '' : 'hidden' ?>>
                 <p class="student-details-title">Dados da turma</p>
@@ -399,6 +423,7 @@ $versao_css = time();
         </div>
 
     </div>
+    </main>
 
     <script src="/site_antigravity/js/password-toggle.js"></script>
 

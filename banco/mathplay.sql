@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     tipo       ENUM('aluno', 'admin') NOT NULL DEFAULT 'aluno',
     serie      VARCHAR(10) NULL,
     turma      CHAR(1) NULL,
+    avatar_path VARCHAR(255) NULL,
     criado_em  DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

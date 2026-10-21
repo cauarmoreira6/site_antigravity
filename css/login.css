@@ -1,3 +1,5 @@
+@import url('/site_antigravity/css/accessibility.css');
+
 /* ============================================================
    MathPlay Solutions — CSS de Login e Cadastro (login.css)
    Design Limpo, Sem Emojis, Formulário Perfeitamente Enquadrado
@@ -19,6 +21,13 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: relative;
     overflow-x: hidden;
+}
+
+.auth-main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Fundo com efeito sutil */
@@ -246,7 +255,7 @@ form {
     background: linear-gradient(135deg, #6c63ff, #a855f7);
     color: #ffffff;
     border: none;
-    border-radius: 8px;
+    border-radius: 50px;
     font-size: 0.92rem;
     font-weight: 700;
     cursor: pointer;

@@ -202,6 +202,8 @@ let estado = {
     erros: 0,
     pontuacao: 0,
     xp: 0,
+    sequencia: 0,
+    maiorSequencia: 0,
     respondido: false
 };
 
@@ -227,6 +229,8 @@ function iniciarJogo() {
     estado.erros = 0;
     estado.pontuacao = 0;
     estado.xp = 0;
+    estado.sequencia = 0;
+    estado.maiorSequencia = 0;
     estado.respondido = false;
 
     document.getElementById('startScreen').style.display = 'none';
@@ -275,9 +279,9 @@ function verificarResposta() {
     if (estado.respondido) return;
 
     const input = document.getElementById('answerInput');
-    const valor = parseFloat(input.value.replace(',', '.'));
+    const valor = Number(input.value.trim().replace(',', '.'));
 
-    if (input.value.trim() === '' || isNaN(valor)) {
+    if (input.value.trim() === '' || !Number.isFinite(valor)) {
         alert(' Digite um valor numérico para confirmar a resposta!');
         input.focus();
         return;
@@ -293,6 +297,8 @@ function verificarResposta() {
 
     if (acertou) {
         estado.acertos++;
+        estado.sequencia++;
+        estado.maiorSequencia = Math.max(estado.maiorSequencia, estado.sequencia);
         estado.pontuacao += 10;
         estado.xp += 10;
 
@@ -302,6 +308,7 @@ function verificarResposta() {
         document.getElementById('feedbackText').textContent = `Muito bem! ${q.explicacao}`;
     } else {
         estado.erros++;
+        estado.sequencia = 0;
         input.style.borderColor = '#e74c3c';
         feedbackBox.className = 'feedback-box wrong-fb show';
         document.getElementById('feedbackTitle').textContent = ` Resposta incorreta! O valor correto é ${q.prefixo} ${q.resp.toFixed(2)}`;
@@ -352,6 +359,7 @@ function salvarResultado() {
     dados.append('erros', estado.erros);
     dados.append('dificuldade', estado.dificuldade);
     dados.append('xp_ganho', estado.xp);
+    dados.append('maior_sequencia', estado.maiorSequencia);
 
     fetch('/site_antigravity/jogos/salvar_resultado.php', { method: 'POST', body: dados })
         .then(r => r.json())

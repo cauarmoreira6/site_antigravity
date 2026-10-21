@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MathPlay Solutions — Plataforma Educacional</title>
-    <link rel="stylesheet" href="/site_antigravity/css/style.css">
+    <link rel="stylesheet" href="/site_antigravity/css/style.css?v=20260616-accessibility">
 </head>
 <body>
 
     <!-- ======================================================
          NAVBAR
     ====================================================== -->
-    <nav class="navbar-home">
+    <nav class="navbar-home" aria-label="Navegação principal">
         <div class="nav-brand">
             <span>MathPlay <strong>Solutions</strong></span>
         </div>
@@ -24,13 +24,16 @@
     <!-- ======================================================
          HERO
     ====================================================== -->
+    <?php require_once __DIR__ . '/includes/accessibility.php'; ?>
+
+    <main id="main-content" tabindex="-1">
     <section class="hero">
         <div class="hero-content">
             <div class="hero-badge">Plataforma Educacional Gamificada</div>
-            <h1>Aprender Matemática e Português<br><span>de forma interativa e engajadora</span></h1>
+            <h1>Aprender Português e Matemática<br><span>de forma interativa e engajadora</span></h1>
             <p>
                 Resolva desafios, acumule pontos, acompanhe seu nível e conquistas
-                enquanto aprende Matemática e Língua Portuguesa.
+                enquanto aprende Língua Portuguesa e Matemática.
             </p>
             <div class="hero-buttons">
                 <a href="/site_antigravity/cadastro.php" class="btn btn-accent btn-lg">Começar Agora</a>
@@ -69,7 +72,7 @@
     <div class="section">
         <div class="section-title">
             <h2>Nossos Jogos</h2>
-            <p>Oito atividades de Matemática e Língua Portuguesa, com pontuação e aprendizado prático.</p>
+            <p>Oito atividades de Língua Portuguesa e Matemática, com pontuação e aprendizado prático.</p>
         </div>
 
         <div class="jogos-grid">
@@ -181,6 +184,8 @@
     <!-- ======================================================
          FOOTER
     ====================================================== -->
+    </main>
+
     <footer class="footer">
         <p>© 2024 <strong>MathPlay Solutions</strong> — Plataforma Educacional</p>
         <p style="margin-top:6px;font-size:0.8rem;">Desenvolvida para estudantes do Ensino Fundamental II</p>

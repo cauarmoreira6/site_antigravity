@@ -96,7 +96,7 @@ $stmt->close();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
 </head>
 <body>
 <div class="app-layout">
@@ -105,7 +105,7 @@ $stmt->close();
     <?php require_once 'includes/header.php'; ?>
 
     <!-- Conteúdo principal -->
-    <main class="main-content">
+    <main id="main-content" class="main-content" tabindex="-1">
 
         <!-- Título da página -->
         <div class="topbar">

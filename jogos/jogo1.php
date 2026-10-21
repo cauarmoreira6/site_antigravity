@@ -11,15 +11,15 @@ require_once '../includes/serie_jogos.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batalha dos Inteiros — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
-    <link rel="stylesheet" href="/site_antigravity/css/jogos.css">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>
 <div class="app-layout">
 
     <?php require_once '../includes/header.php'; ?>
 
-    <main class="main-content">
+    <main id="main-content" class="main-content" tabindex="-1">
 
         <div class="topbar">
             <div>
@@ -41,8 +41,8 @@ require_once '../includes/serie_jogos.php';
                     dá dano ao inimigo. Vença a batalha respondendo corretamente!
                 </p>
 
-                <div style="background:rgba(108,99,255,0.08);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;">
-                    <p style="font-weight:700;margin-bottom:8px;"> Como jogar:</p>
+                <div class="math-game-brief math-game-brief-1">
+                    <p class="math-game-brief-title">Como jogar:</p>
                     <p style="font-size:0.9rem;color:#636e72;line-height:1.7;">
                          Cada acerto = <strong>-20 HP</strong> do inimigo<br>
                          Cada acerto = <strong>+10 XP</strong> para você<br>
@@ -59,7 +59,7 @@ require_once '../includes/serie_jogos.php';
                     <button class="diff-btn diff-dificil"         onclick="selecionarDif('dificil', this)">Difícil</button>
                 </div>
 
-                <button class="btn btn-primary btn-lg" onclick="iniciarJogo()" style="margin-top:24px;">
+                <button id="startGameButton" class="btn btn-lg start-game-btn start-game-math1" onclick="iniciarJogo()">
                      Iniciar Batalha!
                 </button>
             </div>
@@ -123,9 +123,9 @@ require_once '../includes/serie_jogos.php';
 
                 <!-- Carta de pergunta -->
                 <div class="question-card">
-                    <div class="question-number" id="questionNumber">Questão 1 de 10</div>
-                    <div class="question-text" id="questionText">Qual é o resultado de:</div>
-                    <div class="math-expression" id="mathExpr">-8 + 15 = ?</div>
+                    <div class="question-number" id="questionNumber" aria-live="polite">Questão 1 de 10</div>
+                    <div class="question-text" id="questionText" aria-live="polite">Qual é o resultado de:</div>
+                    <div class="math-expression" id="mathExpr" aria-live="polite">-8 + 15 = ?</div>
 
                     <!-- Opções de resposta (4 alternativas) -->
                     <div class="options-grid" id="optionsGrid">
@@ -136,7 +136,7 @@ require_once '../includes/serie_jogos.php';
                     </div>
 
                     <!-- Feedback de resposta -->
-                    <div class="feedback-box" id="feedbackBox">
+                    <div class="feedback-box" id="feedbackBox" role="status" aria-live="polite" aria-atomic="true">
                         <div class="feedback-title" id="feedbackTitle"></div>
                         <div class="feedback-text"  id="feedbackText"></div>
                     </div>
@@ -149,7 +149,7 @@ require_once '../includes/serie_jogos.php';
             </div>
 
             <!-- ============ TELA DE RESULTADO ============ -->
-            <div id="resultScreen" class="result-screen">
+            <div id="resultScreen" class="result-screen" role="status" aria-live="polite">
                 <h2 id="resultTitle">Batalha Concluída!</h2>
                 <p class="result-sub" id="resultSub">Você lutou muito bem!</p>
 
@@ -196,6 +196,6 @@ require_once '../includes/serie_jogos.php';
     const ANO_ESCOLAR = <?= (int)$ano_escolar ?>;
 </script>
 <script src="/site_antigravity/js/serie_jogos.js"></script>
-<script src="/site_antigravity/js/jogo1.js"></script>
+<script src="/site_antigravity/js/jogo1.js?v=20261021-streak"></script>
 </body>
 </html>

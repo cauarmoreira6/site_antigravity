@@ -1,3 +1,5 @@
+@import url('/site_antigravity/css/accessibility.css');
+
 /* ============================================================
    MathPlay Solutions — CSS dos Jogos (jogos.css)
    ============================================================ */
@@ -134,13 +136,77 @@
     display: none;
 }
 
-.portuguese-game {
-    --portuguese-color: #2471a3;
+.math-game-brief {
+    border-radius: 12px;
+    padding: 16px;
+    margin: 0 auto 24px;
+    text-align: left;
+    max-width: 420px;
 }
 
-.portuguese-game .diff-btn.selected {
-    background: var(--portuguese-color);
-    border-color: var(--portuguese-color);
+.math-game-brief p {
+    max-width: none;
+}
+
+.math-game-brief .math-game-brief-title {
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.math-game-brief-1 {
+    background: rgba(108, 99, 255, 0.08);
+}
+
+.math-game-brief-1 .math-game-brief-title {
+    color: #6c63ff;
+}
+
+.math-game-brief-2 {
+    background: rgba(255, 107, 53, 0.08);
+}
+
+.math-game-brief-2 .math-game-brief-title {
+    color: #ff6b35;
+}
+
+.math-game-brief-3 {
+    background: rgba(46, 204, 113, 0.08);
+}
+
+.math-game-brief-3 .math-game-brief-title {
+    color: #27ae60;
+}
+
+.math-game-brief-4 {
+    background: rgba(243, 156, 18, 0.08);
+}
+
+.math-game-brief-4 .math-game-brief-title {
+    color: #e67e22;
+}
+
+.portuguese-game {
+    --portuguese-color: #3498db;
+    --portuguese-color-soft: rgba(52, 152, 219, 0.12);
+    --portuguese-color-border: rgba(52, 152, 219, 0.3);
+}
+
+.portuguese-game-6 {
+    --portuguese-color: #8e44ad;
+    --portuguese-color-soft: rgba(142, 68, 173, 0.12);
+    --portuguese-color-border: rgba(142, 68, 173, 0.3);
+}
+
+.portuguese-game-7 {
+    --portuguese-color: #16a085;
+    --portuguese-color-soft: rgba(22, 160, 133, 0.12);
+    --portuguese-color-border: rgba(22, 160, 133, 0.3);
+}
+
+.portuguese-game-8 {
+    --portuguese-color: #34495e;
+    --portuguese-color-soft: rgba(52, 73, 94, 0.12);
+    --portuguese-color-border: rgba(52, 73, 94, 0.3);
 }
 
 .portuguese-brief {
@@ -149,9 +215,9 @@
     max-width: 500px;
     margin: 0 auto 24px;
     padding: 18px 20px;
-    border: 1px solid rgba(36, 113, 163, 0.16);
+    border: 1px solid var(--portuguese-color-border);
     border-radius: 12px;
-    background: rgba(36, 113, 163, 0.06);
+    background: var(--portuguese-color-soft);
     color: var(--gray);
     text-align: left;
     line-height: 1.55;
@@ -328,10 +394,49 @@
 
 .diff-btn.diff-medio.selected { background: var(--warning); border-color: var(--warning); }
 .diff-btn.diff-dificil.selected { background: var(--danger); border-color: var(--danger); }
-.portuguese-game .diff-btn.diff-medio.selected,
+
+.game-start-screen .start-game-btn {
+    margin-top: 24px;
+    padding: 14px 40px;
+    border: 2px solid transparent;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.game-start-screen .start-game-math1 { background-color: var(--primary) !important; }
+.game-start-screen .start-game-math2 { background-color: var(--accent) !important; }
+.game-start-screen .start-game-math3 { background-color: var(--success) !important; }
+.game-start-screen .start-game-math4 { background-color: var(--warning) !important; }
+.game-start-screen .start-game-portuguese-5 { background-color: #3498db !important; }
+.game-start-screen .start-game-portuguese-6 { background-color: #8e44ad !important; }
+.game-start-screen .start-game-portuguese-7 { background-color: #16a085 !important; }
+.game-start-screen .start-game-portuguese-8 { background-color: #34495e !important; }
+
+.portuguese-game .diff-btn.diff-facil.selected {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #fff !important;
+}
+
+.portuguese-game .diff-btn.diff-medio.selected {
+    background: var(--warning) !important;
+    border-color: var(--warning) !important;
+    color: #fff !important;
+}
+
 .portuguese-game .diff-btn.diff-dificil.selected {
-    background: var(--portuguese-color);
-    border-color: var(--portuguese-color);
+    background: var(--danger) !important;
+    border-color: var(--danger) !important;
+    color: #fff !important;
+}
+
+.game-start-screen .start-game-btn:hover {
+    filter: brightness(0.93);
+    transform: translateY(-2px);
 }
 
 /* ---- Painel do jogo (durante a partida) ---- */

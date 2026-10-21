@@ -91,20 +91,20 @@ $jogos = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogos — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
-    <link rel="stylesheet" href="/site_antigravity/css/jogos.css">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>
 <div class="app-layout">
 
     <?php require_once 'includes/header.php'; ?>
 
-    <main class="main-content">
+    <main id="main-content" class="main-content" tabindex="-1">
 
         <div class="topbar">
             <div>
                 <h1>Catálogo de Jogos</h1>
-                <p>Escolha um jogo para praticar Matemática e Língua Portuguesa</p>
+                <p>Escolha um jogo para praticar Língua Portuguesa e Matemática</p>
             </div>
         </div>
 

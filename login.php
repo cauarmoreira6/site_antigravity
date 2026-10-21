@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($senha)) {
         $erro = 'Por favor, preencha todos os campos.';
     } else {
-        $stmt = $conn->prepare('SELECT id, nome, email, senha, tipo FROM usuarios WHERE email = ?');
+        $stmt = $conn->prepare('SELECT id, nome, email, senha, tipo, avatar_path FROM usuarios WHERE email = ?');
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $resultado = $stmt->get_result();
@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nome']       = $usuario['nome'];
                 $_SESSION['email']      = $usuario['email'];
                 $_SESSION['tipo']       = $usuario['tipo'];
+                $_SESSION['avatar_path'] = $usuario['avatar_path'];
 
                 $stmt2 = $conn->prepare('SELECT xp, nivel FROM progresso WHERE usuario_id = ?');
                 $stmt2->bind_param('i', $usuario['id']);
@@ -119,7 +120,7 @@ $versao_css = time();
         .btn-auth {
             width: 100% !important;
             height: 42px !important;
-            border-radius: 8px !important;
+            border-radius: 50px !important;
             font-size: 0.95rem !important;
             font-weight: 700 !important;
             box-sizing: border-box !important;
@@ -130,6 +131,8 @@ $versao_css = time();
 </head>
 <body class="auth-body">
 
+    <?php require_once __DIR__ . '/includes/accessibility.php'; ?>
+    <main id="main-content" class="auth-main" tabindex="-1">
     <div class="auth-card">
 
         <!-- Logo/Título -->
@@ -140,11 +143,11 @@ $versao_css = time();
 
         <!-- Mensagens de retorno -->
         <?php if ($erro): ?>
-            <div class="alert alert-error"><?= htmlspecialchars($erro) ?></div>
+            <div class="alert alert-error" role="alert"><?= htmlspecialchars($erro) ?></div>
         <?php endif; ?>
 
         <?php if (isset($_GET['cadastro']) && $_GET['cadastro'] === 'ok'): ?>
-            <div class="alert alert-success">Conta criada com sucesso! Faça login.</div>
+            <div class="alert alert-success" role="status">Conta criada com sucesso! Faça login.</div>
         <?php endif; ?>
 
         <!-- Formulário de login -->
@@ -199,6 +202,7 @@ $versao_css = time();
         </div>
 
     </div>
+    </main>
 
     <script src="/site_antigravity/js/password-toggle.js"></script>
 </body>

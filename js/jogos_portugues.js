@@ -112,6 +112,8 @@ const estadoPortugues = {
     acertos: 0,
     erros: 0,
     pontuacao: 0,
+    sequencia: 0,
+    maiorSequencia: 0,
     respondido: false,
 };
 
@@ -143,6 +145,8 @@ function iniciarJogo() {
     estadoPortugues.acertos = 0;
     estadoPortugues.erros = 0;
     estadoPortugues.pontuacao = 0;
+    estadoPortugues.sequencia = 0;
+    estadoPortugues.maiorSequencia = 0;
     estadoPortugues.respondido = false;
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('resultScreen').classList.remove('show');
@@ -167,6 +171,7 @@ function carregarDesafio() {
         botao.className = 'option-btn';
         botao.disabled = false;
     });
+    document.getElementById('opt0').focus();
 
     document.getElementById('feedbackBox').className = 'feedback-box';
     document.getElementById('btnNext').className = 'btn-next portuguese-next';
@@ -185,11 +190,14 @@ function verificarResposta(indice) {
     const feedback = document.getElementById('feedbackBox');
     if (acertou) {
         estadoPortugues.acertos++;
+        estadoPortugues.sequencia++;
+        estadoPortugues.maiorSequencia = Math.max(estadoPortugues.maiorSequencia, estadoPortugues.sequencia);
         estadoPortugues.pontuacao += 10;
         feedback.className = 'feedback-box correct-fb show';
         document.getElementById('feedbackTitle').textContent = 'Muito bem! +10 pontos';
     } else {
         estadoPortugues.erros++;
+        estadoPortugues.sequencia = 0;
         document.getElementById(`opt${indice}`).classList.add('wrong');
         feedback.className = 'feedback-box wrong-fb show';
         document.getElementById('feedbackTitle').textContent = `Quase! A resposta correta é: ${desafio.correta}`;
@@ -237,6 +245,7 @@ function salvarResultado(xp) {
     dados.append('erros', estadoPortugues.erros);
     dados.append('dificuldade', estadoPortugues.dificuldade);
     dados.append('xp_ganho', xp);
+    dados.append('maior_sequencia', estadoPortugues.maiorSequencia);
 
     fetch('/site_antigravity/jogos/salvar_resultado.php', { method: 'POST', body: dados })
         .then(resposta => {

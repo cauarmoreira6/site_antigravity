@@ -11,15 +11,15 @@ require_once '../includes/serie_jogos.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detetive dos Gráficos — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
-    <link rel="stylesheet" href="/site_antigravity/css/jogos.css">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>
 <div class="app-layout">
 
     <?php require_once '../includes/header.php'; ?>
 
-    <main class="main-content">
+    <main id="main-content" class="main-content" tabindex="-1">
         <div class="topbar">
             <div>
                 <h1>Detetive dos Gráficos</h1>
@@ -38,8 +38,8 @@ require_once '../includes/serie_jogos.php';
                     Um caso precisa ser resolvido! Analise gráficos de colunas, calcule
                     <strong>médias, modas, medianas e totais</strong> para coletar pistas e solucionar o mistério.
                 </p>
-                <div style="background:rgba(243,156,18,0.08);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left;max-width:420px;margin-left:auto;margin-right:auto;">
-                    <p style="font-weight:700;margin-bottom:8px;"> O que você investigará:</p>
+                <div class="math-game-brief math-game-brief-4">
+                    <p class="math-game-brief-title">O que você investigará:</p>
                     <p style="font-size:0.9rem;color:#636e72;line-height:1.7;">
                          Leitura e interpretação de gráficos<br>
                          Cálculo de Média Aritmética<br>
@@ -54,7 +54,7 @@ require_once '../includes/serie_jogos.php';
                     <button class="diff-btn diff-medio"           onclick="selecionarDif('medio', this)">Médio</button>
                     <button class="diff-btn diff-dificil"         onclick="selecionarDif('dificil', this)">Difícil</button>
                 </div>
-                <button class="btn btn-warning btn-lg" onclick="iniciarJogo()" style="margin-top:24px;background:#f39c12;color:#fff;border:none;border-radius:50px;padding:14px 40px;font-weight:700;cursor:pointer;">
+                <button id="startGameButton" class="btn btn-lg start-game-btn start-game-math4" onclick="iniciarJogo()">
                      Começar Investigação!
                 </button>
             </div>
@@ -104,12 +104,13 @@ require_once '../includes/serie_jogos.php';
                 <div class="chart-container">
                     <div class="chart-title" id="chartTitle">Gráfico de Dados da Investigação</div>
                     <div class="bar-chart" id="barChart"></div>
+                    <p id="chartDataSummary" class="visually-hidden" role="status" aria-live="polite"></p>
                 </div>
 
                 <!-- Card de Pergunta -->
                 <div class="question-card">
-                    <div class="question-number" id="questionNumber">Pista 1 de 8</div>
-                    <div class="question-text" id="questionText">Analise o gráfico acima e responda:</div>
+                    <div class="question-number" id="questionNumber" aria-live="polite">Pista 1 de 8</div>
+                    <div class="question-text" id="questionText" aria-live="polite">Analise o gráfico acima e responda:</div>
 
                     <!-- Opções -->
                     <div class="options-grid" id="optionsGrid">
@@ -126,7 +127,7 @@ require_once '../includes/serie_jogos.php';
                     </div>
 
                     <!-- Feedback -->
-                    <div class="feedback-box" id="feedbackBox">
+                    <div class="feedback-box" id="feedbackBox" role="status" aria-live="polite" aria-atomic="true">
                         <div class="feedback-title" id="feedbackTitle"></div>
                         <div class="feedback-text"  id="feedbackText"></div>
                     </div>
@@ -139,7 +140,7 @@ require_once '../includes/serie_jogos.php';
             </div>
 
             <!-- RESULTADO -->
-            <div id="resultScreen" class="result-screen">
+            <div id="resultScreen" class="result-screen" role="status" aria-live="polite">
                 <h2 id="resultTitle">Caso Solucionado!</h2>
                 <p class="result-sub" id="resultSub"></p>
                 <div class="result-stats">
@@ -168,6 +169,6 @@ require_once '../includes/serie_jogos.php';
 </script>
 <script>const ANO_ESCOLAR = <?= (int)$ano_escolar ?>;</script>
 <script src="/site_antigravity/js/serie_jogos.js"></script>
-<script src="/site_antigravity/js/jogo4.js"></script>
+<script src="/site_antigravity/js/jogo4.js?v=20261021-streak"></script>
 </body>
 </html>

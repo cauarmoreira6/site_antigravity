@@ -11,15 +11,15 @@ require_once '../includes/serie_jogos.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja MathPlay — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css">
-    <link rel="stylesheet" href="/site_antigravity/css/jogos.css">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>
 <div class="app-layout">
 
     <?php require_once '../includes/header.php'; ?>
 
-    <main class="main-content">
+    <main id="main-content" class="main-content" tabindex="-1">
         <div class="topbar">
             <div>
                 <h1>Loja MathPlay</h1>
@@ -39,8 +39,8 @@ require_once '../includes/serie_jogos.php';
                     <strong>desconto, troco, lucro e porcentagem</strong>
                     para atender seus clientes corretamente.
                 </p>
-                <div style="background:rgba(46,204,113,0.08);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;">
-                    <p style="font-weight:700;margin-bottom:8px;"> Temas abordados:</p>
+                <div class="math-game-brief math-game-brief-3">
+                    <p class="math-game-brief-title">Temas abordados:</p>
                     <p style="font-size:0.9rem;color:#636e72;line-height:1.8;">
                          Cálculo de desconto<br>
                          Cálculo de troco<br>
@@ -55,7 +55,7 @@ require_once '../includes/serie_jogos.php';
                     <button class="diff-btn diff-medio"           onclick="selecionarDif('medio', this)">Médio</button>
                     <button class="diff-btn diff-dificil"         onclick="selecionarDif('dificil', this)">Difícil</button>
                 </div>
-                <button class="btn btn-success btn-lg" onclick="iniciarJogo()" style="margin-top:24px;background:#2ecc71;border-radius:50px;color:#fff;padding:14px 40px;font-weight:700;font-size:1rem;border:none;cursor:pointer;">
+                <button id="startGameButton" class="btn btn-lg start-game-btn start-game-math3" onclick="iniciarJogo()">
                      Abrir a Loja!
                 </button>
             </div>
@@ -116,13 +116,13 @@ require_once '../includes/serie_jogos.php';
 
                 <!-- Questão -->
                 <div class="question-card">
-                    <div class="question-number" id="questionNumber">Venda 1 de 10</div>
-                    <div class="question-text" id="questionText"></div>
+                    <div class="question-number" id="questionNumber" aria-live="polite">Venda 1 de 10</div>
+                    <div class="question-text" id="questionText" aria-live="polite"></div>
 
                     <!-- Input de resposta -->
                     <div class="answer-input-wrap">
                         <span style="font-size:1.1rem;font-weight:700;" id="prefixo">R$</span>
-                        <input type="number" id="answerInput" class="answer-input" placeholder="0,00" step="0.01" min="0">
+                        <input type="text" id="answerInput" class="answer-input" placeholder="0,00" inputmode="decimal" autocomplete="off" aria-label="Digite o valor numérico da resposta">
                         <button class="btn btn-success" onclick="verificarResposta()" id="btnVerificar"
                                 style="background:#2ecc71;border:none;border-radius:50px;color:#fff;padding:12px 24px;font-weight:700;cursor:pointer;">
                              Confirmar
@@ -130,7 +130,7 @@ require_once '../includes/serie_jogos.php';
                     </div>
 
                     <!-- Feedback -->
-                    <div class="feedback-box" id="feedbackBox">
+                    <div class="feedback-box" id="feedbackBox" role="status" aria-live="polite" aria-atomic="true">
                         <div class="feedback-title" id="feedbackTitle"></div>
                         <div class="feedback-text"  id="feedbackText"></div>
                     </div>
@@ -143,7 +143,7 @@ require_once '../includes/serie_jogos.php';
             </div>
 
             <!-- RESULTADO -->
-            <div id="resultScreen" class="result-screen">
+            <div id="resultScreen" class="result-screen" role="status" aria-live="polite">
                 <h2 id="resultTitle">Loja Fechada!</h2>
                 <p class="result-sub" id="resultSub"></p>
                 <div class="result-stats">
@@ -172,6 +172,6 @@ require_once '../includes/serie_jogos.php';
 </script>
 <script>const ANO_ESCOLAR = <?= (int)$ano_escolar ?>;</script>
 <script src="/site_antigravity/js/serie_jogos.js"></script>
-<script src="/site_antigravity/js/jogo3.js"></script>
+<script src="/site_antigravity/js/jogo3.js?v=20261021-streak2"></script>
 </body>
 </html>

@@ -17,6 +17,10 @@ $pagina_atual = basename($_SERVER['PHP_SELF']);
 $esta_em_admin = (strpos($_SERVER['PHP_SELF'], '/admin/') !== false);
 
 $inicial = strtoupper(substr($_SESSION['nome'] ?? 'U', 0, 1));
+$avatar_nome = is_string($_SESSION['avatar_path'] ?? null) ? basename($_SESSION['avatar_path']) : '';
+$avatar_url = preg_match('/\A[a-f0-9]{32}\.(?:jpg|png|webp|avif)\z/', $avatar_nome)
+    ? '/site_antigravity/uploads/profile_photos/' . rawurlencode($avatar_nome)
+    : null;
 
 $xp    = $_SESSION['xp']    ?? 0;
 $nivel = $_SESSION['nivel'] ?? 1;
@@ -40,11 +44,13 @@ $xp_progresso = ($xp_diff > 0) ? min(100, round(($xp - $xp_atual_nivel) / $xp_di
 $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
 ?>
 
+<?php require_once __DIR__ . '/accessibility.php'; ?>
+
 <!-- ============ BOTÃO DE MENU MOBILE ============ -->
-<button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">Menu</button>
+<button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebar">Menu</button>
 
 <!-- ============ SIDEBAR ============ -->
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar" aria-label="Área do usuário">
 
     <!-- Logo -->
     <div class="sidebar-brand">
@@ -56,7 +62,13 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
 
     <!-- Mini perfil do usuário -->
     <div class="sidebar-user">
-        <div class="user-avatar"><?= $inicial ?></div>
+        <div class="user-avatar">
+            <?php if ($avatar_url !== null): ?>
+                <img src="<?= htmlspecialchars($avatar_url) ?>" alt="" width="44" height="44">
+            <?php else: ?>
+                <?= htmlspecialchars($inicial) ?>
+            <?php endif; ?>
+        </div>
         <div class="user-info">
             <div class="user-name"><?= htmlspecialchars($_SESSION['nome'] ?? 'Usuário') ?></div>
             <div class="user-level">Nível <?= $nivel ?> — <?= $titulo_nivel ?></div>
@@ -64,21 +76,24 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
     </div>
 
     <!-- Links de navegação -->
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" aria-label="Navegação principal">
 
         <div class="nav-section-label">Principal</div>
 
         <a href="/site_antigravity/dashboard.php"
+           aria-current="<?= (!$esta_em_admin && $pagina_atual === 'dashboard.php') ? 'page' : 'false' ?>"
            class="nav-item <?= (!$esta_em_admin && $pagina_atual === 'dashboard.php') ? 'active' : '' ?>">
             Dashboard
         </a>
 
         <a href="/site_antigravity/jogos.php"
+           aria-current="<?= $pagina_atual === 'jogos.php' ? 'page' : 'false' ?>"
            class="nav-item <?= $pagina_atual === 'jogos.php' ? 'active' : '' ?>">
             Jogos
         </a>
 
         <a href="/site_antigravity/ranking.php"
+           aria-current="<?= $pagina_atual === 'ranking.php' ? 'page' : 'false' ?>"
            class="nav-item <?= $pagina_atual === 'ranking.php' ? 'active' : '' ?>">
             Ranking
         </a>
@@ -86,16 +101,19 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
         <div class="nav-section-label">Meu Perfil</div>
 
         <a href="/site_antigravity/perfil.php"
+           aria-current="<?= $pagina_atual === 'perfil.php' ? 'page' : 'false' ?>"
            class="nav-item <?= $pagina_atual === 'perfil.php' ? 'active' : '' ?>">
             Perfil
         </a>
 
         <a href="/site_antigravity/conquistas.php"
+           aria-current="<?= $pagina_atual === 'conquistas.php' ? 'page' : 'false' ?>"
            class="nav-item <?= $pagina_atual === 'conquistas.php' ? 'active' : '' ?>">
             Conquistas
         </a>
 
         <a href="/site_antigravity/progresso.php"
+           aria-current="<?= $pagina_atual === 'progresso.php' ? 'page' : 'false' ?>"
            class="nav-item <?= $pagina_atual === 'progresso.php' ? 'active' : '' ?>">
             Progresso
         </a>
@@ -104,16 +122,19 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
         <div class="nav-section-label">Administração</div>
 
         <a href="/site_antigravity/admin/dashboard.php"
+           aria-current="<?= ($esta_em_admin && $pagina_atual === 'dashboard.php') ? 'page' : 'false' ?>"
            class="nav-item <?= ($esta_em_admin && $pagina_atual === 'dashboard.php') ? 'active' : '' ?>">
             Painel Admin
         </a>
 
         <a href="/site_antigravity/admin/usuarios.php"
+           aria-current="<?= ($esta_em_admin && $pagina_atual === 'usuarios.php') ? 'page' : 'false' ?>"
            class="nav-item <?= ($esta_em_admin && $pagina_atual === 'usuarios.php') ? 'active' : '' ?>">
             Alunos
         </a>
 
         <a href="/site_antigravity/admin/resultados.php"
+           aria-current="<?= ($esta_em_admin && $pagina_atual === 'resultados.php') ? 'page' : 'false' ?>"
            class="nav-item <?= ($esta_em_admin && $pagina_atual === 'resultados.php') ? 'active' : '' ?>">
             Resultados
         </a>
@@ -136,12 +157,25 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
     const sidebar    = document.getElementById('sidebar');
 
     menuToggle.addEventListener('click', function () {
-        sidebar.classList.toggle('open');
+        const aberto = sidebar.classList.toggle('open');
+        menuToggle.setAttribute('aria-expanded', String(aberto));
+        menuToggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
     });
 
     document.addEventListener('click', function (e) {
         if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
             sidebar.classList.remove('open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Abrir menu');
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Abrir menu');
+            menuToggle.focus();
         }
     });
 </script>

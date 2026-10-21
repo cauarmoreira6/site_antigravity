@@ -214,6 +214,8 @@ let estado = {
     erros: 0,
     pontuacao: 0,
     xp: 0,
+    sequencia: 0,
+    maiorSequencia: 0,
     respondido: false,
     corretaIdx: 0
 };
@@ -240,6 +242,8 @@ function iniciarJogo() {
     estado.erros = 0;
     estado.pontuacao = 0;
     estado.xp = 0;
+    estado.sequencia = 0;
+    estado.maiorSequencia = 0;
     estado.respondido = false;
 
     document.getElementById('startScreen').style.display = 'none';
@@ -252,6 +256,8 @@ function iniciarJogo() {
 function desenharGrafico(dados) {
     const chart = document.getElementById('barChart');
     chart.innerHTML = '';
+    document.getElementById('chartDataSummary').textContent =
+        `Dados do gráfico: ${dados.map(d => `${d.rotulo}: ${d.val}`).join('; ')}.`;
 
     const maxVal = Math.max(...dados.map(d => d.val), 10);
 
@@ -290,6 +296,7 @@ function carregarQuestao() {
         btn.className = 'option-btn';
         btn.disabled = false;
     }
+    document.getElementById('opt0').focus();
 
     document.getElementById('clueBox').className = 'clue-box';
     document.getElementById('feedbackBox').className = 'feedback-box';
@@ -315,6 +322,8 @@ function verificarResposta(idx) {
 
     if (acertou) {
         estado.acertos++;
+        estado.sequencia++;
+        estado.maiorSequencia = Math.max(estado.maiorSequencia, estado.sequencia);
         estado.pontuacao += 10;
         estado.xp += 10;
 
@@ -327,6 +336,7 @@ function verificarResposta(idx) {
         clueBox.className = 'clue-box show';
     } else {
         estado.erros++;
+        estado.sequencia = 0;
         btnClicado.classList.add('wrong');
         btnCorreto.classList.add('correct');
 
@@ -379,6 +389,7 @@ function salvarResultado() {
     dados.append('erros', estado.erros);
     dados.append('dificuldade', estado.dificuldade);
     dados.append('xp_ganho', estado.xp);
+    dados.append('maior_sequencia', estado.maiorSequencia);
 
     fetch('/site_antigravity/jogos/salvar_resultado.php', { method: 'POST', body: dados })
         .then(r => r.json())
