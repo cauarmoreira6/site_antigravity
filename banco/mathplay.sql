@@ -1,20 +1,3 @@
--- ============================================================
--- Educa Play — Banco de Dados
--- Plataforma educacional gamificada para Ensino Fundamental II
--- ============================================================
-
--- Cria o banco de dados (se ainda não existir)
-CREATE DATABASE IF NOT EXISTS mathplay
-    CHARACTER SET utf8
-    COLLATE utf8_general_ci;
-
--- Seleciona o banco de dados
-USE mathplay;
-
--- ============================================================
--- TABELA: usuarios
--- Armazena os dados de todos os usuários (alunos e admins)
--- ============================================================
 CREATE TABLE IF NOT EXISTS usuarios (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     nome       VARCHAR(100) NOT NULL,
@@ -27,10 +10,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     criado_em  DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- ============================================================
--- TABELA: progresso
--- Armazena o XP, nível e estatísticas globais de cada aluno
--- ============================================================
+
 CREATE TABLE IF NOT EXISTS progresso (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id   INT NOT NULL UNIQUE,        -- Cada usuário tem apenas 1 registro de progresso
@@ -43,10 +23,7 @@ CREATE TABLE IF NOT EXISTS progresso (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
--- ============================================================
--- TABELA: resultados
--- Armazena o histórico de cada partida jogada
--- ============================================================
+
 CREATE TABLE IF NOT EXISTS resultados (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id  INT NOT NULL,
@@ -60,10 +37,7 @@ CREATE TABLE IF NOT EXISTS resultados (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
--- ============================================================
--- TABELA: conquistas
--- Armazena as medalhas/conquistas desbloqueadas por cada aluno
--- ============================================================
+
 CREATE TABLE IF NOT EXISTS conquistas (
     id             INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id     INT NOT NULL,
@@ -74,24 +48,11 @@ CREATE TABLE IF NOT EXISTS conquistas (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
--- ============================================================
--- DADOS INICIAIS: Usuário Admin
--- ============================================================
--- Senha padrão do admin: admin123
--- O hash abaixo foi gerado com password_hash('admin123', PASSWORD_DEFAULT)
+
 INSERT INTO usuarios (nome, email, senha, tipo)
 VALUES ('Administrador', 'admin@mathplay.com',
         '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
         'admin');
 
--- Cria o registro de progresso do admin
 INSERT INTO progresso (usuario_id, xp, nivel, pontuacao, acertos, erros, jogos_feitos)
 VALUES (LAST_INSERT_ID(), 0, 1, 0, 0, 0, 0);
-
--- ============================================================
--- FIM DO SCRIPT
--- Como usar:
--- 1. Abra o phpMyAdmin em http://localhost/phpmyadmin
--- 2. Clique em "Importar"
--- 3. Selecione este arquivo e clique em "Executar"
--- ============================================================
