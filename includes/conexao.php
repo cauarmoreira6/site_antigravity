@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Conexão com o Banco de Dados
+// Educa Play — Conexão com o Banco de Dados
 // ============================================================
 // Este arquivo cria a conexão com o MySQL usando a extensão
 // mysqli (MySQL Improved). É incluído em todas as páginas

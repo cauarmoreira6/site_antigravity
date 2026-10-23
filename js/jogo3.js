@@ -1,5 +1,5 @@
 // ============================================================
-// MathPlay Solutions — Jogo 3: Loja MathPlay (jogo3.js)
+// Educa Play — Jogo 3: Loja Educa Play (jogo3.js)
 // Porcentagem, desconto, troco, lucro e juros simples
 // ============================================================
 
@@ -353,7 +353,7 @@ function encerrarJogo() {
 function salvarResultado() {
     const dados = new FormData();
     dados.append('jogo_id', 3);
-    dados.append('jogo_nome', 'Loja MathPlay');
+    dados.append('jogo_nome', 'Loja Educa Play');
     dados.append('pontuacao', estado.pontuacao);
     dados.append('acertos', estado.acertos);
     dados.append('erros', estado.erros);

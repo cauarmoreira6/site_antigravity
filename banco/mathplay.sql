@@ -1,5 +1,5 @@
 -- ============================================================
--- MathPlay Solutions — Banco de Dados
+-- Educa Play — Banco de Dados
 -- Plataforma educacional gamificada para Ensino Fundamental II
 -- ============================================================
 

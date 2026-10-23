@@ -1,7 +1,7 @@
 @import url('/site_antigravity/css/accessibility.css');
 
 /* ============================================================
-   MathPlay Solutions — CSS de Login e Cadastro (login.css)
+   Educa Play — CSS de Login e Cadastro (login.css)
    Design Limpo, Sem Emojis, Formulário Perfeitamente Enquadrado
    ============================================================ */
 
@@ -84,6 +84,14 @@
 .auth-logo {
     text-align: center;
     margin-bottom: 22px;
+}
+
+.auth-brand-logo {
+    display: block;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 12px;
+    object-fit: contain;
 }
 
 .auth-logo .logo-circle {

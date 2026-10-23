@@ -1,42 +1,61 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Ranking
+// Educa Play — Ranking
 // ============================================================
 require_once 'includes/verificar_login.php';
 require_once 'includes/conexao.php';
 
 $uid = $_SESSION['usuario_id'];
 
-// Busca o ranking completo (apenas alunos)
-// RANK() OVER é uma função de janela do MySQL 8+ que calcula posição
-$sql = 'SELECT u.nome, p.pontuacao, p.xp, p.nivel, p.acertos, p.jogos_feitos,
-               RANK() OVER (ORDER BY p.pontuacao DESC) AS posicao
-        FROM progresso p
-        JOIN usuarios u ON u.id = p.usuario_id
-        WHERE u.tipo = "aluno"
-        ORDER BY p.pontuacao DESC';
-
-$ranking = $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
-
-// Pega a posição do usuário atual no ranking
 $minha_pos = '?';
-foreach ($ranking as $r) {
-    if ($r['posicao'] <= count($ranking)) {
-        // Precisamos do usuario_id no ranking para identificar "eu"
-    }
+$filtros_materia = [
+    'geral' => ['rotulo' => 'Geral', 'jogos' => null],
+    'portugues' => ['rotulo' => 'Língua Portuguesa', 'jogos' => [5, 8]],
+    'matematica' => ['rotulo' => 'Matemática', 'jogos' => [1, 4]],
+];
+$materia = $_GET['materia'] ?? 'geral';
+if (!is_string($materia) || !isset($filtros_materia[$materia])) {
+    $materia = 'geral';
 }
 
-// Refaz com usuario_id para identificar o aluno atual
-$sql2 = 'SELECT u.id, u.nome, p.pontuacao, p.xp, p.nivel, p.acertos, p.jogos_feitos,
-                RANK() OVER (ORDER BY p.pontuacao DESC) AS posicao
-         FROM progresso p
-         JOIN usuarios u ON u.id = p.usuario_id
-         WHERE u.tipo = "aluno"
-         ORDER BY p.pontuacao DESC';
+if ($materia === 'geral') {
+    $sql = 'SELECT u.id, u.nome, p.pontuacao, p.xp, p.nivel, p.acertos, p.jogos_feitos,
+                   RANK() OVER (ORDER BY p.pontuacao DESC) AS posicao
+            FROM progresso p
+            JOIN usuarios u ON u.id = p.usuario_id
+            WHERE u.tipo = "aluno"
+            ORDER BY p.pontuacao DESC';
+} else {
+    [$jogo_inicio, $jogo_fim] = $filtros_materia[$materia]['jogos'];
+    $sql = 'SELECT materia_ranking.*,
+                   RANK() OVER (ORDER BY materia_ranking.pontuacao DESC) AS posicao
+            FROM (
+                SELECT u.id, u.nome, COALESCE(SUM(r.pontuacao), 0) AS pontuacao,
+                       COALESCE(SUM(r.acertos), 0) AS acertos, COUNT(r.id) AS jogos_feitos,
+                       p.xp, p.nivel
+                FROM usuarios u
+                LEFT JOIN progresso p ON p.usuario_id = u.id
+                LEFT JOIN resultados r
+                    ON r.usuario_id = u.id AND r.jogo_id BETWEEN ? AND ?
+                WHERE u.tipo = "aluno"
+                GROUP BY u.id, u.nome, p.xp, p.nivel
+            ) AS materia_ranking
+            ORDER BY materia_ranking.pontuacao DESC';
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        throw new RuntimeException('Não foi possível preparar o ranking por matéria.');
+    }
+    if (!$stmt->bind_param('ii', $jogo_inicio, $jogo_fim) || !$stmt->execute()) {
+        throw new RuntimeException('Não foi possível carregar o ranking por matéria.');
+    }
+    $ranking = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+}
 
-$ranking = $conn->query($sql2)->fetch_all(MYSQLI_ASSOC);
+if ($materia === 'geral') {
+    $ranking = $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+}
 
-// Encontra minha posição
 foreach ($ranking as $r) {
     if ($r['id'] == $uid) {
         $minha_pos = $r['posicao'];
@@ -44,15 +63,15 @@ foreach ($ranking as $r) {
     }
 }
 
-$titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'Desafiador',6=>'Mestre MathPlay'];
+$titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'Desafiador',6=>'Mestre Educa Play'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Ranking — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
 </head>
 <body>
 <div class="app-layout">
@@ -63,8 +82,8 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
 
         <div class="topbar">
             <div>
-                <h1>Ranking Geral</h1>
-                <p>Veja quem são os melhores jogadores da MathPlay!</p>
+                <h1>Ranking de <?= htmlspecialchars($filtros_materia[$materia]['rotulo']) ?></h1>
+                <p>Veja a classificação dos jogadores da Educa Play!</p>
             </div>
             <div class="topbar-right">
                 <div style="background:#fff;border-radius:50px;padding:8px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.08);font-size:0.9rem;color:#636e72;">
@@ -72,6 +91,16 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
                 </div>
             </div>
         </div>
+
+        <nav aria-label="Filtrar ranking por matéria" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;">
+            <?php foreach ($filtros_materia as $chave => $filtro): ?>
+                <a
+                    href="/site_antigravity/ranking.php?materia=<?= urlencode($chave) ?>"
+                    class="btn <?= $materia === $chave ? 'btn-primary' : 'btn-outline' ?>"
+                    <?= $materia === $chave ? 'aria-current="page"' : '' ?>
+                ><?= htmlspecialchars($filtro['rotulo']) ?></a>
+            <?php endforeach; ?>
+        </nav>
 
         <!-- Pódio (top 3) -->
         <?php if (count($ranking) >= 3): ?>
@@ -122,11 +151,13 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
                         <tr>
                             <th>#</th>
                             <th>Jogador</th>
-                            <th>Nível</th>
                             <th>Pontuação</th>
-                            <th>XP</th>
                             <th>Acertos</th>
                             <th>Partidas</th>
+                            <?php if ($materia === 'geral'): ?>
+                                <th>Nível</th>
+                                <th>XP</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,15 +175,17 @@ $titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'De
                                     <span class="badge badge-primary" style="margin-left:6px;">Você</span>
                                 <?php endif; ?>
                             </td>
-                            <td><span class="badge badge-primary">Nv. <?= $r['nivel'] ?></span></td>
                             <td><strong><?= number_format($r['pontuacao']) ?></strong></td>
-                            <td><?= number_format($r['xp']) ?> XP</td>
                             <td><?= $r['acertos'] ?></td>
                             <td><?= $r['jogos_feitos'] ?></td>
+                            <?php if ($materia === 'geral'): ?>
+                                <td><span class="badge badge-primary">Nv. <?= $r['nivel'] ?></span></td>
+                                <td><?= number_format($r['xp']) ?> XP</td>
+                            <?php endif; ?>
                         </tr>
                         <?php endforeach; ?>
                         <?php if (empty($ranking)): ?>
-                        <tr><td colspan="7" style="text-align:center;color:#b2bec3;padding:30px;">Nenhum jogador ainda.</td></tr>
+                        <tr><td colspan="<?= $materia === 'geral' ? 7 : 5 ?>" style="text-align:center;color:#b2bec3;padding:30px;">Nenhum jogador ainda.</td></tr>
                         <?php endif; ?>
                     </tbody>
                 </table>

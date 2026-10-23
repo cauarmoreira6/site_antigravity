@@ -1,7 +1,7 @@
 @import url('/site_antigravity/css/accessibility.css');
 
 /* ============================================================
-   MathPlay Solutions — CSS do Dashboard e Páginas Internas
+   Educa Play — CSS do Dashboard e Páginas Internas
    (dashboard.css)
    ============================================================ */
 
@@ -87,6 +87,14 @@ body {
     font-size: 0.7rem;
     font-weight: 400;
     color: rgba(255,255,255,0.5);
+}
+
+.sidebar-brand .sidebar-logo {
+    display: block;
+    width: 72px;
+    height: 72px;
+    margin: 0 auto;
+    object-fit: contain;
 }
 
 /* Mini perfil na sidebar */

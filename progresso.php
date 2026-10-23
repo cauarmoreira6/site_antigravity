@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Progresso Detalhado
+// Educa Play — Progresso Detalhado
 // ============================================================
 require_once 'includes/verificar_login.php';
 require_once 'includes/conexao.php';
@@ -45,7 +45,7 @@ $niveis = [
     3 => ['nome'=>'Explorador',      'xp_min'=>250,  'xp_max'=>499,  'cor'=>'#3498db'],
     4 => ['nome'=>'Aventureiro',     'xp_min'=>500,  'xp_max'=>799,  'cor'=>'#9b59b6'],
     5 => ['nome'=>'Desafiador',      'xp_min'=>800,  'xp_max'=>1199, 'cor'=>'#e67e22'],
-    6 => ['nome'=>'Mestre MathPlay', 'xp_min'=>1200, 'xp_max'=>9999, 'cor'=>'#f39c12'],
+    6 => ['nome'=>'Mestre Educa Play', 'xp_min'=>1200, 'xp_max'=>9999, 'cor'=>'#f39c12'],
 ];
 ?>
 <!DOCTYPE html>
@@ -53,8 +53,8 @@ $niveis = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progresso — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Progresso — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
 </head>
 <body>
 <div class="app-layout">

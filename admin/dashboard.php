@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Admin: Dashboard Geral
+// Educa Play — Admin: Dashboard Geral
 // ============================================================
 require_once '../includes/verificar_login.php';
 verificar_admin();
@@ -39,8 +39,8 @@ $top_alunos = $conn->query("
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel do Professor — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Painel do Professor — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
 </head>
 <body>
 <div class="app-layout">

@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Salvar Resultado do Jogo
+// Educa Play — Salvar Resultado do Jogo
 // ============================================================
 // Este arquivo recebe os dados de uma partida via AJAX (fetch)
 // e salva no banco de dados. Também atualiza o progresso do
@@ -146,7 +146,7 @@ if ($maior_sequencia >= 5) {
 
 //  Comerciante Nato — Jogo 3 no difícil
 if ($jogo_id === 3 && $dificuldade === 'dificil') {
-    dar_medalha($conn, $uid, '$', 'Comerciante Nato', 'Completou a Loja MathPlay no nível difícil', $novas_conquistas);
+    dar_medalha($conn, $uid, '$', 'Comerciante Nato', 'Completou a Loja Educa Play no nível difícil', $novas_conquistas);
 }
 
 //  Olho de Águia — Jogo 4 sem erros

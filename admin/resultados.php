@@ -1,35 +1,145 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Admin: Resultados e Histórico
+// Educa Play — Admin: Resultados e Histórico
 // ============================================================
 require_once '../includes/verificar_login.php';
 verificar_admin();
 require_once '../includes/conexao.php';
 
-// Filtro opcional por jogo
+// Filtros opcionais por jogo e sala.
 $filtro_jogo = (int)($_GET['jogo'] ?? 0);
-
-$where = "";
-if ($filtro_jogo >= 1 && $filtro_jogo <= 8) {
-    $where = "WHERE r.jogo_id = $filtro_jogo";
+$salas_disponiveis = [];
+foreach (range(6, 9) as $ano) {
+    foreach (['A', 'B'] as $turma) {
+        $salas_disponiveis[] = [
+            'codigo' => $ano . $turma,
+            'serie' => $ano . 'º ano',
+            'turma' => $turma,
+        ];
+    }
 }
 
-$resultados = $conn->query("
-    SELECT r.*, u.nome, u.email 
+$filtro_sala = $_GET['sala'] ?? '';
+$sala_selecionada = null;
+foreach ($salas_disponiveis as $sala) {
+    if ($filtro_sala === $sala['codigo']) {
+        $sala_selecionada = $sala;
+        break;
+    }
+}
+
+$condicoes = [];
+$parametros = [];
+if ($filtro_jogo >= 1 && $filtro_jogo <= 8) {
+    $condicoes[] = 'r.jogo_id = ?';
+    $parametros[] = $filtro_jogo;
+}
+if ($sala_selecionada !== null) {
+    $condicoes[] = 'u.serie = ? AND u.turma = ?';
+    $parametros[] = $sala_selecionada['serie'];
+    $parametros[] = $sala_selecionada['turma'];
+}
+
+$sql = "
+    SELECT r.*, u.nome, u.email, u.serie, u.turma
     FROM resultados r
     JOIN usuarios u ON u.id = r.usuario_id
-    $where
+    " . (empty($condicoes) ? '' : 'WHERE ' . implode(' AND ', $condicoes)) . "
     ORDER BY r.jogado_em DESC
     LIMIT 100
-")->fetch_all(MYSQLI_ASSOC);
+";
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    throw new RuntimeException('Não foi possível preparar a consulta de resultados.');
+}
+if (!$stmt->execute($parametros)) {
+    throw new RuntimeException('Não foi possível carregar os resultados.');
+}
+$resultados = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Histórico de Partidas — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Histórico de Partidas — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
+    <style>
+        .filter-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 42px;
+            padding: 10px 20px;
+            border: 0;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6c63ff, #5148c8);
+            color: #fff;
+            font: inherit;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(108, 99, 255, 0.25);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .filter-submit:hover {
+            background: linear-gradient(135deg, #5a52d5, #4038ad);
+            box-shadow: 0 6px 16px rgba(108, 99, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .filter-submit:active {
+            box-shadow: 0 2px 6px rgba(108, 99, 255, 0.25);
+            transform: translateY(0);
+        }
+
+        .filter-submit svg {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 auto;
+        }
+
+        .sala-select {
+            min-width: 190px;
+            min-height: 42px;
+            padding: 9px 40px 9px 14px;
+            border: 1px solid #d9d5ff;
+            border-radius: 10px;
+            appearance: none;
+            background-color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235148c8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            color: #2d3436;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .sala-select:hover {
+            border-color: #8a82ff;
+        }
+
+        #filtroSala:focus-visible {
+            border-color: #6c63ff;
+            outline: none !important;
+            outline-offset: 0;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        @media (max-width: 520px) {
+            .filter-submit {
+                width: 100%;
+            }
+
+            .sala-select {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 <div class="app-layout">
@@ -48,17 +158,53 @@ $resultados = $conn->query("
         <!-- Filtros rápidos -->
         <div class="card" style="margin-bottom:20px;padding:16px 20px;">
             <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                <span style="font-weight:700;font-size:0.9rem;color:#2d3436;">Filtrar por Jogo:</span>
-                <a href="/site_antigravity/admin/resultados.php" class="btn btn-sm <?= $filtro_jogo === 0 ? 'btn-primary' : 'btn-outline' ?>">Todos</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=1" class="btn btn-sm <?= $filtro_jogo === 1 ? 'btn-primary' : 'btn-outline' ?>"> Inteiros</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=2" class="btn btn-sm <?= $filtro_jogo === 2 ? 'btn-primary' : 'btn-outline' ?>"> Equações</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=3" class="btn btn-sm <?= $filtro_jogo === 3 ? 'btn-primary' : 'btn-outline' ?>"> Loja</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=4" class="btn btn-sm <?= $filtro_jogo === 4 ? 'btn-primary' : 'btn-outline' ?>"> Gráficos</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=5" class="btn btn-sm <?= $filtro_jogo === 5 ? 'btn-primary' : 'btn-outline' ?>"> Revisor</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=6" class="btn btn-sm <?= $filtro_jogo === 6 ? 'btn-primary' : 'btn-outline' ?>"> Metáforas</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=7" class="btn btn-sm <?= $filtro_jogo === 7 ? 'btn-primary' : 'btn-outline' ?>"> Histórias</a>
-                <a href="/site_antigravity/admin/resultados.php?jogo=8" class="btn btn-sm <?= $filtro_jogo === 8 ? 'btn-primary' : 'btn-outline' ?>"> Robôs</a>
+                <span id="filtroJogoLabel" style="font-weight:700;font-size:0.9rem;color:#2d3436;">Filtrar por Jogo:</span>
+                <a href="/site_antigravity/admin/resultados.php<?= $sala_selecionada !== null ? '?sala=' . urlencode($sala_selecionada['codigo']) : '' ?>" class="btn btn-sm <?= $filtro_jogo === 0 ? 'btn-primary' : 'btn-outline' ?>">Todos</a>
+                <?php
+                $nomes_jogos = [
+                    1 => 'Inteiros',
+                    2 => 'Equações',
+                    3 => 'Loja',
+                    4 => 'Gráficos',
+                    5 => 'Revisor',
+                    6 => 'Metáforas',
+                    7 => 'Histórias',
+                    8 => 'Robôs',
+                ];
+                foreach ($nomes_jogos as $jogo_id => $nome_jogo):
+                    $parametros_link = ['jogo' => $jogo_id];
+                    if ($sala_selecionada !== null) {
+                        $parametros_link['sala'] = $sala_selecionada['codigo'];
+                    }
+                ?>
+                <a href="/site_antigravity/admin/resultados.php?<?= htmlspecialchars(http_build_query($parametros_link)) ?>" class="btn btn-sm <?= $filtro_jogo === $jogo_id ? 'btn-primary' : 'btn-outline' ?>"><?= htmlspecialchars($nome_jogo) ?></a>
+                <?php endforeach; ?>
             </div>
+            <form method="get" action="/site_antigravity/admin/resultados.php" style="display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin-top:16px;">
+                <?php if ($filtro_jogo >= 1 && $filtro_jogo <= 8): ?>
+                    <input type="hidden" name="jogo" value="<?= $filtro_jogo ?>">
+                <?php endif; ?>
+                <div>
+                    <label for="filtroSala" style="display:block;margin-bottom:6px;font-weight:700;">Filtrar por sala:</label>
+                    <select id="filtroSala" name="sala" class="sala-select">
+                        <option value="">Todas as salas</option>
+                        <?php foreach ($salas_disponiveis as $sala): ?>
+                            <option value="<?= htmlspecialchars($sala['codigo']) ?>" <?= ($sala_selecionada['codigo'] ?? '') === $sala['codigo'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($sala['codigo']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button type="submit" class="filter-submit">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M4 5h16l-6.5 7.5V19l-3 1v-7.5L4 5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Filtrar sala
+                </button>
+                <?php if ($sala_selecionada !== null): ?>
+                    <a class="btn btn-outline btn-sm" href="/site_antigravity/admin/resultados.php<?= $filtro_jogo >= 1 && $filtro_jogo <= 8 ? '?jogo=' . $filtro_jogo : '' ?>">Limpar sala</a>
+                <?php endif; ?>
+            </form>
         </div>
 
         <div class="card">
@@ -71,6 +217,7 @@ $resultados = $conn->query("
                         <thead>
                             <tr>
                                 <th>Aluno</th>
+                                <th>Sala</th>
                                 <th>Jogo</th>
                                 <th>Dificuldade</th>
                                 <th>Pontos</th>
@@ -86,6 +233,7 @@ $resultados = $conn->query("
                                     <strong><?= htmlspecialchars($r['nome']) ?></strong><br>
                                     <small style="color:#b2bec3;"><?= htmlspecialchars($r['email']) ?></small>
                                 </td>
+                                <td><?= htmlspecialchars(preg_replace('/º ano$/u', '', $r['serie'] ?? '') . ($r['turma'] ?? '')) ?: '—' ?></td>
                                 <td><?= htmlspecialchars($r['jogo_nome']) ?></td>
                                 <td>
                                     <span class="badge badge-<?= $r['dificuldade'] === 'facil' ? 'success' : ($r['dificuldade'] === 'medio' ? 'warning' : 'danger') ?>">

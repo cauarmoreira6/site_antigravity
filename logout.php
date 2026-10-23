@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Logout
+// Educa Play — Logout
 // ============================================================
 // Este arquivo encerra a sessão do usuário e redireciona
 // para a página de login.

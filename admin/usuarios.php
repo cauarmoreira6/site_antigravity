@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Admin: Gerenciamento de Alunos
+// Educa Play — Admin: Gerenciamento de Alunos
 // ============================================================
 require_once '../includes/verificar_login.php';
 verificar_admin();
@@ -21,8 +21,8 @@ $alunos = $conn->query("
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Alunos — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Lista de Alunos — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
 </head>
 <body>
 <div class="app-layout">

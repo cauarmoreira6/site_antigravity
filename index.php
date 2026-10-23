@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathPlay Solutions — Plataforma Educacional</title>
-    <link rel="stylesheet" href="/site_antigravity/css/style.css?v=20260616-accessibility">
+    <title>Educa Play — Plataforma Educacional</title>
+    <link rel="stylesheet" href="/site_antigravity/css/style.css?v=20261023-logo">
 </head>
 <body>
 
@@ -13,7 +13,12 @@
     ====================================================== -->
     <nav class="navbar-home" aria-label="Navegação principal">
         <div class="nav-brand">
-            <span>MathPlay <strong>Solutions</strong></span>
+            <img
+                src="/site_antigravity/assets/images/educa-play-logo.png"
+                alt="Educa Play"
+                width="72"
+                height="72"
+            >
         </div>
         <div class="nav-links">
             <a href="/site_antigravity/login.php" class="btn btn-outline">Entrar</a>
@@ -90,7 +95,7 @@
 
             <!-- Jogo 3 -->
             <div class="jogo-card jogo-3">
-                <h3>Loja MathPlay</h3>
+                <h3>Loja Educa Play</h3>
                 <p>Administre uma loja aplicando conceitos de porcentagem, desconto, troco e lucro.</p>
             </div>
 
@@ -128,7 +133,7 @@
         <div class="features-grid">
             <div class="feature-item">
                 <h4>Pontos e Níveis</h4>
-                <p>Acumule experiência e avance de Iniciante a Mestre MathPlay</p>
+                <p>Acumule experiência e avance de Iniciante a Mestre Educa Play</p>
             </div>
             <div class="feature-item">
                 <h4>Conquistas</h4>
@@ -187,7 +192,7 @@
     </main>
 
     <footer class="footer">
-        <p>© 2024 <strong>MathPlay Solutions</strong> — Plataforma Educacional</p>
+        <p>© 2024 <strong>Educa Play</strong> — Plataforma Educacional</p>
         <p style="margin-top:6px;font-size:0.8rem;">Desenvolvida para estudantes do Ensino Fundamental II</p>
     </footer>
 

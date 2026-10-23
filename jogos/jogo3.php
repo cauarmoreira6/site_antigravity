@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Jogo 3: Loja MathPlay
+// Educa Play — Jogo 3: Loja Educa Play
 // ============================================================
 require_once '../includes/verificar_login.php';
 require_once '../includes/serie_jogos.php';
@@ -10,8 +10,8 @@ require_once '../includes/serie_jogos.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja MathPlay — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Loja Educa Play — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
     <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>
@@ -22,7 +22,7 @@ require_once '../includes/serie_jogos.php';
     <main id="main-content" class="main-content" tabindex="-1">
         <div class="topbar">
             <div>
-                <h1>Loja MathPlay</h1>
+                <h1>Loja Educa Play</h1>
                 <p>Porcentagem e Finanças</p>
             </div>
             <a href="/site_antigravity/jogos.php" class="btn btn-outline btn-sm">← Voltar</a>
@@ -33,7 +33,7 @@ require_once '../includes/serie_jogos.php';
             <!-- TELA INICIAL -->
             <div id="startScreen" class="game-start-screen">
                 <span class="game-big-icon"></span>
-                <h2>Loja MathPlay</h2>
+                <h2>Loja Educa Play</h2>
                 <p>
                     Você é o dono de uma loja! Resolva problemas de
                     <strong>desconto, troco, lucro e porcentagem</strong>

@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Header/Navbar Reutilizável
+// Educa Play — Header/Navbar Reutilizável
 // ============================================================
 // Este arquivo é incluído em todas as páginas internas.
 // Ele gera a sidebar de navegação com links e dados do usuário.
@@ -31,9 +31,9 @@ $titulos = [
     3 => 'Explorador',
     4 => 'Aventureiro',
     5 => 'Desafiador',
-    6 => 'Mestre MathPlay'
+    6 => 'Mestre Educa Play'
 ];
-$titulo_nivel = $titulos[$nivel] ?? 'Mestre MathPlay';
+$titulo_nivel = $titulos[$nivel] ?? 'Mestre Educa Play';
 
 $xp_por_nivel = [0, 0, 100, 250, 500, 800, 1200];
 $xp_proximo   = $xp_por_nivel[$nivel + 1] ?? 9999;
@@ -54,10 +54,13 @@ $is_admin = (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'admin');
 
     <!-- Logo -->
     <div class="sidebar-brand">
-        <div class="brand-name">
-            MathPlay
-            <span>Solutions</span>
-        </div>
+        <img
+            class="sidebar-logo"
+            src="/site_antigravity/assets/images/educa-play-logo.png"
+            alt="Educa Play"
+            width="72"
+            height="72"
+        >
     </div>
 
     <!-- Mini perfil do usuário -->

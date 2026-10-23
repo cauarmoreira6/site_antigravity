@@ -1,7 +1,7 @@
 @import url('/site_antigravity/css/accessibility.css');
 
 /* ============================================================
-   MathPlay Solutions — CSS dos Jogos (jogos.css)
+   Educa Play — CSS dos Jogos (jogos.css)
    ============================================================ */
 
 :root {
@@ -863,6 +863,7 @@
 .safe-item.locked  { border-color: #e0e0e0; opacity: 0.7; }
 .safe-item.current { border-color: var(--accent); background: rgba(255,107,53,0.08); animation: pulse 1s infinite; }
 .safe-item.open    { border-color: var(--success); background: rgba(46,204,113,0.1); }
+.safe-item.wrong   { border-color: var(--danger); background: rgba(231,76,60,0.1); color: var(--danger); }
 
 @keyframes pulse {
     0%, 100% { transform: scale(1); }

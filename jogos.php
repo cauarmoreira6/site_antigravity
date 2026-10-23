@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Catálogo de Jogos
+// Educa Play — Catálogo de Jogos
 // ============================================================
 require_once 'includes/verificar_login.php';
 require_once 'includes/serie_jogos.php';
@@ -36,7 +36,7 @@ $jogos = [
         'link'      => '/site_antigravity/jogos/jogo2.php',
     ],
     3 => [
-        'nome'      => 'Loja MathPlay',
+        'nome'      => 'Loja Educa Play',
         'tema'      => 'Porcentagem e Finanças',
         'descricao' => 'Pratique conceitos de desconto, troco, acréscimo e porcentagens aplicadas.',
         'dificuldades'=> 'Fácil, Médio e Difícil',
@@ -90,8 +90,8 @@ $jogos = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogos — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Jogos — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
     <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>

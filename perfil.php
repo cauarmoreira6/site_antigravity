@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Perfil do Aluno
+// Educa Play — Perfil do Aluno
 // ============================================================
 require_once 'includes/verificar_login.php';
 require_once 'includes/conexao.php';
@@ -148,8 +148,8 @@ $total_resp  = $acertos + $erros;
 $taxa_acerto = ($total_resp > 0) ? round($acertos / $total_resp * 100) : 0;
 
 // Cálculo de nível e XP
-$titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'Desafiador',6=>'Mestre MathPlay'];
-$titulo  = $titulos[$nivel] ?? 'Mestre MathPlay';
+$titulos = [1=>'Iniciante',2=>'Aprendiz',3=>'Explorador',4=>'Aventureiro',5=>'Desafiador',6=>'Mestre Educa Play'];
+$titulo  = $titulos[$nivel] ?? 'Mestre Educa Play';
 $xp_limites = [0, 0, 100, 250, 500, 800, 1200, 9999];
 $xp_prox    = $xp_limites[$nivel + 1] ?? 9999;
 $xp_ini     = $xp_limites[$nivel]     ?? 0;
@@ -169,11 +169,11 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil — MathPlay Solutions</title>
+    <title>Perfil — Educa Play</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
 </head>
 <body>
 <div class="app-layout">
@@ -242,6 +242,12 @@ $membro_desde = date('d/m/Y', strtotime($usuario['criado_em'] ?? 'now'));
                             <span class="google-icon" aria-hidden="true">sports_esports</span> Aluno
                         <?php endif; ?>
                     </span>
+
+                    <?php if ($usuario['tipo'] === 'aluno' && !empty($usuario['serie'])): ?>
+                        <p style="margin-top:10px;color:#5148c8;font-weight:700;">
+                            Turma: <?= htmlspecialchars(str_replace(' ano', '', $usuario['serie']) . ($usuario['turma'] ?? '')) ?>
+                        </p>
+                    <?php endif; ?>
 
                     <div style="margin:20px 0;padding:16px;background:#f0f2f5;border-radius:10px;">
                         <div style="font-size:0.8rem;color:#636e72;">Membro desde</div>

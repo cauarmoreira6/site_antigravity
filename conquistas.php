@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Conquistas / Medalhas
+// Educa Play — Conquistas / Medalhas
 // ============================================================
 require_once 'includes/verificar_login.php';
 require_once 'includes/conexao.php';
@@ -21,7 +21,7 @@ $todas_medalhas = [
     ['icone'=>'100','medalha'=>'Mestre da Matemática', 'descricao'=>'Acumular 100 acertos no total'],
     ['icone'=>'0',  'medalha'=>'Sem Errar',             'descricao'=>'Finalizar uma partida com 0 erros'],
     ['icone'=>'10', 'medalha'=>'Jogador Frequente',     'descricao'=>'Completar 10 partidas'],
-    ['icone'=>'$',  'medalha'=>'Comerciante Nato',      'descricao'=>'Completar a Loja MathPlay no nível difícil'],
+    ['icone'=>'$',  'medalha'=>'Comerciante Nato',      'descricao'=>'Completar a Loja Educa Play no nível difícil'],
     ['icone'=>'OA', 'medalha'=>'Olho de Águia',         'descricao'=>'Completar o Detetive dos Gráficos sem erros'],
 ];
 
@@ -33,8 +33,8 @@ $conquistadas_nomes = array_column($minhas, 'medalha');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conquistas — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Conquistas — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
 </head>
 <body>
 <div class="app-layout">
@@ -123,7 +123,7 @@ $conquistadas_nomes = array_column($minhas, 'medalha');
         <?php else: ?>
         <div style="text-align:center;margin-top:32px;padding:30px;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
             <h2 style="color:#2d3436;">Parabéns! Você conquistou todas as medalhas!</h2>
-            <p style="color:#636e72;">Você é um verdadeiro Mestre MathPlay!</p>
+            <p style="color:#636e72;">Você é um verdadeiro Mestre Educa Play!</p>
         </div>
         <?php endif; ?>
 

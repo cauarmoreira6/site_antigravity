@@ -1,5 +1,5 @@
 // ============================================================
-// MathPlay Solutions — Jogo 4: Detetive dos Gráficos (jogo4.js)
+// Educa Play — Jogo 4: Detetive dos Gráficos (jogo4.js)
 // Gráficos de barras, leitura de dados, média, moda e mediana
 // ============================================================
 

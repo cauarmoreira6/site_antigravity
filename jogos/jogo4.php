@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Jogo 4: Detetive dos Gráficos
+// Educa Play — Jogo 4: Detetive dos Gráficos
 // ============================================================
 require_once '../includes/verificar_login.php';
 require_once '../includes/serie_jogos.php';
@@ -10,8 +10,8 @@ require_once '../includes/serie_jogos.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detetive dos Gráficos — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Detetive dos Gráficos — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
     <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>

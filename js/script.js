@@ -1,5 +1,5 @@
 // ============================================================
-// MathPlay Solutions — Script Global (script.js)
+// Educa Play — Script Global (script.js)
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Jogo 1: Batalha dos Inteiros
+// Educa Play — Jogo 1: Batalha dos Inteiros
 // ============================================================
 require_once '../includes/verificar_login.php';
 require_once '../includes/serie_jogos.php';
@@ -10,8 +10,8 @@ require_once '../includes/serie_jogos.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batalha dos Inteiros — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <title>Batalha dos Inteiros — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
     <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
 </head>
 <body>

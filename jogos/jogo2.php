@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Jogo 2: Cofre das Equações
+// Educa Play — Jogo 2: Cofre das Equações
 // ============================================================
 require_once '../includes/verificar_login.php';
 require_once '../includes/serie_jogos.php';
@@ -10,9 +10,9 @@ require_once '../includes/serie_jogos.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cofre das Equações — MathPlay Solutions</title>
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
-    <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20260616-accessibility">
+    <title>Cofre das Equações — Educa Play</title>
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-cofre-result">
+    <link rel="stylesheet" href="/site_antigravity/css/jogos.css?v=20261023-cofre-result">
 </head>
 <body>
 <div class="app-layout">
@@ -171,6 +171,6 @@ require_once '../includes/serie_jogos.php';
 </script>
 <script>const ANO_ESCOLAR = <?= (int)$ano_escolar ?>;</script>
 <script src="/site_antigravity/js/serie_jogos.js"></script>
-<script src="/site_antigravity/js/jogo2.js?v=20261021-streak2"></script>
+<script src="/site_antigravity/js/jogo2.js?v=20261023-cofre-result"></script>
 </body>
 </html>

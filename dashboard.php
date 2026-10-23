@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Dashboard do Aluno
+// Educa Play — Dashboard do Aluno
 // ============================================================
 require_once 'includes/verificar_login.php';  // Protege a página
 require_once 'includes/conexao.php';
@@ -30,9 +30,9 @@ $_SESSION['nivel'] = $nivel;
 $titulos = [
     1 => 'Iniciante',    2 => 'Aprendiz',
     3 => 'Explorador',   4 => 'Aventureiro',
-    5 => 'Desafiador',   6 => 'Mestre MathPlay'
+    5 => 'Desafiador',   6 => 'Mestre Educa Play'
 ];
-$titulo = $titulos[$nivel] ?? 'Mestre MathPlay';
+$titulo = $titulos[$nivel] ?? 'Mestre Educa Play';
 
 // ---- Cálculo do progresso da barra de XP ----
 $xp_limites = [0, 0, 100, 250, 500, 800, 1200, 9999];
@@ -92,11 +92,11 @@ $stmt->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard — MathPlay Solutions</title>
+    <title>Dashboard — Educa Play</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20260616-accessibility">
+    <link rel="stylesheet" href="/site_antigravity/css/dashboard.css?v=20261023-logo">
 </head>
 <body>
 <div class="app-layout">
@@ -329,7 +329,7 @@ $stmt->close();
                             <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f0f2f5;border-radius:10px;transition:all 0.2s;" onmouseover="this.style.background='rgba(46,204,113,0.08)'" onmouseout="this.style.background='#f0f2f5'">
                                 <span class="quick-game-icon google-icon" aria-hidden="true">storefront</span>
                                 <div>
-                                    <div style="font-weight:700;font-size:0.9rem;color:#2d3436;">Loja MathPlay</div>
+                                    <div style="font-weight:700;font-size:0.9rem;color:#2d3436;">Loja Educa Play</div>
                                     <div style="font-size:0.75rem;color:#636e72;">Porcentagem e finanças</div>
                                 </div>
                                 <span style="margin-left:auto;color:#b2bec3;">›</span>

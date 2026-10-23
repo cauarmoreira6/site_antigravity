@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Cadastro
+// Educa Play — Cadastro
 // ============================================================
 session_start();
 
@@ -102,7 +102,7 @@ $versao_css = time();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Conta — MathPlay Solutions</title>
+    <title>Criar Conta — Educa Play</title>
     <link rel="stylesheet" href="/site_antigravity/css/login.css?v=<?= $versao_css ?>">
     <style>
         *, *::before, *::after {
@@ -285,8 +285,15 @@ $versao_css = time();
 
         <!-- Título -->
         <div class="auth-logo">
+            <img
+                class="auth-brand-logo"
+                src="/site_antigravity/assets/images/educa-play-logo.png"
+                alt="Educa Play"
+                width="160"
+                height="160"
+            >
             <h1>Criar Conta</h1>
-            <p>Junte-se à MathPlay e comece sua jornada educacional</p>
+            <p>Junte-se à Educa Play e comece sua jornada educacional</p>
         </div>
 
         <!-- Mensagem de erro -->

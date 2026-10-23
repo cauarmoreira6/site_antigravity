@@ -1,5 +1,5 @@
 // ============================================================
-// MathPlay Solutions — Jogo 2: Cofre das Equações (jogo2.js)
+// Educa Play — Jogo 2: Cofre das Equações (jogo2.js)
 // Equações de 1º grau: encontre o valor de X
 // ============================================================
 
@@ -55,6 +55,7 @@ let estado = {
     xp:          0,
     sequencia:   0,
     maiorSequencia: 0,
+    resultadosCofres: [],
     respondido:  false,
 };
 
@@ -85,6 +86,7 @@ function iniciarJogo() {
     estado.xp          = 0;
     estado.sequencia   = 0;
     estado.maiorSequencia = 0;
+    estado.resultadosCofres = [];
     estado.respondido  = false;
 
     // Renderiza os cofres visuais
@@ -114,10 +116,12 @@ function renderizarCofres() {
 function atualizarCofres() {
     for (let i = 0; i < 8; i++) {
         const safe = document.getElementById(`safe${i}`);
-        if (i < estado.indice) {
-            // Cofres já resolvidos
-            safe.className   = 'safe-item open';
-            safe.textContent   = i + 1;
+        if (estado.resultadosCofres[i] === true) {
+            safe.className = 'safe-item open';
+            safe.textContent = i + 1;
+        } else if (estado.resultadosCofres[i] === false) {
+            safe.className = 'safe-item wrong';
+            safe.textContent = '×';
         } else if (i === estado.indice) {
             // Cofre atual
             safe.className   = 'safe-item current';
@@ -201,12 +205,17 @@ function verificarResposta() {
 
         // Animação do cofre abrindo
         const safeEl = document.getElementById(`safe${estado.indice}`);
+        estado.resultadosCofres[estado.indice] = true;
         safeEl.textContent = estado.indice + 1;
         safeEl.className   = 'safe-item open';
 
     } else {
         estado.erros++;
         estado.sequencia = 0;
+        const safeEl = document.getElementById(`safe${estado.indice}`);
+        estado.resultadosCofres[estado.indice] = false;
+        safeEl.textContent = '×';
+        safeEl.className = 'safe-item wrong';
         input.style.borderColor = '#e74c3c';
         feedbackBox.className   = 'feedback-box wrong-fb show';
         document.getElementById('feedbackTitle').textContent = ` Valor incorreto! A resposta era x = ${q.resp}`;

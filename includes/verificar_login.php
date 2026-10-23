@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// MathPlay Solutions — Verificação de Login
+// Educa Play — Verificação de Login
 // ============================================================
 // Este arquivo verifica se o usuário está logado.
 // Deve ser incluído no início de qualquer página protegida.

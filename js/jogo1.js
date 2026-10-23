@@ -1,5 +1,5 @@
 // ============================================================
-// MathPlay Solutions — Jogo 1: Batalha dos Inteiros (jogo1.js)
+// Educa Play — Jogo 1: Batalha dos Inteiros (jogo1.js)
 // Operações com números inteiros positivos e negativos
 // ============================================================
 
